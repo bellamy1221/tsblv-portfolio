@@ -1,0 +1,461 @@
+/* TSBLV motion system — progressive enhancement */
+
+/* ------------------------------------------------------------------ */
+/* Reveal base states (only after JS adds .motion-ready)              */
+/* ------------------------------------------------------------------ */
+
+html.motion-ready [data-reveal='fade'] {
+  opacity: 0;
+  transition:
+    opacity var(--reveal-duration, var(--duration-medium)) var(--ease-out-soft);
+}
+
+html.motion-ready [data-reveal='up'] {
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity var(--reveal-duration, var(--duration-medium)) var(--ease-out-soft),
+    transform var(--reveal-duration, var(--duration-medium)) var(--ease-out-expo);
+}
+
+html.motion-ready [data-reveal='down'] {
+  opacity: 0;
+  transform: translateY(-16px);
+  transition:
+    opacity var(--reveal-duration, var(--duration-medium)) var(--ease-out-soft),
+    transform var(--reveal-duration, var(--duration-medium)) var(--ease-out-expo);
+}
+
+html.motion-ready [data-reveal='scale'] {
+  opacity: 0;
+  transform: scale(0.975);
+  transition:
+    opacity var(--reveal-duration, var(--duration-medium)) var(--ease-out-soft),
+    transform var(--reveal-duration, var(--duration-medium)) var(--ease-out-expo);
+}
+
+html.motion-ready [data-reveal='clip'] {
+  opacity: 0;
+  clip-path: inset(0 0 100% 0);
+  transition:
+    opacity var(--reveal-duration, var(--duration-medium)) var(--ease-out-soft),
+    clip-path var(--reveal-duration, var(--duration-slow)) var(--ease-out-expo);
+}
+
+html.motion-ready [data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+  clip-path: inset(0 0 0 0);
+}
+
+html.motion-ready [data-reveal] {
+  transition-delay: calc(var(--reveal-delay, 0ms) + var(--stagger-delay, 0ms));
+}
+
+/* ------------------------------------------------------------------ */
+/* Header                                                             */
+/* ------------------------------------------------------------------ */
+
+html.motion-ready .site-header[data-reveal='down'] {
+  --reveal-duration: 650ms;
+}
+
+html.motion-ready .header-brand[data-reveal='clip'] {
+  --reveal-duration: 700ms;
+  clip-path: inset(0 100% 0 0);
+}
+
+html.motion-ready .header-brand[data-reveal='clip'].is-visible {
+  clip-path: inset(0 0 0 0);
+}
+
+html.motion-ready .desktop-nav [data-reveal='fade'] {
+  --reveal-duration: 480ms;
+}
+
+/* ------------------------------------------------------------------ */
+/* Hero sequence                                                      */
+/* ------------------------------------------------------------------ */
+
+html.motion-ready .hero [data-hero-item] {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity var(--hero-item-duration, 480ms) var(--ease-out-soft),
+    transform var(--hero-item-duration, 480ms) var(--ease-out-expo);
+  transition-delay: var(--hero-item-delay, 0ms);
+}
+
+html.motion-ready.hero-sequenced .hero [data-hero-item].is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+html.motion-ready .hero [data-hero-line] {
+  display: block;
+  overflow: hidden;
+}
+
+html.motion-ready .hero [data-hero-line] .hero-title-line-inner {
+  display: block;
+  transform: translateY(110%);
+  opacity: 0;
+  transition:
+    transform var(--duration-medium) var(--ease-out-expo),
+    opacity var(--duration-medium) var(--ease-out-soft);
+  transition-delay: var(--hero-line-delay, 0ms);
+}
+
+html.motion-ready.hero-sequenced .hero [data-hero-line].is-visible .hero-title-line-inner {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+html.motion-ready .hero-visual-wrap {
+  opacity: 0;
+  transform: scale(1.025) translateY(12px);
+  clip-path: inset(8% 0 100% 0);
+  transition:
+    opacity 1000ms var(--ease-out-soft),
+    transform 1000ms var(--ease-out-expo),
+    clip-path 1000ms var(--ease-out-expo);
+}
+
+html.motion-ready .hero-visual-wrap.is-visible {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  clip-path: inset(0 0 0 0);
+}
+
+/* BrandMark full sequence */
+html.motion-ready .brand-mark--motion-full [data-brand-part] {
+  opacity: 0;
+  transition:
+    opacity 420ms var(--ease-out-soft),
+    transform 420ms var(--ease-out-expo);
+  transition-delay: var(--brand-part-delay, 0ms);
+}
+
+html.motion-ready .brand-mark--motion-full [data-brand-part='wordmark'] {
+  transform: translateY(8px);
+}
+
+html.motion-ready .brand-mark--motion-full [data-brand-part='divider'] {
+  transform: scaleY(0);
+  transform-origin: top;
+}
+
+html.motion-ready .brand-mark--motion-full [data-brand-part='symbol'] {
+  transform: translateX(-6px);
+}
+
+html.motion-ready .brand-mark--motion-full [data-brand-part='caption'] {
+  transform: translateY(6px);
+}
+
+html.motion-ready .brand-mark--motion-full.is-visible [data-brand-part] {
+  opacity: 1;
+  transform: none;
+}
+
+html.motion-ready .brand-mark--motion-full [data-brand-part='divider'].is-visible {
+  transform: scaleY(1);
+}
+
+/* ------------------------------------------------------------------ */
+/* HeroVisual — pointer light & tilt                                  */
+/* ------------------------------------------------------------------ */
+
+.hero-visual[data-tilt] {
+  transform:
+    perspective(1200px)
+    rotateX(var(--tilt-x, 0deg))
+    rotateY(var(--tilt-y, 0deg))
+    translate3d(var(--tilt-tx, 0px), var(--tilt-ty, 0px), 0);
+  transition: transform 520ms var(--ease-out-soft);
+}
+
+.hero-visual[data-tilt].is-tilting {
+  transition-duration: 120ms;
+}
+
+.hero-visual .pointer-light {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(
+    42% 38% at var(--pointer-x, 88%) var(--pointer-y, 8%),
+    rgba(226, 211, 181, 0.14),
+    transparent 68%
+  );
+  transition: opacity 480ms var(--ease-out-soft);
+}
+
+html.motion-ready .hero-visual.has-pointer-light .pointer-light {
+  opacity: 1;
+}
+
+.hero-visual .light-overlay {
+  transition: opacity 480ms var(--ease-out-soft);
+}
+
+@media (hover: hover) and (pointer: fine) and (min-width: 901px) {
+  html.motion-ready:not(.motion-reduced):not(.motion-mobile) .hero-visual .light-overlay {
+    animation: hero-light-breathe 12s var(--ease-in-out-soft) infinite alternate;
+  }
+}
+
+@keyframes hero-light-breathe {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  to {
+    opacity: 0.94;
+    transform: scale(1.02);
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Decorative lines                                                   */
+/* ------------------------------------------------------------------ */
+
+html.motion-ready [data-line-reveal] {
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--duration-slow) var(--ease-out-expo);
+}
+
+html.motion-ready [data-line-reveal='vertical'] {
+  transform: scaleY(0);
+  transform-origin: top;
+}
+
+html.motion-ready [data-line-reveal].is-visible {
+  transform: scaleX(1);
+}
+
+html.motion-ready [data-line-reveal='vertical'].is-visible {
+  transform: scaleY(1);
+}
+
+/* ------------------------------------------------------------------ */
+/* Project cards                                                      */
+/* ------------------------------------------------------------------ */
+
+html.motion-ready .project-card[data-reveal='up'] {
+  transform: translateY(24px) scale(0.99);
+}
+
+html.motion-ready .project-card[data-reveal='up'].is-visible {
+  transform: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .project-card {
+    transition:
+      transform var(--duration-fast) var(--ease-out-expo),
+      border-color var(--duration-fast) var(--ease-in-out-soft);
+  }
+
+  .project-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--color-line-strong);
+  }
+
+  .project-card:hover .project-meta {
+    color: var(--color-text-muted);
+  }
+
+  .project-card:hover .project-category {
+    color: var(--color-text);
+  }
+
+  .project-card-link:hover .card-media :global(img) {
+    transform: scale(1.025);
+  }
+
+  .project-card-link:hover .project-cta::after {
+    transform: translate(4px, -4px);
+  }
+
+  .project-cta::after {
+    display: inline-block;
+    transition: transform var(--duration-fast) var(--ease-out-expo);
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Buttons & magnetic                                                 */
+/* ------------------------------------------------------------------ */
+
+.button {
+  transition:
+    transform var(--duration-fast) var(--ease-out-expo),
+    color var(--duration-fast) var(--ease-in-out-soft),
+    border-color var(--duration-fast) var(--ease-in-out-soft),
+    background-color var(--duration-fast) var(--ease-in-out-soft);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .button:hover {
+    transform: translateY(-2px);
+  }
+
+  .button:active {
+    transform: translateY(0);
+  }
+}
+
+[data-magnetic] {
+  transition: transform 320ms var(--ease-out-expo);
+}
+
+[data-magnetic] .magnetic-inner {
+  display: inline-flex;
+  transition: transform 320ms var(--ease-out-expo);
+}
+
+/* Services hover */
+@media (hover: hover) and (pointer: fine) {
+  .services-list li {
+    transition:
+      border-color var(--duration-fast) var(--ease-in-out-soft),
+      background-color var(--duration-fast) var(--ease-in-out-soft);
+  }
+
+  .services-list li:hover .service-mark {
+    transform: translate(4px, -4px);
+  }
+
+  .service-mark {
+    display: inline-block;
+    transition:
+      transform var(--duration-fast) var(--ease-out-expo),
+      color var(--duration-fast);
+  }
+}
+
+.link-arrow::after {
+  display: inline-block;
+  transition: transform var(--duration-fast) var(--ease-out-expo);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .link-arrow:hover::after {
+    transform: translate(3px, -3px);
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Contact glow intensify on reveal                                   */
+/* ------------------------------------------------------------------ */
+
+.contact-glow {
+  transition: opacity var(--duration-slow) var(--ease-out-soft);
+}
+
+html.motion-ready .contact-shell.is-visible .contact-glow {
+  opacity: 1.15;
+}
+
+/* ------------------------------------------------------------------ */
+/* Parallax (transform applied via JS)                                */
+/* ------------------------------------------------------------------ */
+
+[data-parallax] {
+  will-change: auto;
+}
+
+[data-parallax].is-parallaxing {
+  will-change: transform;
+}
+
+/* ------------------------------------------------------------------ */
+/* Process track line                                                 */
+/* ------------------------------------------------------------------ */
+
+.process-track[data-line-reveal] {
+  display: block;
+}
+
+@media (max-width: 74.99rem) {
+  .process-track[data-line-reveal='vertical'] {
+    position: absolute;
+    top: 0;
+    left: 0.65rem;
+    width: 1px;
+    height: 100%;
+    transform: scaleY(0);
+    transform-origin: top;
+    background: var(--color-line);
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Mobile overrides                                                   */
+/* ------------------------------------------------------------------ */
+
+html.motion-mobile .hero [data-hero-item],
+html.motion-mobile [data-reveal] {
+  --reveal-duration: 380ms;
+}
+
+html.motion-mobile .hero-visual-wrap {
+  clip-path: none;
+  transform: translateY(16px);
+}
+
+html.motion-mobile .hero-visual-wrap.is-visible {
+  transform: translateY(0);
+}
+
+/* ------------------------------------------------------------------ */
+/* Reduced motion                                                     */
+/* ------------------------------------------------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+html.motion-reduced [data-reveal],
+html.motion-reduced [data-hero-item],
+html.motion-reduced [data-hero-line] .hero-title-line-inner,
+html.motion-reduced .brand-mark--motion-full [data-brand-part],
+html.motion-reduced .hero-visual-wrap {
+  opacity: 1 !important;
+  transform: none !important;
+  clip-path: none !important;
+  transition-duration: 150ms !important;
+  transition-delay: 0ms !important;
+}
+
+html.motion-reduced .hero-visual .light-overlay {
+  animation: none !important;
+}
+
+html.motion-reduced .hero-visual[data-tilt] {
+  transform: none !important;
+}
+
+html.motion-reduced [data-parallax] {
+  transform: none !important;
+}
+
+html.motion-reduced [data-magnetic],
+html.motion-reduced [data-magnetic] .magnetic-inner {
+  transform: none !important;
+}
+
+html.motion-reduced .project-card:hover {
+  transform: none;
+}
+
+html.motion-reduced .button:hover {
+  transform: none;
+}

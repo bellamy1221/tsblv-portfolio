@@ -1,0 +1,42 @@
+---
+import { render, type CollectionEntry } from 'astro:content';
+import ProjectLayout from '../../layouts/ProjectLayout.astro';
+import { getAdjacentProjects, getAllProjects } from '../../lib/projects';
+
+export async function getStaticPaths() {
+  const projects = await getAllProjects();
+
+  return projects.map((project) => ({
+    params: { id: project.id },
+    props: { project },
+  }));
+}
+
+interface Props {
+  project: CollectionEntry<'work'>;
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+const { previous, next } = await getAdjacentProjects(project.id);
+const data = project.data;
+---
+
+<ProjectLayout
+  title={data.title}
+  description={data.description ?? data.summary}
+  summary={data.summary}
+  cover={data.cover}
+  coverAlt={data.coverAlt}
+  category={data.category}
+  year={data.year}
+  client={data.client}
+  services={data.services}
+  roles={data.roles}
+  duration={data.duration}
+  tone={data.tone}
+  previous={previous}
+  next={next}
+>
+  <Content />
+</ProjectLayout>

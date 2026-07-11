@@ -1,0 +1,161 @@
+---
+const steps = [
+  ['Погружение', 'Понимаю продукт, аудиторию, задачи и ограничения.'],
+  ['Направление', 'Формирую структуру, визуальную концепцию и ключевой образ.'],
+  ['Дизайн', 'Собираю интерфейс, контент и систему компонентов.'],
+  ['Разработка', 'Переношу дизайн в быстрый, адаптивный и аккуратный сайт.'],
+  ['Запуск', 'Тестирую, оптимизирую и подключаю домен.'],
+];
+---
+
+<section class="section process" id="process" aria-labelledby="process-title">
+  <div class="container">
+    <div class="section-header process-header">
+      <div data-reveal="up">
+        <p class="section-label">Процесс</p>
+        <h2 id="process-title">Как строится работа</h2>
+      </div>
+      <p class="body-large" data-reveal="up" data-delay="100">Пять последовательных этапов — от понимания задачи до аккуратного запуска.</p>
+    </div>
+
+    <div class="process-track process-track--horizontal" data-line-reveal aria-hidden="true"></div>
+
+    <div class="process-steps">
+      <div class="process-track process-track--vertical" data-line-reveal="vertical" aria-hidden="true"></div>
+      <ol class="process-list list-reset" data-stagger data-stagger-delay="80">
+        {steps.map(([title, text], index) => (
+          <li data-reveal="up">
+            <span class="process-number">{String(index + 1).padStart(2, '0')}</span>
+            <h3>{title}</h3>
+            <p>{text}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </div>
+</section>
+
+<style>
+  .process {
+    position: relative;
+    background: rgba(20, 22, 21, 0.35);
+  }
+
+  .process-header .body-large {
+    align-self: end;
+  }
+
+  .process-track {
+    display: none;
+  }
+
+  .process-track--horizontal {
+    height: 1px;
+    margin-bottom: clamp(2rem, 4vw, 3rem);
+    transform-origin: left;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--color-line) 5%,
+      var(--color-line-strong) 50%,
+      var(--color-line) 95%,
+      transparent
+    );
+  }
+
+  .process-steps {
+    position: relative;
+  }
+
+  .process-list {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    border-top: 1px solid var(--color-line);
+  }
+
+  li {
+    position: relative;
+    padding: clamp(1.75rem, 3vw, 2.25rem) 0;
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .process-number {
+    display: inline-block;
+    margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+    color: var(--color-accent);
+    font-family: var(--font-mono);
+    font-size: var(--font-size-meta);
+    font-variant-numeric: tabular-nums;
+  }
+
+  h3 {
+    margin-bottom: 0.75rem;
+    font-size: clamp(1.2rem, 1.8vw, 1.55rem);
+  }
+
+  li p {
+    max-width: 32ch;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-ui);
+    line-height: 1.5;
+  }
+
+  @media (min-width: 48rem) {
+    .process-list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    li {
+      padding: clamp(1.75rem, 3vw, 2.5rem);
+      border-right: 1px solid var(--color-line);
+    }
+  }
+
+  @media (max-width: 74.99rem) {
+    .process-track--vertical {
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0.65rem;
+      width: 1px;
+      height: 100%;
+      transform-origin: top;
+      background: var(--color-line);
+    }
+
+    .process-list {
+      padding-left: 1.5rem;
+    }
+  }
+
+  @media (min-width: 75rem) {
+    .process-track--horizontal {
+      display: block;
+    }
+
+    .process-track--vertical {
+      display: none;
+    }
+
+    .process-list {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      border-top: 0;
+    }
+
+    li {
+      padding: 0 1.25rem clamp(2rem, 4vw, 3rem);
+      border-right: 1px solid var(--color-line);
+      border-bottom: 0;
+    }
+
+    li:first-child {
+      padding-left: 0;
+    }
+
+    li:last-child {
+      padding-right: 0;
+      border-right: 0;
+    }
+  }
+</style>

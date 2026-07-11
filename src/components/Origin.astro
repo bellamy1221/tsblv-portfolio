@@ -1,0 +1,134 @@
+---
+import BrandMark from './BrandMark.astro';
+---
+
+<section class="section origin" id="about" aria-labelledby="origin-title">
+  <div class="container">
+    <div class="origin-rule" aria-hidden="true" data-line-reveal></div>
+    <div class="origin-grid">
+      <aside class="origin-aside">
+        <p class="section-label" data-reveal="fade">Обо мне</p>
+        <p class="origin-marker" data-reveal="up" data-delay="80">
+          <BrandMark variant="symbol" size="small" href={null} />
+          <span>/ Северная Осетия</span>
+        </p>
+      </aside>
+      <div class="origin-content">
+        <h2 id="origin-title" data-reveal="up">Сделано на Северном Кавказе</h2>
+        <p class="origin-lead" data-reveal="up" data-delay="100">Меня зовут Джордж Цаболов. Я дизайнер и разработчик из Северной Осетии. Работаю на пересечении визуального дизайна, технологий и цифрового повествования.</p>
+        <p class="origin-text" data-reveal="up" data-delay="180">Мне одинаково интересны спокойные функциональные сервисы и насыщенные имиджевые сайты, в которых дизайн становится полноценной частью истории бренда.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .origin {
+    position: relative;
+    overflow: clip;
+    border-top-color: transparent;
+  }
+
+  .origin::before {
+    position: absolute;
+    z-index: -1;
+    top: -10%;
+    right: -8%;
+    width: min(32rem, 55vw);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--color-glow-warm-soft), transparent 72%);
+    content: '';
+    pointer-events: none;
+  }
+
+  .origin-rule {
+    height: 1px;
+    margin-bottom: clamp(4rem, 10vw, 8rem);
+    transform-origin: left;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--color-line) 8%,
+      var(--color-line-strong) 50%,
+      var(--color-line) 92%,
+      transparent
+    );
+  }
+
+  .origin-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+    gap: clamp(3rem, 8vw, 5rem);
+  }
+
+  .origin-aside {
+    min-width: 0;
+  }
+
+  .origin-aside .section-label {
+    margin-bottom: clamp(2rem, 5vw, 3.5rem);
+  }
+
+  .origin-marker {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-meta);
+    letter-spacing: 0.04em;
+  }
+
+  .origin-marker > span {
+    color: var(--color-text-subtle);
+  }
+
+  .origin-content {
+    min-width: 0;
+  }
+
+  .origin-content h2 {
+    max-width: 14ch;
+    margin-bottom: clamp(2rem, 5vw, 3.5rem);
+  }
+
+  .origin-lead {
+    max-width: 38rem;
+    color: var(--color-text);
+    font-family: var(--font-display);
+    font-size: clamp(1.65rem, 3vw, 2.85rem);
+    line-height: 1.22;
+    letter-spacing: -0.02em;
+  }
+
+  .origin-text {
+    max-width: var(--content-width);
+    margin-top: clamp(2rem, 4vw, 3rem);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-body-large);
+    line-height: 1.55;
+  }
+
+  @media (min-width: 48rem) {
+    .origin-grid {
+      grid-template-columns: minmax(9rem, 0.42fr) minmax(0, 1.58fr);
+      gap: clamp(4rem, 10vw, 9rem);
+    }
+
+    .origin-aside {
+      padding-top: 0.35rem;
+    }
+  }
+
+  @media (min-width: 75rem) {
+    .origin-grid {
+      grid-template-columns: minmax(11rem, 0.34fr) minmax(0, 1.66fr);
+      gap: clamp(5rem, 12vw, 12rem);
+    }
+
+    .origin-lead {
+      max-width: 42rem;
+    }
+  }
+</style>

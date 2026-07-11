@@ -1,0 +1,159 @@
+---
+import { Image } from 'astro:assets';
+import type { Project } from '../../lib/projects';
+
+interface Props {
+  project: Project;
+  headingLevel?: 'h2' | 'h3';
+  featured?: boolean;
+}
+
+const { project, headingLevel = 'h3', featured = false } = Astro.props;
+const Heading = headingLevel;
+const { title, shortTitle, category, year, summary, cover, coverAlt, tone } = project.data;
+---
+
+<article class="project-card" data-tone={tone} data-featured={featured || undefined} data-reveal="up">
+  <a class="project-card-link" href={`/work/${project.id}/`} aria-label={`Открыть проект «${title}»`}>
+    <div class="card-media">
+      <Image src={cover} alt={coverAlt} width={800} height={600} loading="lazy" decoding="async" />
+    </div>
+    <div class="card-body">
+      <Heading class="card-title">{shortTitle ?? title}</Heading>
+      <div class="project-meta">
+        <span class="project-category">{category}</span>
+        <time class="project-year" datetime={String(year)}>{year}</time>
+      </div>
+      <p class="card-summary">{summary}</p>
+      <span class="project-cta" aria-hidden="true">Смотреть проект</span>
+    </div>
+  </a>
+</article>
+
+<style>
+  .project-card {
+    min-width: 0;
+    height: 100%;
+    overflow: hidden;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-card);
+    background: var(--color-surface);
+    transition: border-color var(--duration-base) var(--ease-standard);
+  }
+
+  .project-card[data-tone='dark'] {
+    background:
+      radial-gradient(120% 80% at 100% 0%, rgba(48, 51, 48, 0.18), transparent 55%),
+      var(--color-surface-depth);
+  }
+
+  .project-card[data-tone='light'] {
+    background:
+      linear-gradient(180deg, rgba(48, 51, 48, 0.35), transparent 45%),
+      var(--color-surface-soft);
+  }
+
+  .project-card[data-tone='warm'] {
+    background:
+      radial-gradient(90% 70% at 0% 0%, rgba(180, 154, 105, 0.1), transparent 60%),
+      linear-gradient(155deg, rgba(62, 53, 40, 0.55), rgba(30, 29, 26, 0.92));
+  }
+
+  .project-card[data-tone='neutral'] {
+    background: var(--color-surface);
+  }
+
+  .project-card-link {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    text-decoration: none;
+  }
+
+  .card-media {
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+    border-bottom: 1px solid var(--color-line);
+    background: var(--color-bg-deep);
+  }
+
+  .project-card[data-featured] .card-media {
+    aspect-ratio: 16 / 9;
+  }
+
+  .card-media :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--duration-slow) var(--ease-out);
+  }
+
+  .card-body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding: clamp(1.25rem, 2.5vw, 2rem);
+  }
+
+  .card-title {
+    overflow-wrap: anywhere;
+    margin: 0 0 0.75rem;
+    font-size: var(--font-size-h3);
+    line-height: 1.12;
+  }
+
+  .project-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.35rem 1rem;
+    margin-bottom: 0.85rem;
+    color: var(--color-text-subtle);
+    font-size: var(--font-size-meta);
+  }
+
+  .project-category {
+    color: var(--color-text-muted);
+  }
+
+  .card-summary {
+    max-width: var(--text-width);
+    flex: 1;
+    margin: 0;
+    color: var(--color-text-muted);
+    line-height: 1.55;
+  }
+
+  .project-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+    color: var(--color-text);
+    font-size: var(--font-size-ui);
+  }
+
+  .project-cta::after {
+    color: var(--color-accent-soft);
+    content: '↗';
+  }
+
+  @media (hover: hover) {
+    .project-card:hover {
+      border-color: var(--color-line-strong);
+    }
+
+    .project-card-link:hover .card-media :global(img) {
+      transform: scale(1.025);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .card-media :global(img),
+    .project-card-link:hover .card-media :global(img) {
+      transform: none;
+      transition: none;
+    }
+  }
+</style>

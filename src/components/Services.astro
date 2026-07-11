@@ -1,0 +1,100 @@
+---
+const services = [
+  { title: 'Стратегия и структура', description: 'Логика продукта, контент и сценарии.' },
+  { title: 'UX/UI-дизайн', description: 'Интерфейсы, прототипы и дизайн-системы.' },
+  { title: 'Арт-дирекшн', description: 'Визуальное направление и цельный образ.' },
+  { title: 'Frontend-разработка', description: 'Быстрая и аккуратная реализация.' },
+  { title: 'Motion и интерактив', description: 'Движение, ритм и обратная связь.' },
+  { title: 'Поддержка после запуска', description: 'Развитие продукта и новые итерации.' },
+];
+---
+
+<section class="section services" id="services" aria-labelledby="services-title">
+  <div class="container services-layout">
+    <div class="services-heading" data-reveal="up">
+      <p class="section-label">Услуги</p>
+      <h2 id="services-title">Что я делаю</h2>
+    </div>
+    <ul class="services-list list-reset" data-stagger data-stagger-delay="60">
+      {services.map((service, index) => (
+        <li data-reveal="up">
+          <span class="item-index">{String(index + 1).padStart(2, '0')}</span>
+          <div class="service-copy">
+            <h3>{service.title}</h3>
+            <p>{service.description}</p>
+          </div>
+          <span class="service-mark" aria-hidden="true">↗</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .services-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(3rem, 7vw, 6rem);
+  }
+
+  .services-heading {
+    align-self: start;
+  }
+
+  .services-list {
+    border-top: 1px solid var(--color-line);
+  }
+
+  li {
+    display: grid;
+    grid-template-columns: 2.25rem minmax(0, 1fr) auto;
+    align-items: center;
+    gap: clamp(0.85rem, 2vw, 1.25rem);
+    padding: clamp(1.35rem, 2.5vw, 1.85rem) clamp(0.5rem, 1.5vw, 0.85rem);
+    border-bottom: 1px solid var(--color-line);
+    transition:
+      border-color var(--duration-fast) var(--ease-standard),
+      background-color var(--duration-fast) var(--ease-standard);
+  }
+
+  .service-copy {
+    min-width: 0;
+  }
+
+  h3 {
+    margin-bottom: 0.35rem;
+    font-family: var(--font-body);
+    font-size: clamp(1.05rem, 1.5vw, 1.35rem);
+    font-weight: 500;
+    letter-spacing: -0.015em;
+  }
+
+  li p {
+    color: var(--color-text-subtle);
+    font-size: var(--font-size-ui);
+    line-height: 1.45;
+  }
+
+  .service-mark {
+    color: var(--color-text-subtle);
+    font-size: var(--font-size-ui);
+    transition: color var(--duration-fast);
+  }
+
+  @media (hover: hover) {
+    li:hover {
+      border-color: var(--color-line-strong);
+      background: rgba(48, 51, 48, 0.22);
+    }
+
+    li:hover .service-mark {
+      color: var(--color-accent-soft);
+    }
+  }
+
+  @media (min-width: 48rem) {
+    .services-layout {
+      grid-template-columns: minmax(14rem, 0.75fr) minmax(0, 1.65fr);
+    }
+  }
+</style>

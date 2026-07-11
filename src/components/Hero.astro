@@ -1,0 +1,154 @@
+---
+import HeroVisual from './HeroVisual.astro';
+import BrandMark from './BrandMark.astro';
+import heroPlaceholder from '../assets/hero-placeholder.jpg';
+---
+
+<section class="hero" id="hero" aria-labelledby="hero-title">
+  <div class="container hero-inner">
+    <div class="hero-content">
+      <p class="eyebrow" data-hero-item="eyebrow">Независимая digital-студия</p>
+      <h1 id="hero-title">
+        <span class="hero-title-line" data-hero-line="1">
+          <span class="hero-title-line-inner">От ясных систем</span>
+        </span>
+        <span class="hero-title-line" data-hero-line="2">
+          <span class="hero-title-line-inner">до выразительных</span>
+        </span>
+        <span class="hero-title-line" data-hero-line="3">
+          <span class="hero-title-line-inner">цифровых миров</span>
+        </span>
+      </h1>
+      <p class="lead" data-hero-item="lead">Я создаю сайты, сервисы и визуальные системы для современных брендов — от строгих минималистичных интерфейсов до масштабных имиджевых проектов.</p>
+      <div class="hero-actions" data-hero-item="actions">
+        <a class="button button-primary" href="#work" data-magnetic>Смотреть работы</a>
+        <a class="button button-secondary" href="#contact">Обсудить проект</a>
+      </div>
+      <div class="location" data-hero-item="brand">
+        <BrandMark variant="full" size="medium" orientation="horizontal" motion="full" />
+      </div>
+    </div>
+
+    <div class="visual-wrap hero-visual-wrap" data-parallax="0.04">
+      <HeroVisual
+        image={heroPlaceholder}
+        alt="Нейтральная графитовая визуальная заглушка TSBLV"
+      />
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    overflow: clip;
+    min-height: calc(100svh - var(--header-height));
+    padding-block: clamp(3rem, 7vw, 7rem);
+  }
+
+  .hero::before {
+    position: absolute;
+    z-index: -1;
+    top: -18%;
+    right: -10%;
+    width: min(58rem, 78vw);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background:
+      radial-gradient(circle, rgba(213, 198, 170, 0.14), rgba(180, 154, 105, 0.05) 42%, transparent 68%);
+    content: '';
+    pointer-events: none;
+  }
+
+  .hero-inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: center;
+    gap: clamp(3rem, 7vw, 6rem);
+  }
+
+  .hero-content,
+  .visual-wrap {
+    min-width: 0;
+  }
+
+  .eyebrow {
+    margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+  }
+
+  h1 {
+    max-width: 100%;
+    margin-bottom: clamp(1.75rem, 4vw, 3rem);
+    font-size: clamp(2.25rem, 10.5vw, 3.25rem);
+    line-height: 0.96;
+    letter-spacing: -0.045em;
+  }
+
+  .hero-title-line {
+    display: block;
+  }
+
+  .lead {
+    max-width: 39rem;
+    margin-bottom: clamp(1.75rem, 4vw, 2.5rem);
+    font-size: clamp(1rem, 1vw + 0.88rem, 1.25rem);
+    line-height: 1.6;
+  }
+
+  .hero-actions {
+    display: flex;
+    align-items: stretch;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .location {
+    margin-top: clamp(2rem, 5vw, 3.5rem);
+  }
+
+  .visual-wrap {
+    width: min(100%, 36rem);
+    justify-self: center;
+  }
+
+  @media (min-width: 48rem) {
+    .hero-inner {
+      grid-template-columns: minmax(0, 1.08fr) minmax(18rem, 1fr);
+      gap: clamp(2rem, 4vw, 4rem);
+    }
+
+    h1 {
+      font-size: clamp(3.2rem, 5.8vw, 5.75rem);
+    }
+
+    .hero-actions {
+      align-items: center;
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+
+    .visual-wrap {
+      width: 100%;
+      justify-self: stretch;
+    }
+  }
+
+  @media (min-width: 75rem) {
+    .hero-inner {
+      grid-template-columns: minmax(0, 52fr) minmax(0, 48fr);
+      gap: clamp(3rem, 5vw, 5.5rem);
+    }
+
+    h1 {
+      font-size: clamp(5rem, 6.4vw, 6.75rem);
+    }
+
+    .hero-title-line-inner {
+      white-space: nowrap;
+    }
+
+    .visual-wrap {
+      width: calc(100% + min(3vw, 2.5rem));
+    }
+  }
+</style>

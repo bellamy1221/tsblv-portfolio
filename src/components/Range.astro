@@ -1,0 +1,131 @@
+---
+const directions = [
+  {
+    title: 'Системы',
+    description: 'Сервисы, кабинеты, каталоги и интерфейсы, в которых главное — ясность и удобство.',
+  },
+  {
+    title: 'Бренды',
+    description: 'Коммерческие сайты, презентация услуг, визуальная идентичность и сильная подача продукта.',
+  },
+  {
+    title: 'Миры',
+    description: 'Имиджевые сайты, motion, интерактивные сцены и экспериментальные цифровые форматы.',
+  },
+];
+---
+
+<section class="section range" id="range" aria-labelledby="range-title">
+  <div class="container">
+    <div class="section-header range-header">
+      <div data-reveal="up">
+        <p class="section-label">Диапазон</p>
+        <h2 id="range-title">От минимализма до полного погружения</h2>
+      </div>
+      <p class="lead" data-reveal="up" data-delay="100">Мой подход меняется вместе с задачей. Иногда продукту нужна почти незаметная система. Иногда — собственный визуальный мир.</p>
+    </div>
+
+    <ul class="range-grid list-reset" data-stagger data-stagger-delay="90">
+      {directions.map((direction, index) => (
+        <li class={`range-card range-card-${index + 1}`} data-reveal="up">
+          <span class="item-index">{String(index + 1).padStart(2, '0')}</span>
+          <div class="range-card-body">
+            <h3>{direction.title}</h3>
+            <p>{direction.description}</p>
+          </div>
+          <span class="range-card-line" data-line-reveal aria-hidden="true"></span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .range-header {
+    margin-bottom: clamp(3rem, 7vw, 5.5rem);
+  }
+
+  .range-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    border-top: 1px solid var(--color-line);
+  }
+
+  .range-card {
+    position: relative;
+    display: flex;
+    min-width: 0;
+    min-height: clamp(16rem, 28vw, 22rem);
+    flex-direction: column;
+    justify-content: space-between;
+    gap: clamp(3rem, 6vw, 5rem);
+    padding: clamp(1.75rem, 3.5vw, 2.75rem);
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .range-card:not(:last-child)::after {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 1px;
+    height: 100%;
+    background: var(--color-line);
+    content: '';
+  }
+
+  .range-card-1 {
+    background: rgba(32, 35, 33, 0.28);
+  }
+
+  .range-card-2 {
+    background: rgba(40, 43, 41, 0.44);
+  }
+
+  .range-card-3 {
+    background:
+      radial-gradient(80% 80% at 100% 0%, rgba(180, 154, 105, 0.07), transparent 55%),
+      linear-gradient(160deg, rgba(48, 51, 48, 0.58), rgba(24, 26, 25, 0.88));
+  }
+
+  .range-card-body {
+    min-width: 0;
+  }
+
+  .range-card-line {
+    display: block;
+    width: 100%;
+    height: 1px;
+    margin-top: auto;
+    transform-origin: left;
+    background: var(--color-line);
+  }
+
+  h3 {
+    margin-bottom: 1rem;
+    font-size: clamp(1.35rem, 2.2vw, 1.85rem);
+  }
+
+  .range-card p {
+    max-width: 34ch;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+  }
+
+  @media (min-width: 48rem) {
+    .range-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .range-card {
+      border-bottom: 0;
+    }
+
+    .range-card:not(:last-child) {
+      border-right: 1px solid var(--color-line);
+    }
+
+    .range-card:not(:last-child)::after {
+      display: none;
+    }
+  }
+</style>

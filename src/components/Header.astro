@@ -1,0 +1,186 @@
+---
+import BrandMark from './BrandMark.astro';
+
+const navigation = [
+  { label: 'Работы', href: '/#work' },
+  { label: 'Обо мне', href: '/#about' },
+  { label: 'Услуги', href: '/#services' },
+  { label: 'Контакты', href: '/#contact' },
+];
+---
+
+<header class="site-header" id="top" data-reveal="down" data-delay="80" data-duration="650">
+  <div class="container header-inner">
+    <BrandMark variant="wordmark" size="small" class="header-brand" motion="header" />
+
+    <nav class="desktop-nav" aria-label="Основная навигация">
+      <ul class="list-reset" data-stagger data-stagger-delay="45">
+        {navigation.map((item) => (
+          <li><a href={item.href} data-reveal="fade">{item.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+
+    <nav class="mobile-nav" aria-label="Мобильная навигация">
+      <details class="mobile-menu">
+        <summary>
+          <span>Меню</span>
+          <span class="menu-icon" aria-hidden="true">+</span>
+        </summary>
+        <ul class="mobile-menu-panel list-reset">
+          {navigation.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+        </ul>
+      </details>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: relative;
+    z-index: 20;
+  }
+
+  .site-header::after {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--color-line-strong) 20%, var(--color-line-strong) 80%, transparent);
+    content: '';
+  }
+
+  .header-inner {
+    display: flex;
+    min-height: var(--header-height);
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+
+  .desktop-nav {
+    display: none;
+  }
+
+  .desktop-nav ul {
+    display: flex;
+    align-items: center;
+    gap: clamp(1.5rem, 3vw, 2.75rem);
+  }
+
+  .desktop-nav a,
+  summary {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-ui);
+    font-weight: 400;
+    line-height: var(--line-height-ui);
+    text-decoration: none;
+    transition: opacity var(--duration-fast) var(--ease-in-out-soft), color var(--duration-fast);
+  }
+
+  .desktop-nav a {
+    position: relative;
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+  }
+
+  .desktop-nav a::after {
+    position: absolute;
+    right: 0;
+    bottom: 0.45rem;
+    left: 0;
+    height: 1px;
+    transform: scaleX(0);
+    transform-origin: right;
+    background: var(--color-accent-soft);
+    content: '';
+    transition: transform var(--duration-fast) var(--ease-out-expo);
+  }
+
+  .desktop-nav a:hover,
+  .desktop-nav a:focus-visible {
+    color: var(--color-text);
+    opacity: 1;
+  }
+
+  .desktop-nav a:hover::after,
+  .desktop-nav a:focus-visible::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  .mobile-nav {
+    position: relative;
+  }
+
+  .mobile-menu summary {
+    display: flex;
+    min-width: 5.5rem;
+    min-height: 3rem;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.65rem 0.8rem;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-button);
+    background: rgba(32, 35, 33, 0.62);
+    color: var(--color-text);
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .mobile-menu summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .menu-icon {
+    color: var(--color-accent-soft);
+    font-size: 1.25rem;
+    line-height: 1;
+    transition: transform var(--duration-medium) var(--ease-out-expo);
+  }
+
+  .mobile-menu[open] .menu-icon {
+    transform: rotate(45deg);
+  }
+
+  .mobile-menu-panel {
+    position: absolute;
+    top: calc(100% + 0.65rem);
+    right: 0;
+    width: min(18rem, calc(100vw - (var(--page-gutter) * 2)));
+    padding: 0.6rem;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-surface);
+    background: rgba(32, 35, 33, 0.96);
+  }
+
+  .mobile-menu-panel a {
+    display: flex;
+    min-height: 3rem;
+    align-items: center;
+    padding-inline: 0.85rem;
+    border-radius: calc(var(--radius-button) - 0.15rem);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-ui);
+    text-decoration: none;
+  }
+
+  .mobile-menu-panel a:hover,
+  .mobile-menu-panel a:focus-visible {
+    background: var(--color-surface-raised);
+    color: var(--color-text);
+  }
+
+  @media (min-width: 48rem) {
+    .desktop-nav {
+      display: block;
+    }
+
+    .mobile-nav {
+      display: none;
+    }
+  }
+</style>

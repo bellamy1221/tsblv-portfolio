@@ -1,0 +1,36 @@
+---
+interface Props {
+  title: string;
+  category: string;
+  year: number;
+  summary: string;
+}
+
+const { title, category, year, summary } = Astro.props;
+---
+
+<header class="project-header container">
+  <nav class="breadcrumbs" aria-label="Хлебные крошки" data-reveal="fade">
+    <ol class="list-reset">
+      <li><a href="/">Главная</a></li>
+      <li><a href="/work/">Работы</a></li>
+      <li aria-current="page">{title}</li>
+    </ol>
+  </nav>
+  <h1 data-reveal="up" data-delay="80">{title}</h1>
+  <div class="project-context" data-reveal="up" data-delay="140">
+    <p>{category}</p>
+    <time datetime={String(year)}>{year}</time>
+  </div>
+  <p class="lead" data-reveal="up" data-delay="200">{summary}</p>
+</header>
+
+<style>
+  .project-header { padding-block: var(--section-space-small); }
+  .project-header h1 { max-width: none; overflow-wrap: anywhere; }
+  .breadcrumbs { margin-bottom: clamp(3rem, 8vw, 6rem); color: var(--color-text-muted); font-size: var(--font-size-ui); }
+  .breadcrumbs ol { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .breadcrumbs li:not(:last-child)::after { margin-left: 0.5rem; content: '/'; }
+  .project-context { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; max-width: var(--content-width); margin-bottom: 2rem; color: var(--color-text-muted); }
+  .project-context p { margin-bottom: 0; overflow-wrap: anywhere; }
+</style>

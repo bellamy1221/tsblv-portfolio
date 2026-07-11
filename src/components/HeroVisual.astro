@@ -1,0 +1,78 @@
+---
+import { Image } from 'astro:assets';
+
+interface Props {
+  image: ImageMetadata;
+  alt: string;
+  caption?: string;
+}
+
+const { image, alt, caption } = Astro.props;
+---
+
+<figure class="hero-visual" data-tilt data-pointer-light>
+  <Image
+    class="hero-image"
+    src={image}
+    alt={alt}
+    width={1200}
+    loading="eager"
+    decoding="async"
+    fetchpriority="high"
+  />
+  <span class="pointer-light" aria-hidden="true"></span>
+  <span class="light-overlay" aria-hidden="true"></span>
+  <span class="edge-vignette" aria-hidden="true"></span>
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>
+
+<style>
+  .hero-visual {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    aspect-ratio: 4 / 5;
+    border: 1px solid var(--color-line);
+    border-radius: clamp(1.25rem, 2vw, 1.5rem);
+    background: var(--color-bg-deep);
+  }
+
+  .hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .pointer-light,
+  .light-overlay,
+  .edge-vignette {
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .light-overlay {
+    background:
+      radial-gradient(90% 62% at var(--pointer-x, 92%) var(--pointer-y, -4%), rgba(226, 211, 181, 0.14), transparent 62%),
+      linear-gradient(145deg, rgba(180, 154, 105, 0.05), transparent 42%);
+    mix-blend-mode: screen;
+  }
+
+  .edge-vignette {
+    z-index: 2;
+    background:
+      linear-gradient(180deg, transparent 60%, rgba(9, 11, 10, 0.32) 100%),
+      radial-gradient(ellipse at center, transparent 52%, rgba(9, 11, 10, 0.2) 100%);
+  }
+
+  figcaption {
+    position: absolute;
+    z-index: 3;
+    right: 1rem;
+    bottom: 1rem;
+    left: 1rem;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-caption);
+  }
+</style>

@@ -1,0 +1,62 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BrandMark from '../components/BrandMark.astro';
+---
+
+<BaseLayout
+  title="Brand system preview — TSBLV"
+  description="Временная страница проверки фирменной системы TSBLV."
+  noindex={true}
+>
+  <main class="brand-preview" id="main-content" tabindex="-1">
+    <header class="container preview-header">
+      <p class="eyebrow">Brand system</p>
+      <h1>TSBLV Brand Mark</h1>
+      <p class="body-large">Рабочая страница для проверки размеров, композиций и контраста фирменного знака.</p>
+    </header>
+
+    <section class="section" aria-labelledby="primary-background-title">
+      <div class="container">
+        <h2 id="primary-background-title">Основной фон</h2>
+        <div class="preview-list">
+          <div><p>Full / small</p><BrandMark variant="full" size="small" /></div>
+          <div><p>Full / medium</p><BrandMark variant="full" size="medium" /></div>
+          <div><p>Full / large</p><BrandMark variant="full" size="large" /></div>
+          <div><p>Wordmark / small</p><BrandMark variant="wordmark" size="small" /></div>
+          <div><p>Wordmark / medium</p><BrandMark variant="wordmark" size="medium" /></div>
+          <div><p>Symbol</p><BrandMark variant="symbol" size="medium" /></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="raised-surface-title">
+      <div class="container preview-surface">
+        <h2 id="raised-surface-title">Raised surface</h2>
+        <div class="preview-list compact">
+          <div><p>Full / medium</p><BrandMark variant="full" size="medium" /></div>
+          <div><p>Wordmark / medium</p><BrandMark variant="wordmark" size="medium" /></div>
+          <div><p>Symbol</p><BrandMark variant="symbol" size="medium" /></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="mobile-composition-title">
+      <div class="container mobile-preview">
+        <h2 id="mobile-composition-title">Mobile composition</h2>
+        <BrandMark variant="full" size="medium" orientation="vertical" />
+      </div>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .preview-header { padding-block: var(--section-space-small); }
+  .preview-header h1 { font-size: clamp(3rem, 7vw, 6rem); }
+  .preview-list { display: grid; gap: 1px; margin-top: 3rem; border: 1px solid var(--color-line); background: var(--color-line); }
+  .preview-list > div { min-width: 0; padding: clamp(1.5rem, 4vw, 3rem); background: var(--color-bg); }
+  .preview-list p { margin-bottom: 2rem; color: var(--color-text-subtle); font-size: var(--font-size-meta); text-transform: uppercase; }
+  .preview-surface { padding: clamp(1.5rem, 5vw, 4rem); border: 1px solid var(--color-line); border-radius: var(--radius-card); background: var(--color-surface-raised); }
+  .preview-surface .preview-list > div { background: var(--color-surface-raised); }
+  .mobile-preview { max-width: 24rem; margin-inline: auto; }
+  @media (min-width: 48rem) { .preview-list { grid-template-columns: repeat(2, minmax(0, 1fr)); } .preview-list.compact { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+</style>
