@@ -29,19 +29,6 @@ import BrandMark from './BrandMark.astro';
     border-top-color: transparent;
   }
 
-  .origin::before {
-    position: absolute;
-    z-index: -1;
-    top: -10%;
-    right: -8%;
-    width: min(32rem, 55vw);
-    aspect-ratio: 1;
-    border-radius: 50%;
-    background: radial-gradient(circle, var(--color-glow-warm-soft), transparent 72%);
-    content: '';
-    pointer-events: none;
-  }
-
   .origin-rule {
     height: 1px;
     margin-bottom: clamp(4rem, 10vw, 8rem);
@@ -94,12 +81,12 @@ import BrandMark from './BrandMark.astro';
   }
 
   .origin-lead {
-    max-width: 38rem;
+    max-width: 36rem;
     color: var(--color-text);
     font-family: var(--font-display);
-    font-size: clamp(1.65rem, 3vw, 2.85rem);
-    line-height: 1.22;
-    letter-spacing: -0.02em;
+    font-size: clamp(1.35rem, 2.2vw, 2.1rem);
+    line-height: 1.28;
+    letter-spacing: -0.015em;
   }
 
   .origin-text {

@@ -147,15 +147,19 @@ function initHeroSequence(): void {
   const baseDelay = ctx.mobile ? 40 : 60;
   const lineStagger = ctx.mobile ? 55 : 90;
 
+  const titleLines = ctx.mobile ? ['1', '2', '3a', '4'] : ['1', '2', '3'];
+
   const sequence: Array<{ selector: string; delay: number; isLine?: boolean }> = [
     { selector: '[data-hero-item="eyebrow"]', delay: 0 },
-    { selector: '[data-hero-line="1"]', delay: baseDelay, isLine: true },
-    { selector: '[data-hero-line="2"]', delay: baseDelay + lineStagger, isLine: true },
-    { selector: '[data-hero-line="3"]', delay: baseDelay + lineStagger * 2, isLine: true },
-    { selector: '[data-hero-item="lead"]', delay: baseDelay + lineStagger * 3 + 40 },
-    { selector: '[data-hero-item="actions"]', delay: baseDelay + lineStagger * 3 + 120 },
-    { selector: '[data-hero-item="brand"]', delay: baseDelay + lineStagger * 3 + 200 },
-    { selector: '.hero-visual-wrap', delay: baseDelay + lineStagger * 2 + 80 },
+    ...titleLines.map((line, index) => ({
+      selector: `[data-hero-line="${line}"]`,
+      delay: baseDelay + lineStagger * index,
+      isLine: true,
+    })),
+    { selector: '[data-hero-item="lead"]', delay: baseDelay + lineStagger * titleLines.length + 40 },
+    { selector: '[data-hero-item="actions"]', delay: baseDelay + lineStagger * titleLines.length + 120 },
+    { selector: '[data-hero-item="origin"]', delay: baseDelay + lineStagger * titleLines.length + 200 },
+    { selector: '.hero-visual-wrap', delay: baseDelay + lineStagger * titleLines.length + 280 },
   ];
 
   document.documentElement.classList.add('hero-sequenced');
@@ -172,16 +176,6 @@ function initHeroSequence(): void {
       }
     }, delay);
   });
-
-  const fullBrand = hero.querySelector('.brand-mark--motion-full');
-  if (fullBrand) {
-    window.setTimeout(() => {
-      fullBrand.classList.add('is-visible');
-      fullBrand.querySelectorAll('[data-brand-part]').forEach((part) => {
-        part.classList.add('is-visible');
-      });
-    }, baseDelay + lineStagger * 3 + 200);
-  }
 }
 
 function initBrandMarkParts(): void {
@@ -202,32 +196,32 @@ function initBrandMarkParts(): void {
   });
 }
 
-function initPointerLight(): void {
-  if (!ctx.desktopInteractive) return;
+function initHeroScene(): void {
+  const scene = document.querySelector<HTMLElement>('[data-hero-scene]');
+  if (!scene) return;
 
-  const visual = document.querySelector<HTMLElement>('.hero-visual[data-pointer-light]');
-  if (!visual) return;
+  scene.style.setProperty('--scene-x', '0');
+  scene.style.setProperty('--scene-y', '0');
 
-  const overlay = visual.querySelector<HTMLElement>('.pointer-light');
-  if (!overlay) return;
-
-  visual.classList.add('has-pointer-light');
-
-  let targetX = 88;
-  let targetY = 8;
-  let currentX = targetX;
-  let currentY = targetY;
+  let visible = true;
+  let targetX = 0;
+  let targetY = 0;
+  let currentX = 0;
+  let currentY = 0;
   let rafId = 0;
-  let inside = false;
+  let pointerInside = false;
 
   const update = (): void => {
-    currentX += (targetX - currentX) * 0.12;
-    currentY += (targetY - currentY) * 0.12;
-    visual.style.setProperty('--pointer-x', `${currentX}%`);
-    visual.style.setProperty('--pointer-y', `${currentY}%`);
+    currentX += (targetX - currentX) * 0.1;
+    currentY += (targetY - currentY) * 0.1;
+    scene.style.setProperty('--scene-x', String(currentX));
+    scene.style.setProperty('--scene-y', String(currentY));
     rafId = 0;
 
-    if (inside || Math.abs(targetX - currentX) > 0.05 || Math.abs(targetY - currentY) > 0.05) {
+    const settling =
+      Math.abs(targetX - currentX) > 0.001 || Math.abs(targetY - currentY) > 0.001;
+
+    if (settling || pointerInside) {
       rafId = requestAnimationFrame(update);
     }
   };
@@ -236,60 +230,50 @@ function initPointerLight(): void {
     if (!rafId) rafId = requestAnimationFrame(update);
   };
 
-  visual.addEventListener(
-    'pointermove',
-    (event) => {
-      const rect = visual.getBoundingClientRect();
-      const nx = ((event.clientX - rect.left) / rect.width) * 100;
-      const ny = ((event.clientY - rect.top) / rect.height) * 100;
-      targetX = 88 + (nx - 88) * 0.07;
-      targetY = 8 + (ny - 8) * 0.07;
-      schedule();
+  const visibilityObserver = new IntersectionObserver(
+    (entries) => {
+      visible = entries.some((entry) => entry.isIntersecting);
+      scene.classList.toggle('is-paused', !visible);
+
+      if (!visible) {
+        targetX = 0;
+        targetY = 0;
+        schedule();
+      }
     },
-    { passive: true },
+    { threshold: 0.05, rootMargin: '0px' },
   );
 
-  visual.addEventListener('pointerenter', () => {
-    inside = true;
-    schedule();
-  });
+  visibilityObserver.observe(scene);
 
-  visual.addEventListener('pointerleave', () => {
-    inside = false;
-    targetX = 88;
-    targetY = 8;
-    schedule();
-  });
-}
+  if (ctx.desktopInteractive) {
+    scene.addEventListener(
+      'pointermove',
+      (event) => {
+        if (!visible) return;
 
-function initTiltElements(): void {
-  if (!ctx.desktopInteractive) return;
+        const rect = scene.getBoundingClientRect();
+        const px = (event.clientX - rect.left) / rect.width - 0.5;
+        const py = (event.clientY - rect.top) / rect.height - 0.5;
+        targetX = px * 2;
+        targetY = py * 2;
+        schedule();
+      },
+      { passive: true },
+    );
 
-  document.querySelectorAll<HTMLElement>('[data-tilt]').forEach((el) => {
-    const maxRotateX = 1;
-    const maxRotateY = 1.5;
-    const maxTranslate = 3;
-
-    el.addEventListener('pointermove', (event) => {
-      const rect = el.getBoundingClientRect();
-      const px = (event.clientX - rect.left) / rect.width - 0.5;
-      const py = (event.clientY - rect.top) / rect.height - 0.5;
-
-      el.classList.add('is-tilting');
-      el.style.setProperty('--tilt-x', `${-py * maxRotateX}deg`);
-      el.style.setProperty('--tilt-y', `${px * maxRotateY}deg`);
-      el.style.setProperty('--tilt-tx', `${px * maxTranslate}px`);
-      el.style.setProperty('--tilt-ty', `${py * maxTranslate}px`);
+    scene.addEventListener('pointerenter', () => {
+      pointerInside = true;
+      schedule();
     });
 
-    el.addEventListener('pointerleave', () => {
-      el.classList.remove('is-tilting');
-      el.style.setProperty('--tilt-x', '0deg');
-      el.style.setProperty('--tilt-y', '0deg');
-      el.style.setProperty('--tilt-tx', '0px');
-      el.style.setProperty('--tilt-ty', '0px');
+    scene.addEventListener('pointerleave', () => {
+      pointerInside = false;
+      targetX = 0;
+      targetY = 0;
+      schedule();
     });
-  });
+  }
 }
 
 function initMagneticElements(): void {
@@ -405,8 +389,7 @@ export function initMotion(): void {
     initStaggerGroups();
     initHeroSequence();
     initRevealAnimations();
-    initPointerLight();
-    initTiltElements();
+    initHeroScene();
     initMagneticElements();
     initParallaxElements();
   } catch {

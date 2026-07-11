@@ -1,47 +1,47 @@
 :root {
   /* Color system */
-  --color-bg: #171918;
-  --color-bg-deep: #121413;
-  --color-surface: #202321;
-  --color-surface-raised: #282b29;
-  --color-surface-soft: #303330;
-  --color-surface-mist: #2a2d2b;
-  --color-surface-depth: #1e2120;
+  --color-bg: #151616;
+  --color-bg-deep: #101111;
+  --color-surface: #1b1d1c;
+  --color-surface-raised: #222423;
+  --color-surface-soft: #282a29;
+  --color-surface-mist: #242625;
+  --color-surface-depth: #181a19;
 
-  --color-glow-warm: rgba(209, 194, 163, 0.12);
-  --color-glow-warm-soft: rgba(180, 154, 105, 0.08);
+  --color-glow-warm: rgba(235, 238, 235, 0.06);
+  --color-glow-warm-soft: rgba(235, 238, 235, 0.04);
 
-  --color-text: #eeeae1;
-  --color-text-muted: #aaa79f;
-  --color-text-subtle: #7e817c;
+  --color-text: #ecece8;
+  --color-text-muted: #a9aaa5;
+  --color-text-subtle: #777a76;
 
-  --color-line: rgba(238, 234, 225, 0.12);
-  --color-line-strong: rgba(238, 234, 225, 0.22);
+  --color-line: rgba(236, 236, 232, 0.1);
+  --color-line-strong: rgba(236, 236, 232, 0.18);
 
-  --color-accent: #b49a69;
-  --color-accent-soft: #d1c2a3;
-  --color-on-accent: #171918;
+  --color-accent: #a89778;
+  --color-accent-soft: #c2b69f;
+  --color-on-accent: #151616;
 
   /* Typography */
-  --font-display: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
-  --font-body: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-display: "Noto Serif Display", Georgia, serif;
+  --font-body: "Manrope", system-ui, sans-serif;
   --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
 
-  --font-size-display: clamp(3.25rem, 8.5vw, 8.75rem);
-  --font-size-h2: clamp(2.25rem, 5vw, 4.75rem);
-  --font-size-h3: clamp(1.4rem, 2.2vw, 2rem);
-  --font-size-body: clamp(1rem, 0.25vw + 0.95rem, 1.125rem);
-  --font-size-body-large: clamp(1.15rem, 1vw + 0.95rem, 1.6rem);
-  --font-size-ui: 0.875rem;
-  --font-size-caption: 0.8125rem;
-  --font-size-meta: clamp(0.8125rem, 0.15vw + 0.78rem, 0.875rem);
+  --font-size-display: clamp(2.8rem, 5vw, 5rem);
+  --font-size-h2: clamp(1.9rem, 3.3vw, 3.25rem);
+  --font-size-h3: clamp(1.2rem, 1.5vw, 1.55rem);
+  --font-size-body: clamp(0.9375rem, 0.2vw + 0.9rem, 1.0625rem);
+  --font-size-body-large: clamp(1rem, 0.45vw + 0.95rem, 1.25rem);
+  --font-size-ui: 0.8125rem;
+  --font-size-caption: 0.625rem;
+  --font-size-meta: clamp(0.6875rem, 0.12vw + 0.66rem, 0.75rem);
 
-  --line-height-display: 0.92;
-  --line-height-heading: 1.02;
-  --line-height-body: 1.65;
+  --line-height-display: 0.98;
+  --line-height-heading: 1.06;
+  --line-height-body: 1.6;
   --line-height-ui: 1.35;
-  --letter-spacing-display: -0.045em;
-  --letter-spacing-heading: -0.035em;
+  --letter-spacing-display: -0.03em;
+  --letter-spacing-heading: -0.025em;
   --letter-spacing-ui: 0.08em;
 
   /* Layout and rhythm */
@@ -49,15 +49,15 @@
   --text-width: 68ch;
   --content-width: 44rem;
   --page-gutter: clamp(1rem, 4vw, 3.5rem);
-  --section-space: clamp(5rem, 11vw, 10rem);
-  --section-space-small: clamp(3rem, 6vw, 6rem);
-  --grid-gap: clamp(2rem, 5vw, 5rem);
-  --header-height: clamp(5rem, 6vw, 6rem);
+  --section-space: clamp(4rem, 7vw, 6.5rem);
+  --section-space-small: clamp(2.5rem, 5vw, 4.5rem);
+  --grid-gap: clamp(1.5rem, 4vw, 3.5rem);
+  --header-height: clamp(4.5rem, 5vw, 5.25rem);
 
   /* Shape */
-  --radius-card: 1.125rem;
-  --radius-surface: 0.875rem;
-  --radius-button: 0.625rem;
+  --radius-card: 0.75rem;
+  --radius-surface: 0.625rem;
+  --radius-button: 0.45rem;
   --radius-pill: 999px;
 
   /* Motion */
@@ -76,9 +76,9 @@
   --duration-base: var(--duration-medium);
 
   /* Controls */
-  --button-height: 3.125rem;
-  --button-padding-inline: 1.25rem;
-  --button-padding-block: 0.75rem;
+  --button-height: 2.5rem;
+  --button-padding-inline: 0.95rem;
+  --button-padding-block: 0.55rem;
   --focus-ring-width: 2px;
   --focus-ring-offset: 4px;
 

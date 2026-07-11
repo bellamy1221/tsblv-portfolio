@@ -42,21 +42,15 @@ const { title, shortTitle, category, year, summary, cover, coverAlt, tone } = pr
   }
 
   .project-card[data-tone='dark'] {
-    background:
-      radial-gradient(120% 80% at 100% 0%, rgba(48, 51, 48, 0.18), transparent 55%),
-      var(--color-surface-depth);
+    background: var(--color-surface-depth);
   }
 
   .project-card[data-tone='light'] {
-    background:
-      linear-gradient(180deg, rgba(48, 51, 48, 0.35), transparent 45%),
-      var(--color-surface-soft);
+    background: var(--color-surface-soft);
   }
 
   .project-card[data-tone='warm'] {
-    background:
-      radial-gradient(90% 70% at 0% 0%, rgba(180, 154, 105, 0.1), transparent 60%),
-      linear-gradient(155deg, rgba(62, 53, 40, 0.55), rgba(30, 29, 26, 0.92));
+    background: linear-gradient(155deg, rgba(42, 40, 36, 0.72), rgba(27, 29, 28, 0.92));
   }
 
   .project-card[data-tone='neutral'] {
@@ -92,14 +86,14 @@ const { title, shortTitle, category, year, summary, cover, coverAlt, tone } = pr
     display: flex;
     flex: 1;
     flex-direction: column;
-    padding: clamp(1.25rem, 2.5vw, 2rem);
+    padding: clamp(1rem, 2vw, 1.5rem);
   }
 
   .card-title {
     overflow-wrap: anywhere;
-    margin: 0 0 0.75rem;
-    font-size: var(--font-size-h3);
-    line-height: 1.12;
+    margin: 0 0 0.6rem;
+    font-size: clamp(1.25rem, 2vw, 1.75rem);
+    line-height: 1.1;
   }
 
   .project-meta {
@@ -108,9 +102,9 @@ const { title, shortTitle, category, year, summary, cover, coverAlt, tone } = pr
     align-items: baseline;
     justify-content: space-between;
     gap: 0.35rem 1rem;
-    margin-bottom: 0.85rem;
+    margin-bottom: 0.65rem;
     color: var(--color-text-subtle);
-    font-size: var(--font-size-meta);
+    font-size: clamp(0.6875rem, 0.12vw + 0.66rem, 0.75rem);
   }
 
   .project-category {
@@ -122,14 +116,15 @@ const { title, shortTitle, category, year, summary, cover, coverAlt, tone } = pr
     flex: 1;
     margin: 0;
     color: var(--color-text-muted);
-    line-height: 1.55;
+    font-size: min(var(--font-size-body), 1rem);
+    line-height: 1.5;
   }
 
   .project-cta {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    margin-top: 1.5rem;
+    margin-top: 1.15rem;
     color: var(--color-text);
     font-size: var(--font-size-ui);
   }

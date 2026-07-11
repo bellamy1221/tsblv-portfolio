@@ -1,0 +1,214 @@
+---
+const portraitAlt = 'Атмосферный портрет на фоне гор Северной Осетии';
+---
+
+<!--
+  Replace placeholder layers in public/images/hero/ with final assets:
+  — mountains.webp  (wide mountain backdrop)
+  — tower.webp      (stone watchtower, transparent PNG)
+  — portrait.webp   (portrait silhouette, transparent PNG)
+  — noise.webp      (optional film grain texture)
+-->
+
+<figure class="hero-scene" data-hero-scene>
+  <div class="hero-scene__light" aria-hidden="true">
+    <div class="hero-scene__light-inner"></div>
+  </div>
+
+  <div class="hero-scene__layer hero-scene__layer--mountains" data-scene-layer="mountains">
+    <div class="hero-scene__layer-motion">
+      <img src="/images/hero/mountains.webp" alt="" width="1920" height="1080" loading="eager" decoding="async" />
+    </div>
+  </div>
+
+  <div class="hero-scene__layer hero-scene__layer--tower" data-scene-layer="tower">
+    <img src="/images/hero/tower.webp" alt="" width="480" height="960" loading="eager" decoding="async" />
+  </div>
+
+  <div class="hero-scene__layer hero-scene__layer--portrait" data-scene-layer="portrait">
+    <div class="hero-scene__layer-motion">
+      <img
+        src="/images/hero/portrait.webp"
+        alt={portraitAlt}
+        width="900"
+        height="1200"
+        loading="eager"
+        decoding="async"
+      />
+    </div>
+  </div>
+
+  <div class="hero-scene__vignette" aria-hidden="true"></div>
+  <div class="hero-scene__grain" aria-hidden="true"></div>
+
+  <figcaption class="hero-scene__caption">NORTH OSSETIA · WORLDWIDE</figcaption>
+</figure>
+
+<style>
+  .hero-scene {
+    position: relative;
+    width: 100%;
+    min-height: clamp(34rem, 58vw, 46rem);
+    overflow: hidden;
+    isolation: isolate;
+    border: 0;
+    border-radius: 0;
+    margin: 0;
+    background: transparent;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 7%, black 84%, transparent 100%);
+    mask-image: linear-gradient(to bottom, transparent 0%, black 7%, black 84%, transparent 100%);
+  }
+
+  .hero-scene__light {
+    position: absolute;
+    z-index: 4;
+    inset: -12%;
+    pointer-events: none;
+    transform: translate3d(calc(var(--scene-x, 0) * 40px), calc(var(--scene-y, 0) * 40px), 0);
+  }
+
+  .hero-scene__light-inner {
+    width: 100%;
+    height: 100%;
+    background:
+      radial-gradient(
+        62% 52% at calc(82% + var(--scene-x, 0) * 4%) calc(4% + var(--scene-y, 0) * 4%),
+        rgba(242, 239, 228, 0.22) 0%,
+        rgba(196, 192, 177, 0.08) 38%,
+        transparent 70%
+      ),
+      linear-gradient(
+        158deg,
+        rgba(243, 241, 231, 0.09) 0%,
+        rgba(210, 206, 193, 0.025) 47%,
+        transparent 72%
+      );
+  }
+
+  .hero-scene__layer {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .hero-scene__layer-motion {
+    width: 100%;
+    height: 100%;
+  }
+
+  .hero-scene__layer--mountains {
+    z-index: 1;
+    transform: translate3d(calc(var(--scene-x, 0) * 3px), calc(var(--scene-y, 0) * 3px), 0);
+  }
+
+  .hero-scene__layer--mountains img {
+    width: 115%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 58% 50%;
+    opacity: 0.56;
+    filter: saturate(0.55) contrast(1.05);
+  }
+
+  .hero-scene__layer--tower {
+    z-index: 2;
+    transform: translate3d(calc(var(--scene-x, 0) * 5px), calc(var(--scene-y, 0) * 5px), 0);
+  }
+
+  .hero-scene__layer--tower::after {
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+    background: radial-gradient(42% 38% at 78% 18%, rgba(242, 239, 228, 0.12), transparent 68%);
+    opacity: 0.03;
+    content: '';
+    pointer-events: none;
+  }
+
+  .hero-scene__layer--tower img {
+    position: absolute;
+    right: 1%;
+    bottom: 5%;
+    width: clamp(7rem, 14vw, 12rem);
+    height: auto;
+    opacity: 0.72;
+    filter: saturate(0.55) brightness(0.72);
+  }
+
+  .hero-scene__layer--portrait {
+    z-index: 3;
+    transform: translate3d(calc(var(--scene-x, 0) * 7px), calc(var(--scene-y, 0) * 7px), 0);
+  }
+
+  .hero-scene__layer--portrait img {
+    position: absolute;
+    right: 8%;
+    bottom: -2%;
+    width: min(78%, 42rem);
+    height: 96%;
+    object-fit: contain;
+    object-position: right bottom;
+    filter: saturate(0.6) contrast(1.04);
+  }
+
+  .hero-scene__vignette {
+    position: absolute;
+    z-index: 5;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(90deg, var(--color-bg) 0%, rgba(21, 22, 22, 0.75) 9%, transparent 36%),
+      linear-gradient(180deg, transparent 58%, var(--color-bg) 100%),
+      radial-gradient(ellipse at center, transparent 45%, rgba(10, 11, 11, 0.35) 100%);
+  }
+
+  .hero-scene__grain {
+    position: absolute;
+    z-index: 6;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.02;
+    background-image: url('/images/hero/noise.webp');
+    background-repeat: repeat;
+    background-size: 240px 240px;
+    mix-blend-mode: soft-light;
+  }
+
+  .hero-scene__caption {
+    position: absolute;
+    z-index: 7;
+    right: clamp(0.5rem, 2vw, 1.25rem);
+    bottom: clamp(0.75rem, 2vw, 1.5rem);
+    margin: 0;
+    color: var(--color-text-subtle);
+    font-family: var(--font-body);
+    font-size: 0.625rem;
+    font-weight: 500;
+    letter-spacing: 0.24em;
+    line-height: 1.4;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 47.99rem) {
+    .hero-scene {
+      min-height: 28rem;
+    }
+
+    .hero-scene__layer--tower img {
+      width: clamp(5rem, 18vw, 8rem);
+    }
+
+    .hero-scene__layer--portrait img {
+      right: 4%;
+      width: min(82%, 22rem);
+    }
+
+    .hero-scene__grain {
+      display: none;
+    }
+
+    .hero-scene__caption {
+      display: none;
+    }
+  }
+</style>
