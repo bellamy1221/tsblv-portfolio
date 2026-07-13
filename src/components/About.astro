@@ -1,9 +1,167 @@
 <section class="section about" id="about" aria-labelledby="about-title">
-  <div class="site-container about-layout">
-    <div class="about-heading" data-reveal="mask"><p class="section-label">Обо мне</p><h2 id="about-title">Вы работаете напрямую со мной</h2><span class="availability"><i></i>Открыт к новым задачам</span></div>
-    <div class="about-copy" data-reveal="soft"><p>Без менеджеров и передачи задачи между разными людьми. Я сам обсуждаю проект, предлагаю решения, делаю сайт и остаюсь на связи после запуска.</p><div class="about-points"><span>Прямое общение</span><span>Понятные этапы</span><span>Один человек отвечает за результат</span><span>Поддержка после запуска</span></div></div>
+  <div class="site-container content-grid about-layout">
+    <div class="about-heading" data-motion="clip">
+      <p class="section-label">Обо мне</p>
+      <h2 id="about-title">Вы работаете напрямую со мной</h2>
+      <span class="availability"><i></i>Открыт к новым задачам</span>
+    </div>
+
+    <div class="about-copy" data-motion="fade-blur">
+      <p>Без менеджеров и передачи задачи между разными людьми. Я сам обсуждаю проект, предлагаю решения, делаю сайт и остаюсь на связи после запуска.</p>
+    </div>
+
+    <div class="about-rail" data-sequence>
+      <div class="rail-line" data-motion="line-draw"></div>
+      <div class="rail-grid">
+        <div class="rail-item" data-pointer-light data-motion="fade-blur"><span>01</span><strong>Прямое общение</strong></div>
+        <div class="rail-item" data-pointer-light data-motion="fade-blur" data-motion-delay="70"><span>02</span><strong>Понятные этапы</strong></div>
+        <div class="rail-item" data-pointer-light data-motion="fade-blur" data-motion-delay="140"><span>03</span><strong>Один человек отвечает за результат</strong></div>
+        <div class="rail-item" data-pointer-light data-motion="fade-blur" data-motion-delay="210"><span>04</span><strong>Поддержка после запуска</strong></div>
+      </div>
+    </div>
   </div>
 </section>
+
 <style>
-  .about-layout { display:grid; gap:2.5rem; }.about-heading h2 { max-width:39rem; }.availability { display:inline-flex; align-items:center; gap:.5rem; margin-top:1.5rem; padding:.55rem .75rem; border:1px solid var(--line); border-radius:999px; background:color-mix(in srgb,var(--cyan) 27%,transparent); color:var(--muted); font-size:.7rem; font-weight:650; }.availability i { width:.5rem; height:.5rem; border-radius:50%; background:#6da87d; box-shadow:0 0 0 .2rem rgba(109,168,125,.16); }.about-copy>p { max-width:50rem; margin:0; font-size:clamp(1.45rem,2.7vw,2.4rem); font-weight:520; line-height:1.25; letter-spacing:-.05em; }.about-points { display:flex; flex-wrap:wrap; gap:.6rem; margin-top:2rem; }.about-points span { padding:.65rem .85rem; border:1px solid var(--line); border-radius:999px; background:color-mix(in srgb,var(--glass) 52%,transparent); color:var(--muted); font-size:.75rem; }@media(min-width:64rem) { .about-layout { grid-template-columns:.8fr 1.2fr; }.about-copy { padding-top:3rem; } }
+  .about-layout {
+    align-items: start;
+    row-gap: clamp(2.5rem, 5vw, 4.5rem);
+  }
+
+  .about-heading {
+    grid-column: 1 / span 5;
+  }
+
+  .about-heading h2 {
+    max-width: 39rem;
+  }
+
+  .availability {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+    padding: 0.55rem 0.75rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--surface-glass);
+    color: var(--text-muted);
+    font-size: 0.7rem;
+    font-weight: 650;
+    backdrop-filter: blur(10px);
+  }
+
+  .availability i {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: var(--flag-yellow);
+    box-shadow: 0 0 0 0 rgba(240, 201, 40, 0.28);
+    animation: availability-pulse 3.5s ease-out infinite;
+  }
+
+  .about-copy {
+    grid-column: 7 / -1;
+    padding-top: 3.3rem;
+  }
+
+  .about-copy p {
+    max-width: 51rem;
+    margin: 0;
+    font-size: clamp(1.45rem, 2.7vw, 2.4rem);
+    font-weight: 520;
+    line-height: 1.25;
+    letter-spacing: -0.05em;
+  }
+
+  .about-rail {
+    position: relative;
+    grid-column: 1 / -1;
+    padding-top: 1.4rem;
+  }
+
+  .rail-line {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 1px;
+    background: linear-gradient(90deg, var(--flag-red), var(--ice) 50%, var(--flag-yellow));
+  }
+
+  .rail-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .rail-item {
+    --pointer-x: 50%;
+    --pointer-y: 50%;
+    position: relative;
+    display: grid;
+    min-height: 6rem;
+    align-content: center;
+    gap: 0.55rem;
+    padding: 1rem clamp(0.8rem, 1.5vw, 1.3rem);
+    border-right: 1px solid var(--line);
+    background: radial-gradient(circle 7rem at var(--pointer-x) var(--pointer-y), rgba(255, 255, 255, 0.56), transparent 72%);
+    transition: background-color 340ms var(--ease-out), transform 340ms var(--ease-out);
+  }
+
+  html[data-theme='dark'] .rail-item {
+    background: radial-gradient(circle 7rem at var(--pointer-x) var(--pointer-y), rgba(255, 255, 255, 0.07), transparent 72%);
+  }
+
+  .rail-item:first-child {
+    border-left: 1px solid var(--line);
+  }
+
+  .rail-item:hover {
+    background-color: var(--surface-glass);
+    transform: translateY(-2px);
+  }
+
+  .rail-item span {
+    color: var(--flag-red);
+    font-size: 0.6rem;
+    font-weight: 760;
+  }
+
+  .rail-item:nth-child(even) span {
+    color: color-mix(in srgb, var(--flag-yellow) 78%, var(--text));
+  }
+
+  .rail-item strong {
+    font-size: 0.8rem;
+    font-weight: 680;
+  }
+
+  @keyframes availability-pulse {
+    50% { box-shadow: 0 0 0 0.35rem rgba(240, 201, 40, 0); }
+  }
+
+  @media (max-width: 63.99rem) {
+    .about-heading,
+    .about-copy {
+      grid-column: 1 / -1;
+    }
+
+    .about-copy {
+      padding-top: 0;
+    }
+  }
+
+  @media (max-width: 47.99rem) {
+    .rail-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .rail-item,
+    .rail-item:first-child {
+      min-height: 4.75rem;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      border-left: 1px solid var(--line);
+    }
+  }
 </style>

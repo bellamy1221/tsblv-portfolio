@@ -4,11 +4,217 @@ import { processSteps } from '../data/home';
 
 <section class="section process" id="process" aria-labelledby="process-title">
   <div class="site-container">
-    <div class="process-heading" data-reveal="mask"><div><p class="section-label">Процесс</p><h2 id="process-title">Как проходит работа</h2></div><p>Четыре понятных этапа — без длинных цепочек согласований.</p></div>
-    <ol class="process-route">{processSteps.map((step) => <li data-reveal="soft"><span>{step.id}</span><div class="route-dot"></div><h3>{step.title}</h3><p>{step.description}</p></li>)}</ol>
+    <div class="content-grid process-heading" data-motion="clip">
+      <div>
+        <p class="section-label">Процесс</p>
+        <h2 id="process-title">Как проходит работа</h2>
+      </div>
+      <p>Четыре понятных этапа — без длинных цепочек согласований.</p>
+    </div>
+
+    <div class="process-route" data-sequence>
+      <svg class="route-svg route-svg--desktop" viewBox="0 0 1000 120" preserveAspectRatio="none" aria-hidden="true">
+        <path class="route-base" d="M24 76 C170 22 246 108 355 64 S552 26 658 68 S826 109 976 50" pathLength="1"></path>
+        <path class="route-progress" d="M24 76 C170 22 246 108 355 64 S552 26 658 68 S826 109 976 50" pathLength="1"></path>
+        <path class="route-highlight" d="M24 76 C170 22 246 108 355 64 S552 26 658 68 S826 109 976 50" pathLength="1"></path>
+        <g class="route-nodes">
+          <circle cx="24" cy="76" r="7"></circle><circle cx="355" cy="64" r="7"></circle><circle cx="658" cy="68" r="7"></circle><circle cx="976" cy="50" r="7"></circle>
+        </g>
+      </svg>
+
+      <svg class="route-svg route-svg--mobile" viewBox="0 0 80 640" preserveAspectRatio="none" aria-hidden="true">
+        <path class="route-base" d="M38 24 C12 92 67 136 38 184 S13 296 42 344 S67 456 37 504" pathLength="1"></path>
+        <path class="route-progress" d="M38 24 C12 92 67 136 38 184 S13 296 42 344 S67 456 37 504" pathLength="1"></path>
+        <path class="route-highlight" d="M38 24 C12 92 67 136 38 184 S13 296 42 344 S67 456 37 504" pathLength="1"></path>
+        <g class="route-nodes">
+          <circle cx="38" cy="24" r="6"></circle><circle cx="38" cy="184" r="6"></circle><circle cx="42" cy="344" r="6"></circle><circle cx="37" cy="504" r="6"></circle>
+        </g>
+      </svg>
+
+      <ol>
+        {processSteps.map((step, index) => (
+          <li data-motion="fade-blur" data-motion-delay={index * 80}>
+            <span>{step.id}</span>
+            <h3>{step.title}</h3>
+            <p>{step.description}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
   </div>
 </section>
 
 <style>
-  .process { overflow:hidden; }.process::before { position:absolute; inset:0; background:linear-gradient(135deg,color-mix(in srgb,var(--paper-raised) 52%,transparent),color-mix(in srgb,var(--cyan) 20%,transparent)); content:''; pointer-events:none; }.process .site-container { position:relative; }.process-heading { display:flex; align-items:end; justify-content:space-between; gap:2rem; margin-bottom:clamp(2.5rem,4vw,3.5rem); }.process-heading>p { max-width:25rem; margin:0; color:var(--muted); line-height:1.6; }.process-route { position:relative; display:grid; gap:2rem; margin:0; padding:0; list-style:none; }.process-route::before { position:absolute; top:1.8rem; right:3%; left:3%; height:2px; background:linear-gradient(90deg,var(--blue),var(--cyan) 52%,var(--signal-yellow) 84%,var(--signal-red)); box-shadow:0 0 .75rem color-mix(in srgb,var(--cyan) 42%,transparent); content:''; }.process-route li { position:relative; }.process-route span { color:var(--violet); font-size:.62rem; font-weight:760; }.route-dot { width:1rem; height:1rem; margin:1rem 0 1.25rem; border:3px solid var(--paper); border-radius:50%; background:var(--violet); box-shadow:0 0 0 1px var(--violet),0 0 .8rem color-mix(in srgb,var(--cyan) 52%,transparent); }.process-route h3 { max-width:15rem; margin:0; font-size:clamp(1.15rem,2vw,1.55rem); font-weight:620; line-height:1.1; letter-spacing:-.04em; }.process-route p { max-width:17rem; margin:.75rem 0 0; color:var(--muted); font-size:.84rem; line-height:1.6; }@media(min-width:48rem) { .process-route { grid-template-columns:repeat(4,1fr); } }@media(max-width:47.99rem) { .process-heading { align-items:flex-start; flex-direction:column; }.process-route { gap:1rem; padding-left:2rem; }.process-route::before { top:1rem; bottom:1rem; left:.45rem; width:2px; height:auto; }.route-dot { position:absolute; top:.35rem; left:-2rem; margin:0; }.process-route p { max-width:28rem; } }
+  .process-heading {
+    align-items: end;
+    margin-bottom: clamp(2.5rem, 4vw, 3.8rem);
+  }
+
+  .process-heading > div {
+    grid-column: 1 / span 7;
+  }
+
+  .process-heading > p {
+    grid-column: 9 / -1;
+    margin: 0;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  .process-route {
+    position: relative;
+    padding-top: 6.3rem;
+  }
+
+  .process-route ol {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: clamp(1rem, 2.3vw, 2.5rem);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .process-route li {
+    min-width: 0;
+  }
+
+  .process-route li > span {
+    color: var(--flag-red);
+    font-size: 0.62rem;
+    font-weight: 760;
+  }
+
+  .process-route h3 {
+    max-width: 17rem;
+    margin: 0.75rem 0 0;
+    font-size: clamp(1.15rem, 2vw, 1.55rem);
+    font-weight: 620;
+    line-height: 1.1;
+    letter-spacing: -0.04em;
+  }
+
+  .process-route li p {
+    max-width: 18rem;
+    margin: 0.75rem 0 0;
+    color: var(--text-muted);
+    font-size: 0.84rem;
+    line-height: 1.6;
+  }
+
+  .route-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 7.5rem;
+    overflow: visible;
+  }
+
+  .route-svg path {
+    fill: none;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .route-base {
+    stroke: var(--line-strong);
+    stroke-width: 1.2;
+  }
+
+  .route-progress {
+    stroke: var(--ice);
+    stroke-width: 1.7;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    transition: stroke-dashoffset 1100ms var(--ease-out);
+  }
+
+  .route-highlight {
+    stroke: var(--flag-yellow);
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-dasharray: 0.06 0.94;
+    stroke-dashoffset: 1;
+    opacity: 0;
+  }
+
+  .route-nodes circle {
+    fill: var(--page);
+    stroke: var(--line-strong);
+    stroke-width: 1.5;
+    vector-effect: non-scaling-stroke;
+    transform-box: fill-box;
+    transform-origin: center;
+    transform: scale(0.6);
+    transition: transform 420ms var(--ease-out), fill 420ms ease, stroke 420ms ease;
+  }
+
+  .process-route.is-sequence-visible .route-progress {
+    stroke-dashoffset: 0;
+  }
+
+  .process-route.is-sequence-visible .route-highlight {
+    opacity: 1;
+    animation: route-travel 1.6s 800ms var(--ease-out) both;
+  }
+
+  .process-route.is-sequence-visible .route-nodes circle {
+    fill: var(--surface-dark);
+    stroke: var(--flag-yellow);
+    transform: scale(1);
+  }
+
+  .process-route.is-sequence-visible .route-nodes circle:nth-child(2) { transition-delay: 160ms; }
+  .process-route.is-sequence-visible .route-nodes circle:nth-child(3) { transition-delay: 320ms; }
+  .process-route.is-sequence-visible .route-nodes circle:nth-child(4) { transition-delay: 480ms; stroke: var(--flag-red); }
+
+  .route-svg--mobile {
+    display: none;
+  }
+
+  @keyframes route-travel {
+    from { stroke-dashoffset: 1; }
+    to { stroke-dashoffset: 0; }
+  }
+
+  @media (max-width: 47.99rem) {
+    .process-heading > div,
+    .process-heading > p {
+      grid-column: 1 / -1;
+    }
+
+    .process-heading > p {
+      margin-top: 1.25rem;
+    }
+
+    .process-route {
+      min-height: 40rem;
+      padding: 0 0 0 4.5rem;
+    }
+
+    .process-route ol {
+      display: grid;
+      height: 40rem;
+      grid-template-columns: 1fr;
+      grid-template-rows: repeat(4, 1fr);
+      gap: 0;
+    }
+
+    .process-route li {
+      align-self: start;
+      padding-top: 0.15rem;
+    }
+
+    .route-svg--desktop {
+      display: none;
+    }
+
+    .route-svg--mobile {
+      display: block;
+      top: 0;
+      left: 0;
+      width: 3.5rem;
+      height: 40rem;
+    }
+  }
 </style>

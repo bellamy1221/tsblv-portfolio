@@ -4,19 +4,358 @@ import { services } from '../data/home';
 
 <section class="section services" id="services" aria-labelledby="services-title">
   <div class="site-container">
-    <div class="services-heading" data-reveal="mask"><p class="section-label">Услуги</p><h2 id="services-title">Что могу сделать</h2></div>
-    <div class="service-grid">
-      {services.map((service) => <a class="service-module" id={service.anchor} href="#contact" data-reveal="depth" data-service-card>
-        <div class:list={['service-diagram', `diagram-${service.visual}`]} aria-hidden="true"><span></span><i></i><b></b><em></em></div>
-        <div><p>{service.id}</p><h3>{service.title}</h3><span>{service.description}</span></div>
-        <strong>Обсудить задачу <span aria-hidden="true">→</span></strong>
-      </a>)}
+    <div class="content-grid services-heading" data-motion="clip">
+      <div>
+        <p class="section-label">Услуги</p>
+        <h2 id="services-title">Что могу сделать</h2>
+      </div>
+    </div>
+
+    <div class="service-grid" data-sequence>
+      {services.map((service, index) => (
+        <article
+          class="service-entry"
+          id={service.anchor}
+          data-motion="scale-depth"
+          data-motion-delay={index * 70}
+        >
+          <a class="service-card tech-frame" href="#contact" data-service-card data-pointer-light>
+            <div class:list={['service-diagram', `diagram-${service.visual}`]} aria-hidden="true">
+              <span></span><i></i><b></b><em></em>
+            </div>
+            <div class="service-copy">
+              <p>{service.id}</p>
+              <h3>{service.title}</h3>
+              <span>{service.description}</span>
+            </div>
+            <strong>Обсудить задачу <span aria-hidden="true">→</span></strong>
+          </a>
+        </article>
+      ))}
     </div>
   </div>
 </section>
 
 <style>
-  .services-heading { margin-bottom:clamp(2.3rem,4vw,3.5rem); }.service-grid { display:grid; gap:.75rem; }.service-module { position:relative; display:grid; min-height:16rem; grid-template-rows:1fr auto auto; overflow:hidden; padding:1.15rem; border:1px solid var(--line); border-radius:1.4rem; background:color-mix(in srgb,var(--glass) 68%,transparent); box-shadow:0 .75rem 2rem rgba(42,30,67,.08); color:var(--ink); text-decoration:none; transition:transform .3s cubic-bezier(.22,1,.36,1),box-shadow .3s ease,border-color .3s ease; }.service-module:hover,.service-module:focus-visible,.service-module.is-highlighted { z-index:1; border-color:var(--violet); box-shadow:var(--shadow-lg); transform:translateY(-.35rem); }.service-module>div:last-of-type p { margin:0 0 .55rem; color:var(--violet); font-size:.62rem; font-weight:750; }.service-module h3 { margin:0; font-size:clamp(1.35rem,2.2vw,2rem); font-weight:600; letter-spacing:-.05em; }.service-module>div:last-of-type>span { display:block; max-width:20rem; margin-top:.65rem; color:var(--muted); font-size:.82rem; line-height:1.55; }.service-module strong { display:inline-flex; align-items:center; gap:.4rem; margin-top:1.2rem; color:var(--violet); font-size:.72rem; }.service-module strong span { font-size:1rem; transition:transform .2s ease; }.service-module:hover strong span { transform:translateX(.2rem); }
-  .service-diagram { position:relative; min-height:7.4rem; overflow:hidden; background:radial-gradient(circle at 60% 50%,color-mix(in srgb,var(--blue) 14%,transparent),transparent 52%); }.service-diagram span,.service-diagram i,.service-diagram b,.service-diagram em { position:absolute; display:block; transition:transform .7s cubic-bezier(.22,1,.36,1),opacity .5s ease,filter .5s ease; }.diagram-site span { top:12%; left:6%; width:64%; height:54%; border:1px solid var(--violet); border-radius:.55rem; }.diagram-site i { top:25%; left:16%; width:32%; height:6%; background:var(--violet); }.diagram-site b { top:41%; left:16%; width:48%; height:3px; background:var(--line-strong); }.diagram-site em { top:58%; left:16%; width:19%; height:14%; border-radius:.35rem; background:var(--peach); }.diagram-crm span,.diagram-crm i,.diagram-crm b { width:2.9rem; aspect-ratio:1; border:1px solid color-mix(in srgb,var(--cyan) 60%,transparent); border-radius:50%; background:color-mix(in srgb,var(--cyan) 25%,transparent); }.diagram-crm span { top:18%; left:10%; }.diagram-crm i { right:12%; bottom:16%; background:color-mix(in srgb,var(--blue) 26%,transparent); }.diagram-crm b { top:8%; right:25%; width:1.8rem; background:color-mix(in srgb,var(--signal-yellow) 30%,transparent); }.diagram-crm em { top:42%; left:29%; width:42%; height:1px; background:var(--violet); transform:rotate(24deg); transform-origin:left; }.diagram-auto::before,.diagram-auto::after { position:absolute; border:1px solid color-mix(in srgb,var(--cyan) 55%,transparent); border-radius:.4rem; content:''; }.diagram-auto::before { top:14%; left:6%; width:22%; height:25%; }.diagram-auto::after { right:6%; bottom:13%; width:22%; height:25%; }.diagram-auto span,.diagram-auto i,.diagram-auto b { height:.8rem; border-radius:999px; background:var(--peach); box-shadow:0 0 1rem color-mix(in srgb,var(--signal-yellow) 30%,transparent); }.diagram-auto span { top:24%; left:10%; width:18%; }.diagram-auto i { top:47%; left:36%; width:28%; background:var(--violet); }.diagram-auto b { right:10%; bottom:24%; width:18%; background:var(--cyan); }.diagram-auto em { top:28%; left:27%; width:48%; height:38%; border-top:1px dashed var(--cyan); border-right:1px dashed var(--cyan); transform:skewY(-18deg); }.diagram-analytics span { right:8%; bottom:18%; left:8%; height:1px; background:var(--line-strong); }.diagram-analytics i,.diagram-analytics b,.diagram-analytics em { bottom:18%; width:13%; border-radius:.3rem .3rem 0 0; background:var(--cyan); }.diagram-analytics i { left:16%; height:28%; }.diagram-analytics b { left:43%; height:51%; background:var(--violet); }.diagram-analytics em { right:16%; height:72%; background:var(--peach); }.service-module:hover .service-diagram span { transform:translate(.3rem,-.25rem); }.service-module:hover .service-diagram i { transform:translate(-.25rem,.25rem); }.service-module:hover .service-diagram b { transform:translate(.2rem,-.35rem); }.service-module:hover .diagram-auto em { filter:drop-shadow(0 0 .4rem var(--cyan)); transform:skewY(-18deg) scaleX(1.08); }
-  @media(min-width:48rem) { .service-grid { grid-template-columns:repeat(2,1fr); } }.service-module.is-highlighted { animation:service-highlight 1.2s ease; }@keyframes service-highlight { 50% { box-shadow:0 0 0 .35rem color-mix(in srgb,var(--violet) 26%,transparent),var(--shadow-lg); } }@media(min-width:64rem) { .service-grid { grid-template-columns:repeat(4,1fr); }.service-module:nth-child(2) { transform:translateY(1rem); }.service-module:nth-child(2):hover { transform:translateY(.65rem); }.service-module:nth-child(4) { transform:translateY(.65rem); }.service-module:nth-child(4):hover { transform:translateY(.3rem); } }
+  .services-heading > div {
+    grid-column: 1 / span 8;
+  }
+
+  .services-heading {
+    margin-bottom: clamp(2.5rem, 4vw, 3.8rem);
+  }
+
+  .service-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: clamp(0.75rem, 1.3vw, 1.1rem);
+  }
+
+  .service-entry {
+    min-width: 0;
+  }
+
+  .service-card {
+    --pointer-x: 50%;
+    --pointer-y: 50%;
+    position: relative;
+    display: grid;
+    min-height: 18rem;
+    height: 100%;
+    grid-template-rows: 1fr auto auto;
+    padding: 1.2rem;
+    border: 1px solid var(--line);
+    border-radius: 1rem;
+    background:
+      radial-gradient(circle 10rem at var(--pointer-x) var(--pointer-y), rgba(255, 255, 255, 0.52), transparent 70%),
+      var(--surface-glass);
+    box-shadow: 0 0.75rem 2rem rgba(16, 18, 22, 0.07);
+    color: var(--text);
+    text-decoration: none;
+    backdrop-filter: blur(10px);
+    transition: transform 380ms var(--ease-out), box-shadow 380ms var(--ease-out), border-color 380ms var(--ease-out);
+  }
+
+  html[data-theme='dark'] .service-card {
+    background:
+      radial-gradient(circle 10rem at var(--pointer-x) var(--pointer-y), rgba(255, 255, 255, 0.08), transparent 70%),
+      var(--surface-glass);
+  }
+
+  .service-card:hover,
+  .service-card:focus-visible,
+  .service-entry.is-highlighted .service-card {
+    border-color: color-mix(in srgb, var(--flag-yellow) 66%, var(--line));
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-0.35rem);
+  }
+
+  .service-copy p {
+    margin: 0 0 0.55rem;
+    color: var(--flag-red);
+    font-size: 0.62rem;
+    font-weight: 750;
+  }
+
+  .service-copy h3 {
+    margin: 0;
+    font-size: clamp(1.35rem, 2.2vw, 2rem);
+    font-weight: 600;
+    letter-spacing: -0.05em;
+  }
+
+  .service-copy > span {
+    display: block;
+    max-width: 20rem;
+    margin-top: 0.65rem;
+    color: var(--text-muted);
+    font-size: 0.82rem;
+    line-height: 1.55;
+  }
+
+  .service-card > strong {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 1.2rem;
+    color: var(--text);
+    font-size: 0.72rem;
+  }
+
+  .service-card > strong span {
+    color: var(--flag-red);
+    font-size: 1rem;
+    transition: transform 320ms var(--ease-out);
+  }
+
+  .service-card:hover > strong span {
+    transform: translateX(0.25rem);
+  }
+
+  .service-diagram {
+    position: relative;
+    min-height: 8rem;
+    overflow: hidden;
+  }
+
+  .service-diagram span,
+  .service-diagram i,
+  .service-diagram b,
+  .service-diagram em {
+    position: absolute;
+    display: block;
+    font-style: normal;
+    transition: transform 620ms var(--ease-out), opacity 500ms ease;
+  }
+
+  .diagram-site span {
+    top: 10%;
+    left: 6%;
+    width: 70%;
+    height: 57%;
+    border: 1px solid var(--line-strong);
+    border-radius: 0.45rem;
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+
+  .diagram-site i {
+    top: 24%;
+    left: 16%;
+    width: 34%;
+    height: 0.38rem;
+    background: var(--flag-red);
+    transform: translateX(-0.8rem);
+    opacity: 0;
+  }
+
+  .diagram-site b {
+    top: 41%;
+    left: 16%;
+    width: 46%;
+    height: 2px;
+    background: var(--line-strong);
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+
+  .diagram-site em {
+    top: 56%;
+    left: 16%;
+    width: 19%;
+    height: 14%;
+    border-radius: 0.25rem;
+    background: var(--flag-yellow);
+    transform: translateY(0.5rem);
+    opacity: 0;
+  }
+
+  .diagram-crm span,
+  .diagram-crm i,
+  .diagram-crm b {
+    width: 2.75rem;
+    aspect-ratio: 1;
+    border: 1px solid var(--line-strong);
+    border-radius: 50%;
+    background: var(--surface-glass-strong);
+    transform: scale(0.72);
+    opacity: 0;
+  }
+
+  .diagram-crm span { top: 17%; left: 8%; }
+  .diagram-crm i { right: 10%; bottom: 14%; }
+  .diagram-crm b { top: 7%; right: 26%; width: 1.7rem; border-color: rgba(220, 52, 65, 0.46); }
+
+  .diagram-crm em {
+    top: 42%;
+    left: 27%;
+    width: 48%;
+    height: 1px;
+    background: linear-gradient(90deg, var(--flag-red), var(--ice), var(--flag-yellow));
+    transform: rotate(24deg) scaleX(0);
+    transform-origin: left;
+  }
+
+  .diagram-auto::before,
+  .diagram-auto::after {
+    position: absolute;
+    width: 22%;
+    height: 26%;
+    border: 1px solid var(--line-strong);
+    border-radius: 0.35rem;
+    content: '';
+  }
+
+  .diagram-auto::before { top: 13%; left: 6%; }
+  .diagram-auto::after { right: 6%; bottom: 12%; }
+
+  .diagram-auto span,
+  .diagram-auto i,
+  .diagram-auto b {
+    height: 0.7rem;
+    border-radius: 999px;
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+
+  .diagram-auto span { top: 23%; left: 10%; width: 17%; background: var(--flag-red); }
+  .diagram-auto i { top: 47%; left: 36%; width: 28%; background: var(--ice); }
+  .diagram-auto b { right: 10%; bottom: 23%; width: 17%; background: var(--flag-yellow); }
+
+  .diagram-auto em {
+    top: 27%;
+    left: 27%;
+    width: 49%;
+    height: 39%;
+    border-top: 1px dashed var(--steel);
+    border-right: 1px dashed var(--steel);
+    transform: skewY(-18deg);
+    opacity: 0.5;
+  }
+
+  .diagram-analytics span {
+    right: 8%;
+    bottom: 17%;
+    left: 8%;
+    height: 1px;
+    background: var(--line-strong);
+  }
+
+  .diagram-analytics i,
+  .diagram-analytics b,
+  .diagram-analytics em {
+    bottom: 17%;
+    width: 13%;
+    border-radius: 0.25rem 0.25rem 0 0;
+    transform: scaleY(0);
+    transform-origin: bottom;
+  }
+
+  .diagram-analytics i { left: 16%; height: 28%; background: var(--ice); }
+  .diagram-analytics b { left: 43%; height: 51%; background: var(--flag-red); }
+  .diagram-analytics em { right: 16%; height: 72%; background: var(--flag-yellow); }
+
+  .service-grid.is-sequence-visible .diagram-site span,
+  .service-card:hover .diagram-site span,
+  .service-grid.is-sequence-visible .diagram-site b,
+  .service-card:hover .diagram-site b,
+  .service-grid.is-sequence-visible .diagram-auto span,
+  .service-grid.is-sequence-visible .diagram-auto i,
+  .service-grid.is-sequence-visible .diagram-auto b,
+  .service-card:hover .diagram-auto span,
+  .service-card:hover .diagram-auto i,
+  .service-card:hover .diagram-auto b {
+    transform: scale(1);
+  }
+
+  .service-grid.is-sequence-visible .diagram-site i,
+  .service-grid.is-sequence-visible .diagram-site em,
+  .service-card:hover .diagram-site i,
+  .service-card:hover .diagram-site em {
+    transform: none;
+    opacity: 1;
+  }
+
+  .service-grid.is-sequence-visible .diagram-crm span,
+  .service-grid.is-sequence-visible .diagram-crm i,
+  .service-grid.is-sequence-visible .diagram-crm b,
+  .service-card:hover .diagram-crm span,
+  .service-card:hover .diagram-crm i,
+  .service-card:hover .diagram-crm b {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  .service-grid.is-sequence-visible .diagram-crm em,
+  .service-card:hover .diagram-crm em {
+    transform: rotate(24deg) scaleX(1);
+  }
+
+  .service-grid.is-sequence-visible .diagram-analytics i,
+  .service-grid.is-sequence-visible .diagram-analytics b,
+  .service-grid.is-sequence-visible .diagram-analytics em,
+  .service-card:hover .diagram-analytics i,
+  .service-card:hover .diagram-analytics b,
+  .service-card:hover .diagram-analytics em {
+    transform: scaleY(1);
+  }
+
+  .service-grid.is-sequence-visible .service-entry:nth-child(2) .service-diagram *,
+  .service-grid.is-sequence-visible .service-entry:nth-child(2) .service-diagram::before {
+    transition-delay: 100ms;
+  }
+
+  .service-grid.is-sequence-visible .service-entry:nth-child(3) .service-diagram * {
+    transition-delay: 170ms;
+  }
+
+  .service-grid.is-sequence-visible .service-entry:nth-child(4) .service-diagram * {
+    transition-delay: 240ms;
+  }
+
+  .service-entry.is-highlighted .service-card {
+    animation: service-highlight 1.15s var(--ease-out);
+  }
+
+  @keyframes service-highlight {
+    50% {
+      box-shadow: 0 0 0 0.3rem rgba(240, 201, 40, 0.22), var(--shadow-lg);
+    }
+  }
+
+  @media (max-width: 63.99rem) {
+    .service-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 35rem) {
+    .service-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .service-card {
+      min-height: 17rem;
+    }
+  }
 </style>

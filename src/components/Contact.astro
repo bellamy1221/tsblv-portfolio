@@ -1,10 +1,129 @@
 ---
 import { siteConfig } from '../config/site';
 ---
+
 <section class="section contact" id="contact" aria-labelledby="contact-title">
-  <div class="contact-light contact-light-one"></div><div class="contact-light contact-light-two"></div>
-  <div class="site-container contact-inner tech-frame" data-reveal="depth"><p class="section-label">Следующий шаг</p><h2 id="contact-title">Расскажите, что хотите сделать</h2><p>Можно написать даже с сырой идеей. Я задам несколько вопросов и предложу, с чего лучше начать.</p><div class="contact-actions"><a class="button button-light" href={siteConfig.telegramUrl} target="_blank" rel="noreferrer">Написать в Telegram</a><a class="button button-outline-light" href={`mailto:${siteConfig.email}`}>Написать на почту</a></div></div>
+  <div class="site-container contact-entry" data-motion="scale-depth">
+    <div class="contact-panel tech-frame">
+      <span class="panel-grain" aria-hidden="true"></span>
+      <div class="content-grid contact-grid">
+        <div class="contact-copy">
+          <p class="section-label">Следующий шаг</p>
+          <h2 id="contact-title">Расскажите, что хотите сделать</h2>
+          <p>Можно написать даже с сырой идеей. Я задам несколько вопросов и предложу, с чего лучше начать.</p>
+        </div>
+        <div class="contact-actions">
+          <a class="button button-light" href={siteConfig.telegramUrl} target="_blank" rel="noreferrer">Написать в Telegram</a>
+          <a class="button button-outline-light" href={`mailto:${siteConfig.email}`}>Написать на почту</a>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
+
 <style>
-  .contact { position:relative; overflow:hidden; color:var(--on-accent); }.contact::before { position:absolute; inset:-8% 0; background:radial-gradient(ellipse at 88% 14%,color-mix(in srgb,var(--cyan) 42%,transparent),transparent 34%),radial-gradient(ellipse at 12% 90%,color-mix(in srgb,var(--signal-yellow) 10%,transparent),transparent 36%),linear-gradient(135deg,rgba(7,21,34,.94),rgba(17,34,48,.86) 55%,rgba(15,22,31,.94)); content:''; }.contact::after { position:absolute; inset:1rem; border:1px solid rgba(255,255,255,.18); border-radius:1.1rem; content:''; }.contact-light { position:absolute; border-radius:50%; filter:blur(16px); opacity:.48; }.contact-light-one { top:-24%; right:-5%; width:43vw; aspect-ratio:1; background:var(--cyan); }.contact-light-two { bottom:-38%; left:12%; width:42vw; aspect-ratio:1; background:var(--signal-yellow); opacity:.14; }.contact-inner { position:relative; z-index:1; }.section-label { color:var(--cyan); }.contact h2 { max-width:60rem; font-size:clamp(2.65rem,6.2vw,6.2rem); }.contact p:not(.section-label) { max-width:37rem; margin:1.5rem 0 0; color:rgba(255,255,255,.84); font-size:clamp(1rem,1.5vw,1.2rem); line-height:1.6; }.contact-actions { display:flex; flex-wrap:wrap; gap:.7rem; margin-top:1.8rem; }@media(max-width:35rem) { .contact-actions { display:grid; }.contact::after { inset:.5rem; } }
+  .contact {
+    z-index: 1;
+    padding-top: clamp(7rem, 11vw, 11rem);
+    padding-bottom: clamp(4rem, 7vw, 6rem);
+    color: var(--white);
+  }
+
+  .contact::before {
+    position: absolute;
+    z-index: -1;
+    inset: -14rem 0 -8rem;
+    background:
+      conic-gradient(from 226deg at 76% 52%, transparent 0 26%, rgba(240, 201, 40, 0.09) 32%, rgba(255, 255, 255, 0.08) 37%, rgba(220, 52, 65, 0.08) 43%, transparent 51% 100%),
+      radial-gradient(ellipse 92% 76% at 50% 70%, rgba(16, 18, 22, 0.98), rgba(16, 18, 22, 0.9) 54%, transparent 84%);
+    content: '';
+    pointer-events: none;
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 14rem, #000);
+    mask-image: linear-gradient(to bottom, transparent, #000 14rem, #000);
+  }
+
+  .contact-panel {
+    position: relative;
+    overflow: hidden;
+    padding: clamp(2rem, 5vw, 5rem);
+    border: 1px solid rgba(243, 245, 247, 0.18);
+    border-radius: 1.15rem;
+    background:
+      linear-gradient(118deg, rgba(255, 255, 255, 0.1), transparent 32%),
+      rgba(23, 26, 31, 0.67);
+    box-shadow: 0 2rem 5rem rgba(0, 0, 0, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.16);
+    backdrop-filter: blur(18px);
+  }
+
+  .contact-panel::before {
+    border-color: rgba(220, 52, 65, 0.52);
+  }
+
+  .contact-panel::after {
+    border-color: rgba(240, 201, 40, 0.55);
+  }
+
+  .panel-grain {
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.25'/%3E%3C/svg%3E");
+    mix-blend-mode: soft-light;
+    opacity: 0.22;
+    pointer-events: none;
+  }
+
+  .contact-grid {
+    position: relative;
+    z-index: 1;
+    align-items: end;
+  }
+
+  .contact-copy {
+    grid-column: 1 / span 8;
+  }
+
+  .contact .section-label {
+    color: var(--flag-yellow);
+  }
+
+  .contact h2 {
+    max-width: 59rem;
+    font-size: clamp(2.65rem, 5.8vw, 5.9rem);
+  }
+
+  .contact-copy > p:not(.section-label) {
+    max-width: 37rem;
+    margin: 1.5rem 0 0;
+    color: rgba(243, 245, 247, 0.76);
+    font-size: clamp(1rem, 1.5vw, 1.2rem);
+    line-height: 1.6;
+  }
+
+  .contact-actions {
+    display: grid;
+    grid-column: 10 / -1;
+    gap: 0.7rem;
+  }
+
+  @media (max-width: 63.99rem) {
+    .contact-copy,
+    .contact-actions {
+      grid-column: 1 / -1;
+    }
+
+    .contact-actions {
+      max-width: 26rem;
+      margin-top: 2rem;
+    }
+  }
+
+  @media (max-width: 35rem) {
+    .contact-entry {
+      width: calc(100% - 1rem);
+    }
+
+    .contact-panel {
+      padding: 2rem 1.2rem;
+    }
+  }
 </style>
