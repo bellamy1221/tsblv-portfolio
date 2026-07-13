@@ -9,6 +9,7 @@ function initTheme(): void {
   if (!toggle) return;
 
   const applyTheme = (theme: 'light' | 'dark', persist = false): void => {
+    if (persist && !reduceMotionQuery.matches) root.classList.add('theme-transitioning');
     root.dataset.theme = theme;
     const isDark = theme === 'dark';
     const label = isDark ? 'Включить светлую тему' : 'Включить тёмную тему';
@@ -16,6 +17,7 @@ function initTheme(): void {
     toggle.title = label;
     if (themeColor) themeColor.content = isDark ? '#1c1928' : '#e9e8ed';
     if (persist) try { localStorage.setItem('tsblv-theme', theme); } catch {}
+    if (persist) window.setTimeout(() => root.classList.remove('theme-transitioning'), 460);
   };
 
   applyTheme(root.dataset.theme === 'dark' ? 'dark' : 'light');
