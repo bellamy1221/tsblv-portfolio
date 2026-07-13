@@ -6,12 +6,12 @@ const year = new Date().getFullYear();
 ---
 
 <footer class="footer" data-sequence>
-  <div class="site-container footer-wordmark-stage" data-motion="scale-depth" data-footer-light>
+  <div class="footer-wordmark-stage" data-motion="scene" data-footer-light>
     <span class="footer-wordmark" aria-hidden="true">TSBLV</span>
     <span class="footer-wordmark-light" aria-hidden="true">TSBLV</span>
   </div>
 
-  <div class="site-container content-grid footer-contact" data-motion="fade-blur">
+  <div class="site-container content-grid footer-contact" data-motion="text">
     <div class="footer-brand">
       <BrandMark variant="full" size="medium" href="#top" ariaLabel="TSBLV — в начало страницы" />
     </div>
@@ -21,7 +21,7 @@ const year = new Date().getFullYear();
     </nav>
   </div>
 
-  <div class="site-container footer-bottom" data-motion="line-draw">
+  <div class="site-container footer-bottom" data-motion="line">
     <span>© {year} TSBLV</span>
     <span>Без трекеров и лишних cookies</span>
   </div>
@@ -29,31 +29,20 @@ const year = new Date().getFullYear();
 
 <style>
   .footer {
-    z-index: 0;
+    position: relative;
     overflow: hidden;
-    padding: clamp(1.5rem, 3vw, 3.25rem) 0 1.5rem;
+    padding: 0 0 1.4rem;
     color: var(--white);
-  }
-
-  .footer::before {
-    position: absolute;
-    z-index: -1;
-    inset: -10rem 0 0;
-    background:
-      conic-gradient(from 225deg at 76% 36%, transparent 0 28%, rgba(240, 201, 40, 0.13) 34%, rgba(255, 255, 255, 0.1) 39%, rgba(181, 31, 43, 0.11) 44%, transparent 52% 100%),
-      linear-gradient(to bottom, rgba(16, 18, 22, 0.94), var(--surface-deep));
-    content: '';
-    pointer-events: none;
-    transition: background 560ms var(--ease-out), opacity 560ms var(--ease-out);
+    background: var(--dark);
   }
 
   .footer-wordmark-stage {
     --footer-light-x: 50%;
     --footer-light-y: 50%;
     position: relative;
-    height: clamp(7rem, 14.5vw, 13rem);
+    height: clamp(10rem, 24vw, 23rem);
     overflow: hidden;
-    border-bottom: 1px solid var(--line-on-dark);
+    border-bottom: 1px solid var(--line-dark);
   }
 
   .footer-wordmark,
@@ -61,29 +50,28 @@ const year = new Date().getFullYear();
     position: absolute;
     top: 50%;
     left: 50%;
-    font-size: clamp(6rem, 18.5vw, 17rem);
-    font-weight: 780;
-    line-height: 0.72;
-    letter-spacing: -0.065em;
-    transform: translate(-50%, -38%);
+    font-size: clamp(9rem, 26vw, 25rem);
+    font-weight: 790;
+    line-height: 0.66;
+    letter-spacing: -0.086em;
+    transform: translate(-50%, -40%);
     white-space: nowrap;
   }
 
   .footer-wordmark {
-    color: rgba(6, 8, 11, 0.56);
-    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.06);
+    color: #0d0f12;
+    -webkit-text-stroke: 1px rgba(247, 245, 239, 0.07);
     text-shadow:
-      0 -1px 0 rgba(255, 255, 255, 0.13),
-      0 2px 0 rgba(0, 0, 0, 0.82),
-      0 0.16rem 0 rgba(255, 255, 255, 0.025),
-      0 1.2rem 2.8rem rgba(0, 0, 0, 0.42);
+      0 -1px rgba(247, 245, 239, 0.12),
+      0 3px rgba(0, 0, 0, 0.75),
+      0 2rem 4rem rgba(0, 0, 0, 0.46);
   }
 
   .footer-wordmark-light {
     background:
-      radial-gradient(circle at var(--footer-light-x) var(--footer-light-y), rgba(255, 255, 255, 0.22), rgba(255, 252, 235, 0.09) 9%, transparent 25%),
-      linear-gradient(104deg, transparent 28%, rgba(181, 31, 43, 0.1) 38%, rgba(255, 255, 255, 0.2) 45%, rgba(240, 201, 40, 0.11) 51%, transparent 63%);
-    background-position: 0 0, 120% 0;
+      radial-gradient(circle at var(--footer-light-x) var(--footer-light-y), rgba(247, 245, 239, 0.24), rgba(247, 245, 239, 0.07) 10%, transparent 26%),
+      linear-gradient(105deg, transparent 29%, rgba(181, 31, 43, 0.13) 38%, rgba(247, 245, 239, 0.22) 46%, rgba(228, 185, 31, 0.13) 52%, transparent 64%);
+    background-position: 0 0, 125% 0;
     background-size: 100% 100%, 230% 100%;
     -webkit-background-clip: text;
     background-clip: text;
@@ -91,82 +79,77 @@ const year = new Date().getFullYear();
   }
 
   .footer.is-sequence-visible .footer-wordmark-light {
-    animation: footer-light 2.4s 500ms var(--ease-out) both;
+    animation: footer-sweep 2.4s 350ms var(--ease-out) both;
   }
 
   .footer-contact {
     align-items: start;
-    padding-block: 1.75rem;
+    padding-block: clamp(2rem, 4vw, 3.5rem);
   }
 
-  .footer-brand {
-    grid-column: 1 / span 6;
-  }
+  .footer-brand { grid-column: 1 / span 6; }
 
   .footer :global(.brand-mark) {
     --brand-color: var(--white);
-    --brand-muted: rgba(243, 245, 247, 0.56);
-    --brand-line: rgba(243, 245, 247, 0.22);
-    --brand-accent: var(--flag-red);
+    --brand-muted: rgba(247, 245, 239, 0.52);
+    --brand-line: rgba(247, 245, 239, 0.2);
+    --brand-accent: var(--red);
   }
 
   .footer nav {
     display: grid;
-    grid-column: 10 / -1;
+    grid-column: 9 / -1;
     justify-items: end;
     gap: 0.75rem;
   }
 
   .footer nav a {
-    color: rgba(243, 245, 247, 0.74);
+    position: relative;
+    color: rgba(247, 245, 239, 0.72);
     font-size: 0.82rem;
     text-decoration: none;
-    transition: color 320ms var(--ease-out), transform 320ms var(--ease-out);
+    transition: color 280ms ease;
   }
 
-  .footer nav a:hover {
-    color: var(--flag-yellow);
-    transform: translateX(-0.2rem);
+  .footer nav a::after {
+    position: absolute;
+    right: 0;
+    bottom: -0.25rem;
+    left: 0;
+    height: 1px;
+    background: var(--yellow);
+    content: '';
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 320ms var(--ease-out);
   }
+
+  .footer nav a:hover,
+  .footer nav a:focus-visible { color: var(--white); }
+  .footer nav a:hover::after,
+  .footer nav a:focus-visible::after { transform: scaleX(1); transform-origin: left; }
 
   .footer-bottom {
     display: flex;
     justify-content: space-between;
     gap: 1rem;
-    padding-top: 1.25rem;
-    border-top: 1px solid var(--line-on-dark);
-    color: rgba(243, 245, 247, 0.5);
-    font-size: 0.62rem;
+    padding-top: 1.15rem;
+    border-top: 1px solid var(--line-dark);
+    color: rgba(247, 245, 239, 0.46);
+    font-size: 0.61rem;
   }
 
-  @keyframes footer-light {
+  @keyframes footer-sweep {
     to { background-position: 0 0, -25% 0; }
   }
 
   @media (max-width: 47.99rem) {
-    .footer-wordmark-stage {
-      width: 100%;
-      height: clamp(6rem, 28vw, 9rem);
-    }
-
+    .footer-wordmark-stage { height: clamp(7rem, 31vw, 10rem); }
     .footer-wordmark,
-    .footer-wordmark-light {
-      font-size: clamp(5.5rem, 28vw, 9rem);
-      letter-spacing: -0.055em;
-    }
-
+    .footer-wordmark-light { font-size: clamp(7rem, 34vw, 11rem); }
     .footer-brand,
-    .footer nav {
-      grid-column: 1 / -1;
-    }
-
-    .footer nav {
-      justify-items: start;
-      margin-top: 1.5rem;
-    }
-
-    .footer-bottom {
-      flex-direction: column;
-    }
+    .footer nav { grid-column: 1 / -1; }
+    .footer nav { justify-items: start; margin-top: 1.5rem; }
+    .footer-bottom { flex-direction: column; }
   }
 </style>

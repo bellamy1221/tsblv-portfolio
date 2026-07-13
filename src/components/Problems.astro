@@ -12,11 +12,9 @@ import { problems } from '../data/home';
 
     <ol class="problem-stack" data-sequence>
       {problems.map((problem, index) => (
-        <li data-motion="fade-blur" data-motion-delay={index * 65}>
-          <div class="problem-row tech-frame" data-pointer-light>
-            <span>{problem.id}</span>
-            <h3>{problem.title}</h3>
-          </div>
+        <li data-motion="row" data-motion-delay={index * 60} data-pointer-light>
+          <span>{problem.id}</span>
+          <h3>{problem.title}</h3>
         </li>
       ))}
     </ol>
@@ -24,6 +22,10 @@ import { problems } from '../data/home';
 </section>
 
 <style>
+  .problems {
+    border-bottom: 1px solid var(--line);
+  }
+
   .problems-layout {
     align-items: start;
   }
@@ -32,7 +34,11 @@ import { problems } from '../data/home';
     grid-column: 1 / span 5;
   }
 
-  .section-intro p:last-child {
+  .section-intro h2 {
+    max-width: 40rem;
+  }
+
+  .section-intro > p:last-child {
     max-width: 29rem;
     margin: 1.25rem 0 0;
     color: var(--text-muted);
@@ -40,87 +46,88 @@ import { problems } from '../data/home';
   }
 
   .problem-stack {
-    position: relative;
-    display: grid;
+    display: flex;
     grid-column: 6 / -1;
-    gap: 0.65rem;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0;
     margin: 0;
     padding: 0;
     list-style: none;
   }
 
-  .problem-stack::before {
-    position: absolute;
-    top: 0.9rem;
-    bottom: 0.9rem;
-    left: 1.85rem;
-    width: 1px;
-    background: linear-gradient(to bottom, var(--flag-red), var(--ice) 48%, var(--flag-yellow));
-    content: '';
-    opacity: 0.7;
-    transform: scaleY(0);
-    transform-origin: top;
-    transition: transform 1050ms var(--ease-out);
-  }
-
-  .problem-stack.is-sequence-visible::before {
-    transform: scaleY(1);
-  }
-
-  .problem-row {
+  .problem-stack li {
     --pointer-x: 50%;
     --pointer-y: 50%;
     position: relative;
     display: grid;
-    min-height: 4.5rem;
-    grid-template-columns: 2.5rem 1fr;
+    width: 100%;
+    min-height: 4.8rem;
+    grid-template-columns: 2.4rem 1fr;
     align-items: center;
-    gap: 1rem;
-    overflow: hidden;
-    padding: 1rem 1.2rem;
-    border: 1px solid var(--line);
-    border-radius: 0.85rem;
-    background:
-      radial-gradient(circle 9rem at var(--pointer-x) var(--pointer-y), rgba(255, 255, 255, 0.5), transparent 72%),
-      var(--surface-glass);
-    box-shadow: 0 0.45rem 1.2rem rgba(16, 18, 22, 0.05);
-    backdrop-filter: blur(9px);
-    transition: border-color 340ms var(--ease-out), box-shadow 340ms var(--ease-out), transform 340ms var(--ease-out);
+    gap: 0.8rem;
+    border-top: 1px solid var(--line);
+    background: radial-gradient(circle 9rem at var(--pointer-x) var(--pointer-y), rgba(255, 255, 255, 0.5), transparent 72%);
+    transition: width 460ms var(--ease-out), padding-left 460ms var(--ease-out), color 300ms ease, opacity 300ms ease, transform 460ms var(--ease-out);
   }
 
-  html[data-theme='dark'] .problem-row {
-    background:
-      radial-gradient(circle 9rem at var(--pointer-x) var(--pointer-y), rgba(255, 255, 255, 0.08), transparent 72%),
-      var(--surface-glass);
+  :global(html[data-theme='dark']) .problem-stack li {
+    background: radial-gradient(circle 9rem at var(--pointer-x) var(--pointer-y), rgba(255, 255, 255, 0.07), transparent 72%);
   }
 
-  .problem-row:hover {
-    border-color: var(--line-strong);
-    box-shadow: 0 0.8rem 2rem rgba(16, 18, 22, 0.1);
-    transform: translateY(-2px);
+  .problem-stack li::after {
+    position: absolute;
+    right: 0;
+    bottom: -1px;
+    left: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--red), rgba(247, 245, 239, 0.8), var(--yellow), transparent 82%);
+    content: '';
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 620ms var(--ease-out);
   }
 
-  .problem-row > span {
-    position: relative;
-    z-index: 1;
-    color: var(--flag-red);
-    font-size: 0.62rem;
-    font-weight: 750;
+  .problem-stack li:nth-child(2) { width: 92%; }
+  .problem-stack li:nth-child(3) { width: 97%; }
+  .problem-stack li:nth-child(4) { width: 86%; }
+  .problem-stack li:nth-child(5) { width: 95%; }
+  .problem-stack li:nth-child(6) { width: 90%; border-bottom: 1px solid var(--line); }
+
+  .problem-stack li:hover {
+    width: 100%;
+    padding-left: 0.55rem;
+    color: var(--red);
   }
 
-  .problem-row h3 {
-    position: relative;
-    z-index: 1;
+  .problem-stack li:hover::after {
+    transform: scaleX(1);
+  }
+
+  .problem-stack:has(li:hover) li:not(:hover) {
+    opacity: 0.72;
+    transform: translateX(-0.2rem);
+  }
+
+  .problem-stack span {
+    color: var(--text-muted);
+    font-size: 0.6rem;
+    font-weight: 740;
+  }
+
+  .problem-stack h3 {
+    max-width: 42rem;
     margin: 0;
-    font-size: clamp(1rem, 1.65vw, 1.28rem);
-    font-weight: 600;
-    letter-spacing: -0.03em;
+    font-size: clamp(1.25rem, 2.45vw, 2.35rem);
+    font-weight: 540;
+    line-height: 1.08;
+    letter-spacing: -0.052em;
   }
 
   @media (min-width: 64rem) {
     .section-intro {
       position: sticky;
-      top: 6.5rem;
+      top: 6.25rem;
     }
   }
 
@@ -132,6 +139,23 @@ import { problems } from '../data/home';
 
     .problem-stack {
       margin-top: 2.5rem;
+    }
+  }
+
+  @media (max-width: 47.99rem) {
+    .problem-stack li,
+    .problem-stack li:nth-child(n) {
+      width: 100%;
+      min-height: 4.2rem;
+    }
+
+    .problem-stack h3 {
+      font-size: clamp(1.15rem, 5.8vw, 1.65rem);
+    }
+
+    .problem-stack:has(li:hover) li:not(:hover) {
+      opacity: 1;
+      transform: none;
     }
   }
 </style>

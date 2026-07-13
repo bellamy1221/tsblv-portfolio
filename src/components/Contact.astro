@@ -2,20 +2,15 @@
 import { siteConfig } from '../config/site';
 ---
 
-<section class="section contact" id="contact" aria-labelledby="contact-title">
-  <div class="site-container contact-entry" data-motion="scale-depth">
-    <div class="contact-panel tech-frame">
-      <span class="panel-grain" aria-hidden="true"></span>
-      <div class="content-grid contact-grid">
-        <div class="contact-copy">
-          <p class="section-label">Следующий шаг</p>
-          <h2 id="contact-title">Расскажите, что хотите сделать</h2>
-          <p>Можно написать даже с сырой идеей. Я задам несколько вопросов и предложу, с чего лучше начать.</p>
-        </div>
-        <div class="contact-actions">
-          <a class="button button-light" href={siteConfig.telegramUrl} target="_blank" rel="noreferrer">Написать в Telegram</a>
-          <a class="button button-outline-light" href={`mailto:${siteConfig.email}`}>Написать на почту</a>
-        </div>
+<section class="contact" id="contact" aria-labelledby="contact-title" data-pointer-light data-sequence>
+  <div class="site-container contact-inner">
+    <p class="section-label" data-motion="row">Следующий шаг</p>
+    <h2 id="contact-title" data-motion="clip"><span>Есть идея?</span><span>Давайте превратим её в работающий проект.</span></h2>
+    <div class="content-grid contact-bottom" data-motion="text">
+      <p>Можно написать даже с сырой идеей. Я задам несколько вопросов и предложу, с чего лучше начать.</p>
+      <div class="contact-actions">
+        <a class="button button-light" href={siteConfig.telegramUrl} target="_blank" rel="noreferrer">Написать в Telegram</a>
+        <a class="button button-outline-light" href={`mailto:${siteConfig.email}`}>Написать на почту</a>
       </div>
     </div>
   </div>
@@ -23,107 +18,93 @@ import { siteConfig } from '../config/site';
 
 <style>
   .contact {
-    z-index: 1;
-    padding-top: clamp(7rem, 11vw, 11rem);
-    padding-bottom: clamp(4rem, 7vw, 6rem);
+    --pointer-x: 68%;
+    --pointer-y: 42%;
+    position: relative;
+    overflow: hidden;
+    padding: clamp(7rem, 12vw, 12rem) 0 clamp(5rem, 8vw, 8rem);
     color: var(--white);
+    background:
+      radial-gradient(ellipse 34% 52% at var(--pointer-x) var(--pointer-y), rgba(255, 255, 255, 0.12), transparent 68%),
+      conic-gradient(from 218deg at 72% 48%, transparent 0 27%, rgba(181, 31, 43, 0.13) 34%, rgba(247, 245, 239, 0.11) 40%, rgba(228, 185, 31, 0.12) 46%, transparent 54% 100%),
+      linear-gradient(to bottom, transparent, var(--dark) 12rem, var(--dark));
   }
 
   .contact::before {
     position: absolute;
-    z-index: -1;
-    inset: -14rem 0 -8rem;
-    background:
-      conic-gradient(from 226deg at 76% 52%, transparent 0 26%, rgba(240, 201, 40, 0.09) 32%, rgba(255, 255, 255, 0.08) 37%, rgba(220, 52, 65, 0.08) 43%, transparent 51% 100%),
-      radial-gradient(ellipse 92% 76% at 50% 70%, rgba(16, 18, 22, 0.98), rgba(16, 18, 22, 0.9) 54%, transparent 84%);
+    inset: 0;
+    background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, 0.12) 49%, transparent 63%);
+    background-position: 130% 0;
+    background-size: 220% 100%;
     content: '';
     pointer-events: none;
-    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 14rem, #000);
-    mask-image: linear-gradient(to bottom, transparent, #000 14rem, #000);
   }
 
-  .contact-panel {
+  .contact.is-sequence-visible::before {
+    animation: contact-sweep 2.2s 300ms var(--ease-out) both;
+  }
+
+  .contact-inner {
     position: relative;
-    overflow: hidden;
-    padding: clamp(2rem, 5vw, 5rem);
-    border: 1px solid rgba(243, 245, 247, 0.18);
-    border-radius: 1.15rem;
-    background:
-      linear-gradient(118deg, rgba(255, 255, 255, 0.1), transparent 32%),
-      rgba(23, 26, 31, 0.67);
-    box-shadow: 0 2rem 5rem rgba(0, 0, 0, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.16);
-    backdrop-filter: blur(18px);
-  }
-
-  .contact-panel::before {
-    border-color: rgba(220, 52, 65, 0.52);
-  }
-
-  .contact-panel::after {
-    border-color: rgba(240, 201, 40, 0.55);
-  }
-
-  .panel-grain {
-    position: absolute;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.25'/%3E%3C/svg%3E");
-    mix-blend-mode: soft-light;
-    opacity: 0.22;
-    pointer-events: none;
-  }
-
-  .contact-grid {
-    position: relative;
-    z-index: 1;
-    align-items: end;
-  }
-
-  .contact-copy {
-    grid-column: 1 / span 8;
   }
 
   .contact .section-label {
-    color: var(--flag-yellow);
+    color: var(--yellow);
   }
 
   .contact h2 {
-    max-width: 59rem;
-    font-size: clamp(2.65rem, 5.8vw, 5.9rem);
+    display: grid;
+    max-width: 88rem;
+    font-size: clamp(4rem, 10.5vw, 11.5rem);
+    line-height: 0.82;
+    letter-spacing: -0.085em;
   }
 
-  .contact-copy > p:not(.section-label) {
-    max-width: 37rem;
-    margin: 1.5rem 0 0;
-    color: rgba(243, 245, 247, 0.76);
-    font-size: clamp(1rem, 1.5vw, 1.2rem);
-    line-height: 1.6;
+  .contact h2 span:first-child {
+    color: rgba(247, 245, 239, 0.46);
+  }
+
+  .contact h2 span:last-child {
+    padding-left: 8vw;
+  }
+
+  .contact-bottom {
+    align-items: end;
+    margin-top: clamp(2.5rem, 6vw, 5rem);
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--line-dark);
+  }
+
+  .contact-bottom > p {
+    grid-column: 1 / span 5;
+    max-width: 34rem;
+    margin: 0;
+    color: rgba(247, 245, 239, 0.68);
+    font-size: clamp(0.92rem, 1.3vw, 1.1rem);
+    line-height: 1.62;
   }
 
   .contact-actions {
-    display: grid;
-    grid-column: 10 / -1;
-    gap: 0.7rem;
+    display: flex;
+    grid-column: 8 / -1;
+    justify-content: flex-end;
+    gap: 0.65rem;
+  }
+
+  @keyframes contact-sweep {
+    to { background-position: -25% 0; }
   }
 
   @media (max-width: 63.99rem) {
-    .contact-copy,
-    .contact-actions {
-      grid-column: 1 / -1;
-    }
-
-    .contact-actions {
-      max-width: 26rem;
-      margin-top: 2rem;
-    }
+    .contact h2 span:last-child { padding-left: 0; }
+    .contact-bottom > p,
+    .contact-actions { grid-column: 1 / -1; }
+    .contact-actions { justify-content: flex-start; margin-top: 1.75rem; }
   }
 
-  @media (max-width: 35rem) {
-    .contact-entry {
-      width: calc(100% - 1rem);
-    }
-
-    .contact-panel {
-      padding: 2rem 1.2rem;
-    }
+  @media (max-width: 47.99rem) {
+    .contact { padding-top: 5rem; }
+    .contact h2 { font-size: clamp(3.5rem, 18vw, 6rem); }
+    .contact-actions { align-items: stretch; flex-direction: column; }
   }
 </style>

@@ -14,8 +14,9 @@ import { processSteps } from '../data/home';
 
     <div class="process-route" data-sequence>
       <svg class="route-svg route-svg--desktop" viewBox="0 0 1000 120" preserveAspectRatio="none" aria-hidden="true">
+        <defs><linearGradient id="route-desktop" x1="0" x2="1"><stop stop-color="var(--red)"/><stop offset=".18" stop-color="var(--white)"/><stop offset=".82" stop-color="var(--white)"/><stop offset="1" stop-color="var(--yellow)"/></linearGradient></defs>
         <path class="route-base" d="M24 76 C170 22 246 108 355 64 S552 26 658 68 S826 109 976 50" pathLength="1"></path>
-        <path class="route-progress" d="M24 76 C170 22 246 108 355 64 S552 26 658 68 S826 109 976 50" pathLength="1"></path>
+        <path class="route-progress route-progress--desktop" d="M24 76 C170 22 246 108 355 64 S552 26 658 68 S826 109 976 50" pathLength="1"></path>
         <path class="route-highlight" d="M24 76 C170 22 246 108 355 64 S552 26 658 68 S826 109 976 50" pathLength="1"></path>
         <g class="route-nodes">
           <circle cx="24" cy="76" r="7"></circle><circle cx="355" cy="64" r="7"></circle><circle cx="658" cy="68" r="7"></circle><circle cx="976" cy="50" r="7"></circle>
@@ -23,8 +24,9 @@ import { processSteps } from '../data/home';
       </svg>
 
       <svg class="route-svg route-svg--mobile" viewBox="0 0 80 640" preserveAspectRatio="none" aria-hidden="true">
+        <defs><linearGradient id="route-mobile" x1="0" y1="0" x2="0" y2="1"><stop stop-color="var(--red)"/><stop offset=".18" stop-color="var(--white)"/><stop offset=".82" stop-color="var(--white)"/><stop offset="1" stop-color="var(--yellow)"/></linearGradient></defs>
         <path class="route-base" d="M38 24 C12 92 67 136 38 184 S13 296 42 344 S67 456 37 504" pathLength="1"></path>
-        <path class="route-progress" d="M38 24 C12 92 67 136 38 184 S13 296 42 344 S67 456 37 504" pathLength="1"></path>
+        <path class="route-progress route-progress--mobile" d="M38 24 C12 92 67 136 38 184 S13 296 42 344 S67 456 37 504" pathLength="1"></path>
         <path class="route-highlight" d="M38 24 C12 92 67 136 38 184 S13 296 42 344 S67 456 37 504" pathLength="1"></path>
         <g class="route-nodes">
           <circle cx="38" cy="24" r="6"></circle><circle cx="38" cy="184" r="6"></circle><circle cx="42" cy="344" r="6"></circle><circle cx="37" cy="504" r="6"></circle>
@@ -33,7 +35,7 @@ import { processSteps } from '../data/home';
 
       <ol>
         {processSteps.map((step, index) => (
-          <li data-motion="fade-blur" data-motion-delay={index * 80}>
+          <li data-motion="row" data-motion-delay={index * 80}>
             <span>{step.id}</span>
             <h3>{step.title}</h3>
             <p>{step.description}</p>
@@ -63,7 +65,7 @@ import { processSteps } from '../data/home';
 
   .process-route {
     position: relative;
-    padding-top: 6.3rem;
+    padding-top: 4.8rem;
   }
 
   .process-route ol {
@@ -80,7 +82,7 @@ import { processSteps } from '../data/home';
   }
 
   .process-route li > span {
-    color: var(--flag-red);
+    color: var(--red);
     font-size: 0.62rem;
     font-weight: 760;
   }
@@ -122,15 +124,17 @@ import { processSteps } from '../data/home';
   }
 
   .route-progress {
-    stroke: var(--ice);
     stroke-width: 1.7;
     stroke-dasharray: 1;
     stroke-dashoffset: 1;
     transition: stroke-dashoffset 1100ms var(--ease-out);
   }
 
+  .route-progress--desktop { stroke: url(#route-desktop); }
+  .route-progress--mobile { stroke: url(#route-mobile); }
+
   .route-highlight {
-    stroke: var(--flag-yellow);
+    stroke: var(--yellow);
     stroke-width: 2.5;
     stroke-linecap: round;
     stroke-dasharray: 0.06 0.94;
@@ -159,14 +163,15 @@ import { processSteps } from '../data/home';
   }
 
   .process-route.is-sequence-visible .route-nodes circle {
-    fill: var(--surface-dark);
-    stroke: var(--flag-yellow);
+    fill: var(--dark);
+    stroke: var(--white);
     transform: scale(1);
   }
 
   .process-route.is-sequence-visible .route-nodes circle:nth-child(2) { transition-delay: 160ms; }
   .process-route.is-sequence-visible .route-nodes circle:nth-child(3) { transition-delay: 320ms; }
-  .process-route.is-sequence-visible .route-nodes circle:nth-child(4) { transition-delay: 480ms; stroke: var(--flag-red); }
+  .process-route.is-sequence-visible .route-nodes circle:first-child { stroke: var(--red); fill: var(--red); }
+  .process-route.is-sequence-visible .route-nodes circle:nth-child(4) { transition-delay: 480ms; stroke: var(--yellow); fill: var(--yellow); }
 
   .route-svg--mobile {
     display: none;

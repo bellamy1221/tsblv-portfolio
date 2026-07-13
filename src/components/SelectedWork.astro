@@ -3,368 +3,436 @@ import { conceptCases } from '../data/home';
 import ProjectPreview from './ProjectPreview.astro';
 ---
 
-<section class="section selected-work" id="work" aria-labelledby="work-title">
-  <div class="site-container">
-    <div class="content-grid work-heading" data-motion="clip">
-      <div class="work-title-block">
-        <p class="section-label">Практика</p>
-        <h2 id="work-title">Избранные проекты</h2>
-      </div>
-      <p>Концепции показывают мой подход к структуре, дизайну и рабочим системам. Это не реальные клиентские проекты.</p>
+<section class="selected-work" id="work" aria-labelledby="work-title">
+  <div class="site-container content-grid work-heading" data-motion="clip">
+    <div>
+      <p class="section-label">Практика</p>
+      <h2 id="work-title">Избранные проекты</h2>
     </div>
+    <p>Концепции показывают мой подход к структуре, дизайну и рабочим системам. Это не реальные клиентские проекты.</p>
+  </div>
 
-    <div class="case-list">
-      {conceptCases.map((project, index) => (
-        <div class="case-entry" data-motion="scale-depth">
-          <article class:list={['case-study', index % 2 === 1 && 'case-study--reverse']}>
-            <div class="case-visual tech-frame" data-project-scene>
-              <div class="case-preview-interactive">
-                <ProjectPreview kind={project.preview} />
-              </div>
-            </div>
-
-            <div class="case-copy" data-motion="fade-blur">
-              <div class="case-topline"><span>{project.id}</span><strong>{project.kind}</strong></div>
-              <p class="case-type">{project.type}</p>
-              <h3>{project.title}</h3>
-              <button class="case-toggle" type="button" aria-expanded="true" data-case-toggle>
-                Подробнее о концепте <span aria-hidden="true">+</span>
-              </button>
-              <div class="case-details-grid" data-case-panel>
-                <div class="case-details-inner">
-                  <dl>
-                    <div><dt>Задача</dt><dd>{project.task}</dd></div>
-                    <div><dt>Решение</dt><dd>{project.solution}</dd></div>
-                  </dl>
-                  <ul aria-label="Услуги">{project.services.map((service) => <li>{service}</li>)}</ul>
-                </div>
-              </div>
-            </div>
-          </article>
+  <div class="case-list">
+    {conceptCases.map((project, index) => (
+      <article class:list={['case-study', `case-study--${index + 1}`]} data-sequence>
+        <div class="site-container case-title" data-motion="clip">
+          <div class="case-index"><span>{project.id}</span><strong>{project.kind}</strong></div>
+          <p>{project.type}</p>
+          <h3>{project.title}</h3>
         </div>
-      ))}
-    </div>
+
+        <div class="site-container case-scene" data-project-scene data-motion="scene">
+          <div class="case-preview" data-project-layer="back">
+            <ProjectPreview kind={project.preview} />
+          </div>
+          {index === 1 && (
+            <>
+              <span class="scene-fragment scene-fragment--one" data-project-layer="front" aria-hidden="true"><i></i><i></i><b></b></span>
+              <span class="scene-fragment scene-fragment--two" data-project-layer="front" aria-hidden="true"><i></i><b></b><b></b></span>
+            </>
+          )}
+        </div>
+
+        <div class="site-container content-grid case-details" data-motion="text">
+          <dl>
+            <div><dt>Задача</dt><dd>{project.task}</dd></div>
+            <div><dt>Решение</dt><dd>{project.solution}</dd></div>
+          </dl>
+          <div class="case-more">
+            <button type="button" aria-expanded="false" data-case-toggle>
+              Услуги проекта <span aria-hidden="true">+</span>
+            </button>
+            <div class="case-services" data-case-panel>
+              <div><ul aria-label="Услуги">{project.services.map((service) => <li>{service}</li>)}</ul></div>
+            </div>
+          </div>
+        </div>
+      </article>
+    ))}
   </div>
 </section>
 
 <style>
   .selected-work {
-    isolation: isolate;
+    position: relative;
+    overflow: hidden;
+    padding: clamp(6rem, 9vw, 9rem) 0;
     color: var(--white);
   }
 
   .selected-work::before {
     position: absolute;
-    z-index: -1;
-    inset: -14rem 0;
+    z-index: -2;
+    inset: -18rem 0;
     background:
-      conic-gradient(from 235deg at 74% 42%, transparent 0 24%, rgba(240, 201, 40, 0.08) 30%, rgba(255, 255, 255, 0.08) 35%, rgba(220, 52, 65, 0.07) 41%, transparent 49% 100%),
-      radial-gradient(ellipse 90% 72% at 50% 50%, rgba(16, 18, 22, 0.96), rgba(16, 18, 22, 0.88) 52%, transparent 82%);
+      conic-gradient(from 224deg at 76% 34%, transparent 0 28%, rgba(228, 185, 31, 0.08) 34%, rgba(247, 245, 239, 0.08) 39%, rgba(181, 31, 43, 0.08) 45%, transparent 53% 100%),
+      linear-gradient(180deg, transparent, rgba(21, 24, 29, 0.96) 12rem, var(--dark) 26rem, var(--dark) calc(100% - 20rem), transparent);
     content: '';
     pointer-events: none;
-    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 14rem, #000 calc(100% - 14rem), transparent);
-    mask-image: linear-gradient(to bottom, transparent, #000 14rem, #000 calc(100% - 14rem), transparent);
   }
 
   .work-heading {
     align-items: end;
-    margin-bottom: clamp(3rem, 6vw, 5rem);
+    margin-bottom: clamp(4.5rem, 7vw, 7rem);
   }
 
-  .work-title-block {
-    grid-column: 1 / span 7;
+  .work-heading > div {
+    grid-column: 1 / span 8;
   }
 
   .work-heading > p {
     grid-column: 9 / -1;
     margin: 0;
-    color: rgba(243, 245, 247, 0.7);
-    font-size: 0.9rem;
-    line-height: 1.6;
+    color: rgba(247, 245, 239, 0.64);
+    font-size: 0.88rem;
+    line-height: 1.62;
   }
 
   .selected-work .section-label {
-    color: var(--flag-yellow);
+    color: var(--yellow);
   }
 
   .case-list {
     display: grid;
-    gap: clamp(4.5rem, 6vw, 5.5rem);
+    gap: clamp(7rem, 12vw, 12rem);
   }
 
   .case-study {
-    display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    align-items: center;
-    gap: clamp(1rem, 2vw, 2rem);
-  }
-
-  .case-visual {
-    --project-x: 0px;
-    --project-y: 0px;
-    --project-back-x: 0px;
-    --project-back-y: 0px;
-    --pointer-x: 50%;
-    --pointer-y: 50%;
-    grid-column: 1 / span 8;
-    padding: 0.55rem;
-  }
-
-  .case-preview-interactive {
     position: relative;
-    filter: saturate(0.92) contrast(1.02);
-    transform: translate(var(--project-back-x), var(--project-back-y));
-    transition: transform 520ms var(--ease-out), filter 420ms var(--ease-out), box-shadow 420ms var(--ease-out);
   }
 
-  .case-preview-interactive::before {
-    position: absolute;
-    z-index: 2;
-    inset: -1px;
-    border-radius: clamp(1.1rem, 2.2vw, 2rem);
-    background:
-      radial-gradient(circle at var(--pointer-x) var(--pointer-y), rgba(255, 255, 255, 0.2), transparent 25%),
-      linear-gradient(122deg, rgba(181, 31, 43, 0.22), transparent 14% 78%, rgba(240, 201, 40, 0.2));
-    content: '';
-    opacity: 0.48;
-    pointer-events: none;
-    transition: opacity 420ms var(--ease-out);
-  }
-
-  .case-visual :global(.preview-main),
-  .case-visual :global(.expert-copy),
-  .case-visual :global(.local-copy),
-  .case-visual :global(.lead-workspace) {
-    transform: translate(var(--project-x), var(--project-y));
-    transition: transform 520ms var(--ease-out);
-  }
-
-  .case-preview-interactive::after {
-    position: absolute;
-    inset: 0;
-    border-radius: clamp(1.1rem, 2.2vw, 2rem);
-    background: linear-gradient(112deg, transparent 26%, rgba(255, 255, 255, 0.19) 47%, transparent 67%);
-    background-position: 115% 0;
-    background-size: 220% 100%;
-    content: '';
+  .case-title {
+    position: relative;
     z-index: 3;
-    pointer-events: none;
-    transition: background-position 700ms var(--ease-out);
   }
 
-  .case-study:hover .case-preview-interactive,
-  .case-study:focus-within .case-preview-interactive {
-    filter: saturate(1) contrast(1.04);
-    box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.24);
-  }
-
-  .case-study:hover .case-preview-interactive::before,
-  .case-study:focus-within .case-preview-interactive::before {
-    opacity: 0.76;
-  }
-
-  .case-entry .case-visual::before,
-  .case-entry .case-visual::after {
-    opacity: 0;
-    transform: scale(0.25);
-  }
-
-  .case-entry.is-motion-visible .case-visual::before,
-  .case-entry.is-motion-visible .case-visual::after {
-    opacity: 1;
-    transform: scale(1);
-  }
-
-  .case-study:hover .case-preview-interactive::after,
-  .case-study:focus-within .case-preview-interactive::after {
-    background-position: -20% 0;
-  }
-
-  .case-copy {
-    grid-column: 9 / -1;
-  }
-
-  .case-study--reverse .case-visual {
-    grid-column: 5 / -1;
-    order: 2;
-  }
-
-  .case-study--reverse .case-copy {
-    grid-column: 1 / span 4;
-    order: 1;
-  }
-
-  .case-topline {
+  .case-index {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid var(--line-on-dark);
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid var(--line-dark);
   }
 
-  .case-topline > span {
-    color: rgba(243, 245, 247, 0.58);
-    font-size: 0.65rem;
+  .case-index span {
+    color: rgba(247, 245, 239, 0.54);
+    font-size: 0.62rem;
   }
 
-  .case-topline strong {
-    padding: 0.35rem 0.55rem;
-    border: 1px solid rgba(240, 201, 40, 0.38);
-    border-radius: 999px;
-    color: var(--flag-yellow);
-    font-size: 0.58rem;
-    letter-spacing: 0.09em;
-    text-transform: uppercase;
-  }
-
-  .case-type {
-    margin: 1.2rem 0 0.55rem;
-    color: rgba(243, 245, 247, 0.64);
-    font-size: 0.65rem;
-    font-weight: 700;
+  .case-index strong {
+    color: var(--yellow);
+    font-size: 0.59rem;
+    font-weight: 760;
     letter-spacing: 0.12em;
     text-transform: uppercase;
   }
 
-  .case-copy h3 {
-    max-width: 32rem;
+  .case-title > p {
+    margin: 1.2rem 0 0.6rem;
+    color: rgba(247, 245, 239, 0.55);
+    font-size: 0.64rem;
+    font-weight: 700;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+  }
+
+  .case-title h3 {
+    max-width: 72rem;
     margin: 0;
-    font-size: clamp(2rem, 4vw, 4rem);
+    font-size: clamp(3rem, 7.8vw, 8.5rem);
     font-weight: 520;
-    line-height: 1;
-    letter-spacing: -0.055em;
+    line-height: 0.88;
+    letter-spacing: -0.078em;
   }
 
-  .case-toggle {
-    display: none;
-    align-items: center;
-    gap: 0.6rem;
-    margin-top: 1.4rem;
-    padding: 0.65rem 0;
-    border: 0;
-    border-bottom: 1px solid rgba(243, 245, 247, 0.32);
-    background: transparent;
-    color: var(--white);
-    font: 700 0.76rem var(--font-sans);
-    cursor: pointer;
+  .case-scene {
+    --project-x: 0px;
+    --project-y: 0px;
+    --project-back-x: 0px;
+    --project-back-y: 0px;
+    --project-front-x: 0px;
+    --project-front-y: 0px;
+    --pointer-x: 50%;
+    --pointer-y: 50%;
+    position: relative;
+    margin-top: clamp(2rem, 4vw, 4rem);
   }
 
-  .case-toggle.is-enhanced {
-    display: inline-flex;
+  .case-scene::after {
+    position: absolute;
+    z-index: 5;
+    inset: -1px;
+    background:
+      radial-gradient(circle at var(--pointer-x) var(--pointer-y), rgba(255, 255, 255, 0.16), transparent 21%),
+      linear-gradient(112deg, rgba(181, 31, 43, 0.16), transparent 14% 82%, rgba(228, 185, 31, 0.16));
+    content: '';
+    opacity: 0.42;
+    pointer-events: none;
+    transition: opacity 320ms ease;
   }
 
-  .case-toggle span {
+  .case-scene:hover::after {
+    opacity: 0.74;
+  }
+
+  .case-preview {
+    position: relative;
+    z-index: 1;
+    transform: translate(var(--project-back-x), var(--project-back-y));
+    transition: transform 520ms var(--ease-out), filter 420ms ease;
+  }
+
+  .case-scene:hover .case-preview {
+    filter: contrast(1.025) saturate(1.03);
+  }
+
+  .case-study--1 .case-scene {
+    width: min(calc(100% - var(--gutter)), 95rem);
+    margin-right: 0;
+  }
+
+  .case-study--1 .case-preview :global(.browser-preview) {
+    min-height: clamp(28rem, 58vw, 52rem);
+  }
+
+  .case-study--2 .case-title {
     display: grid;
-    width: 1.45rem;
-    height: 1.45rem;
-    place-items: center;
-    border: 1px solid rgba(240, 201, 40, 0.42);
-    border-radius: 50%;
-    color: var(--flag-yellow);
-    font-size: 1.1rem;
-    line-height: 1;
-    transition: transform 420ms var(--ease-out), background-color 320ms var(--ease-out);
+    grid-template-columns: repeat(12, 1fr);
+    column-gap: 1.5rem;
   }
 
-  .case-toggle[aria-expanded='true'] span {
-    transform: rotate(45deg);
+  .case-study--2 .case-index,
+  .case-study--2 .case-title > p {
+    grid-column: 1 / span 4;
   }
 
-  .case-toggle:hover span,
-  .case-toggle:focus-visible span {
-    background: rgba(240, 201, 40, 0.1);
+  .case-study--2 .case-title h3 {
+    grid-column: 4 / -1;
+    margin-top: -1.2rem;
   }
 
-  .case-details-grid {
+  .case-study--2 .case-scene {
+    width: min(76rem, calc(100% - var(--gutter) * 2));
+    margin-right: 3vw;
+  }
+
+  .case-study--2 .case-preview {
+    transform: translate(calc(var(--project-back-x) - 2vw), var(--project-back-y)) rotate(-1.2deg);
+  }
+
+  .scene-fragment {
+    position: absolute;
+    z-index: 4;
     display: grid;
-    grid-template-rows: 1fr;
-    opacity: 1;
+    gap: 0.65rem;
+    padding: 1rem;
+    border: 1px solid rgba(247, 245, 239, 0.3);
+    background: rgba(32, 36, 42, 0.9);
+    box-shadow: 0 1.5rem 3.5rem rgba(0, 0, 0, 0.28);
+    transform: translate(var(--project-x), var(--project-y));
+    transition: transform 520ms var(--ease-out);
   }
 
-  .case-details-grid.is-collapsible {
-    grid-template-rows: 0fr;
-    opacity: 0;
-    transition: grid-template-rows 520ms var(--ease-out), opacity 380ms var(--ease-out);
+  .scene-fragment i,
+  .scene-fragment b {
+    display: block;
+    height: 0.4rem;
+    background: rgba(247, 245, 239, 0.28);
   }
 
-  .case-details-grid.is-collapsible.is-open {
-    grid-template-rows: 1fr;
-    opacity: 1;
+  .scene-fragment i { width: 65%; background: var(--yellow); }
+  .scene-fragment b:nth-child(odd) { width: 82%; }
+
+  .scene-fragment--one {
+    top: 13%;
+    right: -3vw;
+    width: clamp(8rem, 16vw, 15rem);
+    transform: translate(var(--project-front-x), var(--project-front-y)) rotate(3deg);
   }
 
-  .case-details-inner {
-    min-height: 0;
-    overflow: hidden;
+  .scene-fragment--two {
+    bottom: -5%;
+    left: 8%;
+    width: clamp(7rem, 13vw, 12rem);
+    transform: translate(var(--project-x), var(--project-y)) rotate(-4deg);
   }
 
-  .case-details-inner dl {
+  .case-study--3 {
+    padding-block: clamp(2rem, 5vw, 5rem);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.025) 18% 82%, transparent);
+  }
+
+  .case-study--3 .case-title h3 {
+    max-width: 64rem;
+  }
+
+  .case-study--3 .case-scene {
+    width: min(calc(100% - var(--gutter)), 88rem);
+    margin-left: auto;
+  }
+
+  .case-details {
+    align-items: start;
+    margin-top: clamp(2rem, 4vw, 3.5rem);
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--line-dark);
+  }
+
+  .case-details dl {
     display: grid;
-    gap: 1.2rem;
-    margin: 1.5rem 0;
+    grid-column: 1 / span 9;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(1.5rem, 4vw, 4rem);
+    margin: 0;
   }
 
-  .case-details-inner dl > div {
+  .case-details dl > div {
     display: grid;
     grid-template-columns: 4rem 1fr;
     gap: 1rem;
   }
 
-  .case-details-inner dt {
-    color: rgba(243, 245, 247, 0.56);
-    font-size: 0.65rem;
-  }
-
-  .case-details-inner dd {
-    margin: 0;
-    color: rgba(243, 245, 247, 0.86);
-    font-size: 0.88rem;
-    line-height: 1.55;
-  }
-
-  .case-details-inner ul {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.45rem;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  .case-details-inner li {
-    padding: 0.45rem 0.65rem;
-    border: 1px solid var(--line-on-dark);
-    border-radius: 999px;
-    color: rgba(243, 245, 247, 0.76);
+  .case-details dt {
+    color: rgba(247, 245, 239, 0.48);
     font-size: 0.62rem;
   }
 
+  .case-details dd {
+    margin: 0;
+    color: rgba(247, 245, 239, 0.82);
+    font-size: 0.88rem;
+    line-height: 1.58;
+  }
+
+  .case-more {
+    grid-column: 10 / -1;
+  }
+
+  .case-more button {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 0 0.75rem;
+    border: 0;
+    border-bottom: 1px solid var(--line-dark);
+    background: transparent;
+    color: var(--white);
+    font-size: 0.7rem;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .case-more button span {
+    color: var(--yellow);
+    font-size: 1.1rem;
+    transition: transform 360ms var(--ease-out);
+  }
+
+  .case-more button[aria-expanded='true'] span {
+    transform: rotate(45deg);
+  }
+
+  .case-services {
+    display: grid;
+    grid-template-rows: 1fr;
+    opacity: 1;
+    transition: grid-template-rows 440ms var(--ease-out), opacity 300ms ease;
+  }
+
+  .case-services.is-collapsible {
+    grid-template-rows: 0fr;
+    opacity: 0;
+  }
+
+  .case-services.is-collapsible.is-open {
+    grid-template-rows: 1fr;
+    opacity: 1;
+  }
+
+  .case-services > div {
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .case-services ul {
+    display: grid;
+    gap: 0.55rem;
+    margin: 0;
+    padding: 0.85rem 0 0;
+    color: rgba(247, 245, 239, 0.64);
+    font-size: 0.68rem;
+    list-style: none;
+  }
+
   @media (max-width: 63.99rem) {
-    .work-title-block,
+    .work-heading > div,
     .work-heading > p {
       grid-column: 1 / -1;
     }
 
     .work-heading > p {
       max-width: 34rem;
-      margin-top: 1.5rem;
+      margin-top: 1.25rem;
     }
 
-    .case-visual,
-    .case-copy,
-    .case-study--reverse .case-visual,
-    .case-study--reverse .case-copy {
+    .case-details dl,
+    .case-more {
       grid-column: 1 / -1;
-      order: initial;
     }
 
-    .case-copy {
+    .case-more {
       margin-top: 1.5rem;
     }
   }
 
   @media (max-width: 47.99rem) {
-    .case-study {
+    .selected-work {
+      padding-block: 5.5rem;
+    }
+
+    .case-list {
+      gap: 6rem;
+    }
+
+    .case-title h3 {
+      font-size: clamp(2.8rem, 14vw, 4.5rem);
+    }
+
+    .case-study--2 .case-title {
       display: block;
+    }
+
+    .case-study--2 .case-title h3 {
+      margin-top: 0;
+    }
+
+    .case-study--1 .case-scene,
+    .case-study--2 .case-scene,
+    .case-study--3 .case-scene {
+      width: calc(100% - 0.5rem);
+      margin-inline: auto;
+    }
+
+    .case-study--2 .case-preview {
+      transform: translate(var(--project-back-x), var(--project-back-y));
+    }
+
+    .scene-fragment {
+      display: none;
+    }
+
+    .case-details {
+      display: block;
+    }
+
+    .case-details dl {
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+
+    .case-details dl > div {
+      grid-template-columns: 3.5rem 1fr;
     }
   }
 </style>

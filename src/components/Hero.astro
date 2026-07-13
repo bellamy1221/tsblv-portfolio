@@ -2,389 +2,337 @@
 import BrandMark from './BrandMark.astro';
 ---
 
-<section class="hero" id="top" aria-labelledby="hero-title">
-  <div class="site-container content-grid hero-grid">
-    <div class="hero-copy" data-motion="clip">
-      <p class="kicker">Сайты и автоматизация без лишней сложности</p>
-      <h1 id="hero-title">Делаю сайты, которые помогают выглядеть профессионально и получать больше обращений.</h1>
-      <p class="hero-lead">Работаю со специалистами, самозанятыми и небольшими командами. Могу собрать сайт с нуля, подключить CRM, автоматизировать рутину и настроить аналитику.</p>
-      <div class="hero-actions">
-        <a class="button button-primary" href="#work">Посмотреть проекты</a>
-        <a class="button button-secondary" href="#contact">Обсудить задачу</a>
-      </div>
+<section class="hero" id="top" aria-labelledby="hero-title" data-hero-viewport>
+  <div class="hero-stage" data-hero-scene data-sequence>
+    <span class="hero-wordmark" aria-hidden="true">TSBLV</span>
+    <span class="hero-light" aria-hidden="true"></span>
+
+    <div class="hero-lens-wrap" data-hero-lens aria-hidden="true">
+      <span class="lens-wordmark">TSBLV</span>
+      <span class="lens-spectrum"></span>
+      <span class="lens-highlight" data-lens-highlight></span>
     </div>
 
-    <div class="hero-visual-entry" data-motion="scale-depth">
-      <div class="hero-scene tech-frame" data-hero-viewport data-hero-scene>
-        <span class="scene-index" aria-hidden="true">TS / REFRACTION 01</span>
-        <span class="hero-wordmark" aria-hidden="true">TSBLV</span>
-
-        <div class="orbit orbit--wide" data-orbit-depth="1" aria-hidden="true"></div>
-        <div class="orbit orbit--tight" data-orbit-depth="2" aria-hidden="true"></div>
-
-        <div class="lens-position">
-          <div class="hero-lens" data-hero-lens aria-hidden="true">
-            <span class="lens-highlight" data-lens-highlight></span>
-            <span class="lens-rim"></span>
-          </div>
+    <div class="site-container content-grid hero-content">
+      <div class="hero-copy" data-motion="clip">
+        <BrandMark variant="full" size="small" href={null} />
+        <p class="kicker">Сайты и автоматизация без лишней сложности</p>
+        <h1 id="hero-title">Делаю сайты, которые помогают выглядеть профессионально и получать больше обращений.</h1>
+        <p class="hero-lead">Работаю со специалистами, самозанятыми и небольшими командами. Собираю сайты, подключаю CRM, автоматизирую рутину и настраиваю аналитику.</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#work">Посмотреть проекты</a>
+          <a class="button button-secondary" href="#contact">Обсудить задачу</a>
         </div>
-
-        <a class="service-chip chip-site" href="#service-sites" data-service-chip="service-sites"><i></i>Сайты</a>
-        <a class="service-chip chip-crm" href="#service-crm" data-service-chip="service-crm"><i></i>CRM</a>
-        <a class="service-chip chip-auto" href="#service-automation" data-service-chip="service-automation"><i></i>Автоматизация</a>
-        <a class="service-chip chip-data" href="#service-analytics" data-service-chip="service-analytics"><i></i>Аналитика</a>
-
-        <p class="object-note">Выберите направление</p>
       </div>
-    </div>
-
-    <div class="hero-brand" data-motion="fade-blur">
-      <BrandMark variant="full" size="medium" href={null} />
-      <p>Работаю напрямую<br />и остаюсь на связи после запуска</p>
     </div>
   </div>
+
+  <nav class="site-container hero-services" aria-label="Направления работы" data-motion="line">
+    <a href="#service-sites" data-service-link="service-sites"><span>01</span>Сайты</a>
+    <a href="#service-crm" data-service-link="service-crm"><span>02</span>CRM</a>
+    <a href="#service-automation" data-service-link="service-automation"><span>03</span>Автоматизация</a>
+    <a href="#service-analytics" data-service-link="service-analytics"><span>04</span>Аналитика</a>
+  </nav>
 </section>
 
 <style>
   .hero {
     position: relative;
-    padding: clamp(5.15rem, 6vw, 6.35rem) 0 clamp(3.5rem, 4.75vw, 4.75rem);
+    padding-top: 0.4rem;
   }
 
-  .hero-grid {
-    align-items: center;
-    row-gap: clamp(2rem, 4vw, 3.5rem);
-  }
-
-  .hero-copy {
-    z-index: 2;
-    grid-column: 1 / span 6;
-  }
-
-  .kicker {
-    margin: 0 0 1rem;
-    color: var(--flag-red);
-    font-size: 0.7rem;
-    font-weight: 760;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-  }
-
-  h1 {
-    max-width: 48rem;
-    margin: 0;
-    font-size: clamp(2.7rem, 5.7vw, 5.65rem);
-    font-weight: 560;
-    line-height: 0.96;
-    letter-spacing: -0.07em;
-    text-wrap: balance;
-  }
-
-  .hero-lead {
-    max-width: 39rem;
-    margin: 1.45rem 0 0;
-    color: var(--text-muted);
-    font-size: clamp(1rem, 1.35vw, 1.16rem);
-    line-height: 1.6;
-  }
-
-  .hero-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.7rem;
-    margin-top: 1.65rem;
-  }
-
-  .hero-visual-entry {
-    grid-column: 7 / -1;
-  }
-
-  .hero-scene {
-    --scene-x: 0px;
-    --scene-y: 0px;
-    --lens-shift-x: 0px;
-    --lens-edge-x: 50%;
-    --lens-edge-y: 50%;
+  .hero-stage {
+    --lens-x: 0px;
+    --lens-y: 0px;
+    --lens-rx: 0deg;
+    --lens-ry: 0deg;
+    --lens-scale: 1;
+    --light-x: 58%;
+    --light-y: 34%;
     position: relative;
-    min-height: clamp(23rem, 38vw, 32rem);
+    min-height: clamp(43rem, 96svh, 62rem);
     overflow: hidden;
     isolation: isolate;
-    border: 1px solid var(--line-strong);
-    border-radius: 1.35rem;
+    border-bottom: 1px solid var(--line);
     background:
-      radial-gradient(ellipse 70% 46% at 4% 18%, rgba(182, 31, 44, 0.25), transparent 58%),
-      radial-gradient(ellipse 64% 42% at 96% 84%, rgba(240, 201, 40, 0.27), transparent 58%),
-      conic-gradient(from 222deg at 66% 46%, transparent 0 21%, rgba(240, 201, 40, 0.22) 29%, rgba(255, 252, 235, 0.42) 35%, rgba(190, 35, 47, 0.16) 42%, transparent 52% 100%),
-      linear-gradient(138deg, rgba(255, 255, 255, 0.52), rgba(68, 77, 85, 0.1) 50%, rgba(255, 255, 255, 0.24));
-    box-shadow: var(--shadow-lg), inset 0 1px 0 rgba(255, 255, 255, 0.62);
-    backdrop-filter: blur(16px) saturate(115%);
+      linear-gradient(108deg, transparent 0 62%, rgba(228, 185, 31, 0.08) 72%, transparent 82%),
+      linear-gradient(24deg, rgba(181, 31, 43, 0.1), transparent 30%),
+      var(--page);
   }
 
-  html[data-theme='dark'] .hero-scene {
-    background:
-      radial-gradient(ellipse 70% 46% at 4% 18%, rgba(182, 31, 44, 0.15), transparent 58%),
-      radial-gradient(ellipse 64% 42% at 96% 84%, rgba(240, 201, 40, 0.14), transparent 58%),
-      conic-gradient(from 222deg at 66% 46%, transparent 0 21%, rgba(240, 201, 40, 0.1) 29%, rgba(220, 229, 235, 0.15) 35%, rgba(181, 31, 43, 0.1) 42%, transparent 52% 100%),
-      linear-gradient(138deg, rgba(255, 255, 255, 0.09), rgba(16, 18, 22, 0.18) 50%, rgba(255, 255, 255, 0.055));
-  }
-
-  .hero-scene::before {
-    z-index: 4;
+  .hero-stage::before {
     position: absolute;
-    inset: 0;
-    background: linear-gradient(108deg, transparent 30%, rgba(255, 255, 255, 0.3) 48%, transparent 65%);
-    background-position: 130% 0;
-    background-size: 220% 100%;
+    z-index: -2;
+    inset: -18%;
+    background:
+      conic-gradient(from 218deg at 62% 44%, transparent 0 25%, rgba(181, 31, 43, 0.2) 31%, rgba(247, 245, 239, 0.46) 37%, rgba(228, 185, 31, 0.2) 43%, transparent 51% 100%);
     content: '';
-    pointer-events: none;
+    opacity: 0.82;
+    transform: rotate(-4deg);
   }
 
-  .hero-scene::after {
-    position: absolute;
-    z-index: -1;
-    inset: -20%;
+  :global(html[data-theme='dark']) .hero-stage {
     background:
-      radial-gradient(circle at var(--lens-edge-x) var(--lens-edge-y), rgba(255, 255, 255, 0.22), transparent 19%),
-      conic-gradient(from 188deg at 48% 52%, transparent 0 32%, rgba(181, 31, 43, 0.12) 38%, rgba(255, 252, 235, 0.2) 42%, rgba(240, 201, 40, 0.14) 47%, transparent 54% 100%);
-    content: '';
-    pointer-events: none;
+      linear-gradient(108deg, transparent 0 62%, rgba(228, 185, 31, 0.05) 72%, transparent 82%),
+      linear-gradient(24deg, rgba(181, 31, 43, 0.07), transparent 30%),
+      var(--page);
   }
 
-  .hero-visual-entry.is-motion-visible .hero-scene::before {
-    animation: scene-sheen 1.8s 350ms var(--ease-out) both;
+  :global(html[data-theme='dark']) .hero-stage::before {
+    opacity: 0.46;
   }
 
-  .scene-index {
-    position: absolute;
-    top: 1.15rem;
-    right: 1.25rem;
-    color: color-mix(in srgb, var(--text) 52%, transparent);
-    font-size: 0.54rem;
-    font-weight: 720;
-    letter-spacing: 0.12em;
+  .hero-wordmark,
+  .lens-wordmark {
+    font-size: clamp(10rem, 25vw, 24rem);
+    font-weight: 790;
+    line-height: 0.67;
+    letter-spacing: -0.085em;
+    white-space: nowrap;
   }
 
   .hero-wordmark {
     position: absolute;
     z-index: -1;
-    top: 50%;
+    top: 48%;
     left: 50%;
-    color: color-mix(in srgb, var(--text) 51%, transparent);
-    font-size: clamp(6rem, 17vw, 15rem);
-    font-weight: 780;
-    line-height: 0.6;
-    letter-spacing: -0.075em;
-    text-shadow: 0 -1px rgba(255, 255, 255, 0.7), 0 1.5rem 3rem rgba(16, 18, 22, 0.2);
-    transform: translate(calc(-50% + var(--scene-x)), calc(-50% + var(--scene-y)));
-    transition: transform 520ms var(--ease-out);
-    white-space: nowrap;
+    color: color-mix(in srgb, var(--text) 27%, transparent);
+    text-shadow:
+      0 -1px rgba(255, 255, 255, 0.62),
+      0 2px rgba(17, 19, 23, 0.24),
+      0 2rem 4rem rgba(17, 19, 23, 0.13);
+    transform: translate(-50%, -50%);
   }
 
-  .lens-position {
+  .hero-light {
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 28% 40% at var(--light-x) var(--light-y), rgba(255, 255, 255, 0.32), transparent 68%),
+      linear-gradient(106deg, transparent 30%, rgba(181, 31, 43, 0.09) 43%, rgba(255, 255, 255, 0.28) 49%, rgba(228, 185, 31, 0.11) 55%, transparent 64%);
+    background-position: 0 0, 140% 0;
+    background-size: 100% 100%, 230% 100%;
+    mix-blend-mode: screen;
+    pointer-events: none;
+  }
+
+  .hero-stage.is-sequence-visible .hero-light {
+    animation: hero-sweep 2s 300ms var(--ease-out) both;
+  }
+
+  .hero-lens-wrap {
+    position: absolute;
+    z-index: 3;
+    top: 48%;
+    left: 50%;
+    width: clamp(11rem, 19vw, 18rem);
+    aspect-ratio: 1;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.66);
+    border-radius: 50%;
+    box-shadow:
+      0 2rem 5rem rgba(17, 19, 23, 0.22),
+      inset 1rem 1rem 2rem rgba(255, 255, 255, 0.14),
+      inset -1rem -1rem 2rem rgba(17, 19, 23, 0.16);
+    backdrop-filter: blur(2px) brightness(1.12) contrast(1.12);
+    pointer-events: none;
+    transform: translate(calc(-50% + var(--lens-x)), calc(-50% + var(--lens-y))) rotateX(var(--lens-rx)) rotateY(var(--lens-ry)) scale(var(--lens-scale));
+    transform-style: preserve-3d;
+    transition: transform 520ms var(--ease-out), box-shadow 420ms var(--ease-out);
+  }
+
+  .lens-wordmark {
     position: absolute;
     top: 50%;
     left: 50%;
-    width: clamp(10.5rem, 20vw, 17rem);
-    aspect-ratio: 1;
-    transform: translate(calc(-50% + var(--lens-shift-x)), -50%);
+    color: color-mix(in srgb, var(--text) 58%, transparent);
+    text-shadow:
+      -1px 0 rgba(181, 31, 43, 0.38),
+      1px 0 rgba(228, 185, 31, 0.36),
+      0 -1px rgba(255, 255, 255, 0.7);
+    transform: translate(calc(-50% - var(--lens-x)), calc(-50% - var(--lens-y))) scale(1.065, 1.04);
     transition: transform 520ms var(--ease-out);
-    perspective: 700px;
   }
 
-  .hero-lens {
-    --lens-rotate-x: 0deg;
-    --lens-rotate-y: 0deg;
-    --lens-scale: 1;
-    --lens-edge-x: 50%;
-    --lens-edge-y: 50%;
+  .lens-spectrum,
+  .lens-highlight {
     position: absolute;
     inset: 0;
-    border: 1px solid rgba(255, 255, 255, 0.68);
-    border-radius: 50%;
-    background:
-      radial-gradient(circle at var(--lens-edge-x) var(--lens-edge-y), rgba(255, 255, 255, 0.56), transparent 25%),
-      conic-gradient(from calc(130deg + var(--lens-rotate-y)), rgba(181, 31, 43, 0.25), rgba(255, 252, 235, 0.15) 23%, rgba(240, 201, 40, 0.28) 40%, rgba(255, 255, 255, 0.15) 58%, rgba(181, 31, 43, 0.14) 76%, rgba(255, 255, 255, 0.22));
-    box-shadow:
-      0 2rem 5rem rgba(16, 18, 22, 0.24),
-      inset 1rem 1rem 2rem rgba(255, 255, 255, 0.17),
-      inset -1rem -1rem 2rem rgba(16, 18, 22, 0.14);
-    backdrop-filter: blur(2.5px) brightness(1.14) contrast(1.07) saturate(1.08);
-    transform: rotateX(var(--lens-rotate-x)) rotateY(var(--lens-rotate-y)) scale(var(--lens-scale));
-    transition: transform 480ms var(--ease-out), box-shadow 420ms var(--ease-out);
-    transform-style: preserve-3d;
+    border-radius: inherit;
+    pointer-events: none;
   }
 
-  .hero-lens::before {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    content: 'TSBLV';
-    color: color-mix(in srgb, var(--text) 64%, transparent);
-    font-size: clamp(6rem, 17vw, 15rem);
-    font-weight: 780;
-    line-height: 0.6;
-    letter-spacing: -0.075em;
-    text-shadow:
-      -1px 0 rgba(181, 31, 43, 0.28),
-      1px 0 rgba(240, 201, 40, 0.28),
-      0 -1px rgba(255, 255, 255, 0.72);
-    transform: translate(calc(-50% + var(--scene-x)), calc(-50% + var(--scene-y))) scaleX(1.025);
-    white-space: nowrap;
+  .lens-spectrum {
+    border: 1px solid rgba(255, 255, 255, 0.34);
+    background: conic-gradient(from 142deg, rgba(181, 31, 43, 0.2), transparent 22%, rgba(228, 185, 31, 0.2) 42%, transparent 65%, rgba(255, 255, 255, 0.18));
+    mix-blend-mode: screen;
   }
 
   .lens-highlight {
-    --highlight-x: 35%;
+    --highlight-x: 38%;
     --highlight-y: 28%;
-    position: absolute;
-    z-index: 2;
-    inset: 0;
-    border-radius: inherit;
-    background: radial-gradient(circle at var(--highlight-x) var(--highlight-y), rgba(255, 255, 255, 0.72), transparent 17%);
-    opacity: 0.66;
-    transition: background-position 300ms var(--ease-out);
+    background: radial-gradient(circle at var(--highlight-x) var(--highlight-y), rgba(255, 255, 255, 0.72), transparent 18%);
+    opacity: 0.54;
   }
 
-  .lens-rim {
-    position: absolute;
-    z-index: 3;
-    inset: 7%;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: inherit;
-    box-shadow: inset 0 0 1.2rem rgba(255, 255, 255, 0.12);
+  .hero-content {
+    min-height: inherit;
+    align-items: end;
+    padding-top: 7rem;
+    padding-bottom: clamp(3rem, 6vh, 5rem);
   }
 
-  .orbit {
-    --orbit-x: 0px;
-    --orbit-y: 0px;
-    position: absolute;
-    z-index: -1;
-    border: 1px solid color-mix(in srgb, var(--ice) 36%, transparent);
-    border-radius: 50%;
-    transform: translate(var(--orbit-x), var(--orbit-y));
-    transition: transform 620ms var(--ease-out);
+  .hero-copy {
+    position: relative;
+    z-index: 5;
+    grid-column: 1 / span 6;
+    max-width: 44rem;
   }
 
-  .orbit--wide {
-    top: 5%;
-    right: 7%;
-    width: 53%;
-    aspect-ratio: 1;
+  .hero-copy :global(.brand-mark) {
+    --brand-color: var(--text);
+    --brand-muted: var(--text-muted);
+    --brand-line: var(--line-strong);
+    margin-bottom: clamp(3rem, 10vh, 7rem);
   }
 
-  .orbit--tight {
-    bottom: -20%;
-    left: 20%;
-    width: 62%;
-    aspect-ratio: 1;
-    border-color: color-mix(in srgb, var(--flag-yellow) 24%, transparent);
-  }
-
-  .service-chip {
-    --chip-x: 0px;
-    --chip-y: 0px;
-    position: absolute;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.62rem 0.85rem;
-    border: 1px solid var(--line-strong);
-    border-radius: 999px;
-    background: var(--surface-glass-strong);
-    box-shadow: 0 0.75rem 1.8rem rgba(16, 18, 22, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.5);
-    backdrop-filter: blur(14px);
-    color: var(--text);
-    font: 650 clamp(0.65rem, 1vw, 0.82rem) / 1 var(--font-sans);
-    text-decoration: none;
-    transform: translate(var(--chip-x), var(--chip-y));
-    transition: transform 420ms var(--ease-out), background-color 320ms var(--ease-out), border-color 320ms var(--ease-out);
-  }
-
-  .service-chip i {
-    width: 0.43rem;
-    height: 0.43rem;
-    border-radius: 50%;
-    background: var(--flag-red);
-    box-shadow: 0 0 0 0.18rem rgba(220, 52, 65, 0.12);
-  }
-
-  .service-chip:hover,
-  .service-chip:focus-visible,
-  .service-chip.is-active {
-    border-color: var(--flag-yellow);
-    background: var(--surface-glass-strong);
-  }
-
-  .chip-site { top: 14%; left: 10%; }
-  .chip-crm { top: 19%; right: 10%; }
-  .chip-auto { bottom: 15%; left: 14%; }
-  .chip-data { right: 14%; bottom: 12%; }
-  .chip-crm i, .chip-data i { background: var(--flag-yellow); box-shadow: 0 0 0 0.18rem rgba(240, 201, 40, 0.12); }
-
-  .object-note {
-    position: absolute;
-    right: 1.2rem;
-    bottom: 1rem;
-    margin: 0;
-    color: color-mix(in srgb, var(--text) 58%, transparent);
-    font-size: 0.56rem;
-    letter-spacing: 0.1em;
+  .kicker {
+    margin: 0 0 0.8rem;
+    color: var(--red);
+    font-size: 0.67rem;
+    font-weight: 760;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
   }
 
-  .hero-brand {
-    display: flex;
-    grid-column: 1 / -1;
-    align-items: center;
-    justify-content: space-between;
-    gap: 2rem;
-    padding-top: 1.4rem;
-    border-top: 1px solid var(--line);
-  }
-
-  .hero-brand p {
+  h1 {
     margin: 0;
-    color: var(--text-muted);
-    font-size: 0.72rem;
-    line-height: 1.6;
-    text-align: right;
+    font-size: clamp(2.25rem, 4vw, 4.8rem);
+    font-weight: 540;
+    line-height: 0.98;
+    letter-spacing: -0.067em;
+    text-wrap: balance;
   }
 
-  @keyframes scene-sheen {
-    to { background-position: -25% 0; }
+  .hero-lead {
+    max-width: 39rem;
+    margin: 1.2rem 0 0;
+    color: var(--text-muted);
+    font-size: clamp(0.95rem, 1.25vw, 1.12rem);
+    line-height: 1.58;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+    margin-top: 1.45rem;
+  }
+
+  .hero-services {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .hero-services a {
+    display: flex;
+    min-height: 4.4rem;
+    align-items: center;
+    gap: 0.8rem;
+    border-right: 1px solid var(--line);
+    color: var(--text);
+    font-size: clamp(0.78rem, 1.2vw, 1rem);
+    font-weight: 670;
+    text-decoration: none;
+    transition: color 280ms ease, padding-left 360ms var(--ease-out);
+  }
+
+  .hero-services a:last-child {
+    border-right: 0;
+  }
+
+  .hero-services a:hover,
+  .hero-services a:focus-visible {
+    padding-left: 0.45rem;
+    color: var(--red);
+  }
+
+  .hero-services span {
+    color: var(--text-muted);
+    font-size: 0.6rem;
+  }
+
+  @keyframes hero-sweep {
+    to { background-position: 0 0, -25% 0; }
   }
 
   @media (max-width: 63.99rem) {
-    .hero-copy,
-    .hero-visual-entry {
-      grid-column: 1 / -1;
+    .hero-copy {
+      grid-column: 1 / span 8;
     }
 
-    .hero-copy {
-      max-width: 56rem;
+    .hero-wordmark,
+    .lens-wordmark {
+      font-size: clamp(9rem, 28vw, 17rem);
     }
   }
 
-  @media (max-width: 35rem) {
-    .hero {
-      padding-top: 5rem;
+  @media (hover: none) {
+    .hero-lens-wrap {
+      animation: touch-lens 7s ease-in-out infinite alternate;
+    }
+  }
+
+  @keyframes touch-lens {
+    to { transform: translate(calc(-50% + 1.4rem), calc(-50% - 0.75rem)); }
+  }
+
+  @media (max-width: 47.99rem) {
+    .hero-stage {
+      min-height: 44rem;
     }
 
-    .hero-scene {
-      min-height: 22rem;
-      margin-inline: calc(var(--gutter) * -0.5);
+    .hero-content {
+      display: flex;
+      align-items: flex-end;
+      padding-top: 5.5rem;
+      padding-bottom: 2.25rem;
     }
 
-    .chip-site { left: 5%; }
-    .chip-crm { right: 5%; }
-    .chip-auto { bottom: 12%; left: 6%; }
-    .chip-data { right: 6%; bottom: 9%; }
-    .object-note { display: none; }
-
-    .hero-brand {
-      align-items: flex-start;
-      flex-direction: column;
+    .hero-copy :global(.brand-mark) {
+      margin-bottom: 14rem;
     }
 
-    .hero-brand p { text-align: left; }
+    .hero-wordmark,
+    .lens-wordmark {
+      top: 38%;
+      font-size: clamp(7.4rem, 38vw, 11rem);
+    }
+
+    .lens-wordmark { top: 50%; }
+
+    .hero-lens-wrap {
+      top: 38%;
+      width: clamp(8rem, 34vw, 10rem);
+    }
+
+    h1 {
+      font-size: clamp(2.05rem, 10.2vw, 3.3rem);
+    }
+
+    .hero-services {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .hero-services a {
+      min-height: 3.8rem;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .hero-services a:nth-child(2) {
+      border-right: 0;
+    }
   }
 </style>
