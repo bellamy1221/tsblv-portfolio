@@ -1,41 +1,7 @@
 ---
 import { processSteps } from '../data/home';
 ---
-
-<section class="section process" id="process" aria-labelledby="process-title">
-  <div class="site-container">
-    <div class="process-heading" data-reveal>
-      <div><p class="section-label">Процесс</p><h2 id="process-title">Как проходит работа</h2></div>
-      <p>Четыре понятных этапа без длинных цепочек согласований.</p>
-    </div>
-    <ol class="process-track">
-      {processSteps.map((step) => (
-        <li data-reveal>
-          <span>{step.id}</span>
-          <div><h3>{step.title}</h3><p>{step.description}</p></div>
-        </li>
-      ))}
-    </ol>
-  </div>
-</section>
-
+<section class="section process" id="process" aria-labelledby="process-title"><div class="site-container"><div class="process-heading" data-reveal="mask"><div><p class="section-label">Процесс</p><h2 id="process-title">Как проходит работа</h2></div><p>Четыре понятных этапа — без длинных цепочек согласований.</p></div><ol class="process-route">{processSteps.map((step)=><li data-reveal="soft"><span>{step.id}</span><div class="route-dot"></div><h3>{step.title}</h3><p>{step.description}</p></li>)}</ol></div></section>
 <style>
-  .process { background: var(--paper-raised); }
-  .process-heading { display: flex; align-items: end; justify-content: space-between; gap: 2rem; margin-bottom: 3.5rem; }
-  .process-heading > p { max-width: 24rem; margin: 0; color: var(--muted); line-height: 1.55; }
-  .process-track { position: relative; display: grid; margin: 0; padding: 0; list-style: none; }
-  .process-track::before { position: absolute; top: 1rem; right: 0; left: 0; height: 1px; background: var(--line-strong); content: ''; }
-  li { position: relative; padding: 0 1.4rem 0 0; }
-  li::before { position: relative; z-index: 1; display: block; width: .65rem; height: .65rem; margin: .7rem 0 2rem; border: 2px solid var(--paper-raised); border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 1px var(--accent); content: ''; }
-  li > span { color: var(--accent); font-size: .64rem; font-weight: 700; }
-  h3 { max-width: 17rem; margin: .75rem 0 0; font-size: clamp(1.15rem, 2vw, 1.65rem); font-weight: 560; line-height: 1.15; letter-spacing: -.035em; }
-  li p { max-width: 18rem; margin: 1rem 0 0; color: var(--muted); font-size: .84rem; line-height: 1.6; }
-  @media (min-width: 48rem) { .process-track { grid-template-columns: repeat(4, 1fr); } }
-  @media (max-width: 47.99rem) {
-    .process-heading { align-items: flex-start; flex-direction: column; }
-    .process-track { gap: 0; padding-left: 2rem; }
-    .process-track::before { top: 0; right: auto; left: .3rem; width: 1px; height: 100%; }
-    li { min-height: 10rem; padding: 0 0 2rem; }
-    li::before { position: absolute; top: .15rem; left: -2rem; margin: 0; }
-  }
+.process{overflow:hidden;background:linear-gradient(145deg,var(--paper-raised),color-mix(in srgb,var(--cyan) 28%,var(--paper-raised)))}.process-heading{display:flex;align-items:end;justify-content:space-between;gap:2rem;margin-bottom:clamp(3rem,6vw,5rem)}.process-heading>p{max-width:25rem;margin:0;color:var(--muted);line-height:1.6}.process-route{position:relative;display:grid;gap:2rem;margin:0;padding:0;list-style:none}.process-route::before{position:absolute;top:1.8rem;right:3%;left:3%;height:2px;background:linear-gradient(90deg,var(--violet),var(--cyan),var(--peach));content:''}.process-route li{position:relative}.process-route span{color:var(--violet);font-size:.62rem;font-weight:760}.route-dot{width:1rem;height:1rem;margin:1rem 0 1.5rem;border:3px solid var(--paper-raised);border-radius:50%;background:var(--violet);box-shadow:0 0 0 1px var(--violet)}.process-route h3{max-width:15rem;margin:0;font-size:clamp(1.15rem,2vw,1.55rem);font-weight:620;line-height:1.1;letter-spacing:-.04em}.process-route p{max-width:17rem;margin:.8rem 0 0;color:var(--muted);font-size:.84rem;line-height:1.6}@media(min-width:48rem){.process-route{grid-template-columns:repeat(4,1fr)}}@media(max-width:47.99rem){.process-heading{align-items:flex-start;flex-direction:column}.process-route{gap:1rem;padding-left:2rem}.process-route::before{top:1rem;bottom:1rem;left:.45rem;width:2px;height:auto}.route-dot{position:absolute;top:.35rem;left:-2rem;margin:0}.process-route p{max-width:28rem}}
 </style>

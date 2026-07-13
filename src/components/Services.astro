@@ -1,35 +1,7 @@
 ---
 import { services } from '../data/home';
 ---
-
-<section class="section" id="services" aria-labelledby="services-title">
-  <div class="site-container services-layout">
-    <div data-reveal>
-      <p class="section-label">Услуги</p>
-      <h2 id="services-title">Чем я занимаюсь</h2>
-    </div>
-    <ol class="services-list">
-      {services.map((service) => (
-        <li data-reveal>
-          <span>{service.id}</span>
-          <h3>{service.title}</h3>
-          <p>{service.description}</p>
-          <i aria-hidden="true">↗</i>
-        </li>
-      ))}
-    </ol>
-  </div>
-</section>
-
+<section class="section services" id="services" aria-labelledby="services-title"><div class="site-container"><div class="services-heading" data-reveal="mask"><p class="section-label">Услуги</p><h2 id="services-title">Что могу сделать</h2></div><div class="service-grid">{services.map((service)=><article class="service-module" data-reveal="depth" data-service={service.visual}><div class:list={['service-diagram',`diagram-${service.visual}`]} aria-hidden="true"><span></span><i></i><b></b><em></em></div><div><p>{service.id}</p><h3>{service.title}</h3><span>{service.description}</span></div><a href="#contact" aria-label={`Обсудить услугу: ${service.title}`}>↗</a></article>)}</div></div></section>
 <style>
-  .services-layout { display: grid; gap: 3rem; }
-  .services-list { margin: 0; padding: 0; border-top: 1px solid var(--line-strong); list-style: none; }
-  li { display: grid; grid-template-columns: 2.5rem minmax(8rem, .8fr) minmax(12rem, 1.2fr) auto; align-items: center; gap: 1.25rem; min-height: 7rem; border-bottom: 1px solid var(--line); transition: padding .25s ease, background .25s ease; }
-  li:hover { padding-inline: 1rem; background: var(--paper-raised); }
-  li > span { color: var(--accent); font-size: .65rem; font-weight: 700; }
-  h3 { margin: 0; font-size: clamp(1.25rem, 2.2vw, 2rem); font-weight: 550; letter-spacing: -.04em; }
-  p { max-width: 32rem; margin: 0; color: var(--muted); font-size: .9rem; line-height: 1.55; }
-  i { color: var(--muted); font-style: normal; }
-  @media (min-width: 64rem) { .services-layout { grid-template-columns: .55fr 1.45fr; } }
-  @media (max-width: 47.99rem) { li { grid-template-columns: 2rem 1fr auto; gap: .75rem; padding-block: 1.35rem; } li p { grid-column: 2 / -1; } }
+.services-heading{margin-bottom:clamp(2.5rem,5vw,4rem)}.service-grid{display:grid;gap:.75rem}.service-module{position:relative;display:grid;min-height:16rem;grid-template-rows:1fr auto;overflow:hidden;padding:1.15rem;border:1px solid var(--line);border-radius:1.4rem;background:var(--paper-raised);transition:transform .3s cubic-bezier(.22,1,.36,1),box-shadow .3s ease}.service-module:hover{z-index:1;box-shadow:var(--shadow-lg);transform:translateY(-.35rem)}.service-module>div:last-of-type p{margin:0 0 .55rem;color:var(--violet);font-size:.62rem;font-weight:750}.service-module h3{margin:0;font-size:clamp(1.35rem,2.2vw,2rem);font-weight:600;letter-spacing:-.05em}.service-module>div:last-of-type span{display:block;max-width:20rem;margin-top:.65rem;color:var(--muted);font-size:.82rem;line-height:1.55}.service-module>a{position:absolute;right:1rem;bottom:1rem;display:grid;width:2.3rem;height:2.3rem;place-items:center;border:1px solid var(--line-strong);border-radius:50%;color:var(--ink);text-decoration:none;transition:background .2s,color .2s}.service-module>a:hover{background:var(--ink);color:var(--paper)}.service-diagram{position:relative;min-height:7.4rem;overflow:hidden}.service-diagram span,.service-diagram i,.service-diagram b,.service-diagram em{position:absolute;display:block;transition:transform .45s cubic-bezier(.22,1,.36,1)}.diagram-site span{top:12%;left:6%;width:64%;height:54%;border:1px solid var(--violet);border-radius:.55rem}.diagram-site i{top:25%;left:16%;width:32%;height:6%;background:var(--violet)}.diagram-site b{top:41%;left:16%;width:48%;height:3px;background:var(--line-strong)}.diagram-site em{top:58%;left:16%;width:19%;height:14%;border-radius:.35rem;background:var(--peach)}.diagram-crm span,.diagram-crm i,.diagram-crm b{width:2.9rem;aspect-ratio:1;border-radius:50%;background:var(--cyan)}.diagram-crm span{top:18%;left:10%}.diagram-crm i{right:12%;bottom:16%;background:var(--lavender)}.diagram-crm b{top:8%;right:25%;width:1.8rem;background:var(--peach)}.diagram-crm em{top:42%;left:29%;width:42%;height:1px;background:var(--violet);transform:rotate(24deg);transform-origin:left}.diagram-auto span,.diagram-auto i,.diagram-auto b{height:.8rem;border-radius:999px;background:var(--peach)}.diagram-auto span{top:18%;left:8%;width:28%}.diagram-auto i{top:48%;left:34%;width:38%;background:var(--lavender)}.diagram-auto b{right:8%;bottom:18%;width:25%;background:var(--cyan)}.diagram-auto em{top:25%;left:31%;width:1px;height:54%;border-left:1px dashed var(--violet);transform:rotate(-46deg)}.diagram-analytics span{right:8%;bottom:18%;left:8%;height:1px;background:var(--line-strong)}.diagram-analytics i,.diagram-analytics b,.diagram-analytics em{bottom:18%;width:13%;border-radius:.3rem .3rem 0 0;background:var(--cyan)}.diagram-analytics i{left:16%;height:28%}.diagram-analytics b{left:43%;height:51%;background:var(--lavender)}.diagram-analytics em{right:16%;height:72%;background:var(--peach)}.service-module:hover .service-diagram span{transform:translate(.3rem,-.25rem)}.service-module:hover .service-diagram i{transform:translate(-.25rem,.25rem)}.service-module:hover .service-diagram b{transform:translate(.2rem,-.35rem)}@media(min-width:48rem){.service-grid{grid-template-columns:repeat(2,1fr)}}@media(min-width:64rem){.service-grid{grid-template-columns:repeat(4,1fr)}.service-module:nth-child(2){transform:translateY(2rem)}.service-module:nth-child(2):hover{transform:translateY(1.65rem)}.service-module:nth-child(4){transform:translateY(1rem)}.service-module:nth-child(4):hover{transform:translateY(.65rem)}}
 </style>

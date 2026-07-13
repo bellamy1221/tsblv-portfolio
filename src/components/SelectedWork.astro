@@ -5,14 +5,14 @@ import ProjectPreview from './ProjectPreview.astro';
 
 <section class="section selected-work" id="work" aria-labelledby="work-title">
   <div class="site-container">
-    <div class="work-heading" data-reveal>
+    <div class="work-heading" data-reveal="mask">
       <div><p class="section-label">Практика</p><h2 id="work-title">Избранные проекты</h2></div>
       <p>Концепции показывают мой подход к структуре, дизайну и рабочим системам. Это не реальные клиентские проекты.</p>
     </div>
 
     <div class="case-list">
       {conceptCases.map((project, index) => (
-        <article class:list={['case-study', index % 2 === 1 && 'case-study--reverse']} data-reveal>
+        <article class:list={['case-study', index % 2 === 1 && 'case-study--reverse']} data-reveal="depth">
           <div class="case-preview"><ProjectPreview kind={project.preview} /></div>
           <div class="case-copy">
             <div class="case-topline"><span>{project.id}</span><strong>{project.kind}</strong></div>
@@ -31,14 +31,15 @@ import ProjectPreview from './ProjectPreview.astro';
 </section>
 
 <style>
-  .selected-work { background: var(--surface-inverse); color: var(--on-inverse); }
+  .selected-work { overflow:hidden; background: radial-gradient(circle at 10% 10%, #413966, transparent 34%), var(--surface-inverse); color: var(--on-inverse); }
   .work-heading { display: flex; align-items: end; justify-content: space-between; gap: 2rem; margin-bottom: clamp(3rem, 7vw, 6rem); }
   .work-heading .section-label { color: #9fa29b; }
   .work-heading > p { max-width: 30rem; margin: 0; color: #aeb1aa; font-size: .9rem; line-height: 1.6; }
   .case-list { display: grid; gap: clamp(5rem, 11vw, 10rem); }
   .case-study { display: grid; gap: clamp(2rem, 4vw, 4rem); }
-  .case-preview { transition: transform .45s cubic-bezier(.22,1,.36,1), filter .45s ease; }
-  .case-study:hover .case-preview, .case-study:focus-within .case-preview { filter: saturate(1.04); transform: translateY(-.5rem); }
+  .case-preview { position:relative; transition: transform .55s cubic-bezier(.22,1,.36,1), filter .45s ease; }
+  .case-preview::after{position:absolute;inset:8%;border:1px solid rgba(255,255,255,.16);border-radius:1.2rem;pointer-events:none;content:'';transform:rotate(-2deg);transition:transform .55s cubic-bezier(.22,1,.36,1)}
+  .case-study:hover .case-preview, .case-study:focus-within .case-preview { filter: saturate(1.08); transform: translateY(-.8rem) rotate(.5deg); }.case-study:hover .case-preview::after{transform:rotate(2deg) scale(1.03)}
   .case-study:hover .case-topline strong, .case-study:focus-within .case-topline strong { border-color: #91a5ff; color: #d8e0ff; }
   .case-copy { align-self: center; }
   .case-topline { display: flex; align-items: center; justify-content: space-between; padding-bottom: 1rem; border-bottom: 1px solid #343632; }

@@ -1,26 +1,7 @@
 ---
 import { siteConfig } from '../config/site';
 ---
-
-<section class="section contact" id="contact" aria-labelledby="contact-title">
-  <div class="site-container contact-inner" data-reveal>
-    <p class="section-label">Следующий шаг</p>
-    <h2 id="contact-title">Есть задача? Давайте найдём для неё подходящее решение.</h2>
-    <p>Коротко расскажите, что хотите сделать. Я изучу задачу и предложу следующий шаг.</p>
-    <div class="contact-actions">
-      <a class="button button-light" href={siteConfig.telegramUrl} target="_blank" rel="noreferrer">Написать в Telegram</a>
-      <a class="button button-outline-light" href={`mailto:${siteConfig.email}`}>Написать на почту</a>
-    </div>
-  </div>
-</section>
-
+<section class="section contact" id="contact" aria-labelledby="contact-title"><div class="contact-light contact-light-one"></div><div class="contact-light contact-light-two"></div><div class="site-container contact-inner" data-reveal="depth"><p class="section-label">Следующий шаг</p><h2 id="contact-title">Расскажите, что хотите сделать</h2><p>Можно написать даже с сырой идеей. Я задам несколько вопросов и предложу, с чего лучше начать.</p><div class="contact-actions"><a class="button button-light" href={siteConfig.telegramUrl} target="_blank" rel="noreferrer">Написать в Telegram</a><a class="button button-outline-light" href={`mailto:${siteConfig.email}`}>Написать на почту</a></div></div></section>
 <style>
-  .contact { position: relative; overflow: hidden; background: var(--accent); color: var(--on-accent); }
-  .contact::after { position: absolute; right: -12vw; bottom: -26vw; width: 55vw; height: 55vw; border: 1px solid rgba(255,255,255,.22); border-radius: 50%; content: ''; }
-  .contact-inner { position: relative; z-index: 1; }
-  .section-label { color: #cbd5ff; }
-  h2 { max-width: 68rem; font-size: clamp(2.5rem, 6.7vw, 6.7rem); line-height: .98; }
-  p:not(.section-label) { max-width: 36rem; margin: 2rem 0 0; color: #dce3ff; font-size: clamp(1rem, 1.5vw, 1.2rem); line-height: 1.55; }
-  .contact-actions { display: flex; flex-wrap: wrap; gap: .65rem; margin-top: 2rem; }
-  @media (max-width: 35rem) { .contact-actions { display: grid; } }
+.contact{position:relative;overflow:hidden;background:linear-gradient(135deg,#383149,#293b4b 55%,#604759);color:var(--on-accent)}:global(html[data-theme='dark']) .contact{background:linear-gradient(135deg,#322a46,#243d48 55%,#543b48)}.contact::before{position:absolute;inset:1rem;border:1px solid rgba(255,255,255,.18);border-radius:1.6rem;content:''}.contact-light{position:absolute;border-radius:50%;filter:blur(16px);opacity:.85}.contact-light-one{top:-24%;right:-5%;width:43vw;aspect-ratio:1;background:var(--lavender)}.contact-light-two{bottom:-38%;left:12%;width:42vw;aspect-ratio:1;background:var(--peach)}.contact-inner{position:relative;z-index:1}.section-label{color:#d9d1ff}.contact h2{max-width:60rem;font-size:clamp(2.65rem,6.5vw,6.7rem)}.contact p:not(.section-label){max-width:37rem;margin:1.8rem 0 0;color:rgba(255,255,255,.8);font-size:clamp(1rem,1.5vw,1.2rem);line-height:1.6}.contact-actions{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:2rem}@media(max-width:35rem){.contact-actions{display:grid}.contact::before{inset:.5rem}}
 </style>

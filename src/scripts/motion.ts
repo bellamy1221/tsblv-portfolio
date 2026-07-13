@@ -71,47 +71,40 @@ function initHeader(): void {
 }
 
 function initHeroInteraction(): void {
-  const stage = document.querySelector<HTMLElement>('[data-hero-mark]');
-  const letters = Array.from(stage?.querySelectorAll<HTMLElement>('[data-hero-letter]') ?? []);
-  if (!stage || letters.length === 0 || reduceMotionQuery.matches || !finePointerQuery.matches) return;
+  const object = document.querySelector<HTMLElement>('[data-hero-object]');
+  const orb = document.querySelector<HTMLElement>('[data-hero-orb]');
+  const chips = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-service-chip]'));
+  if (!object || !orb) return;
+
+  chips.forEach((chip) => chip.addEventListener('click', () => {
+    chips.forEach((item) => item.classList.toggle('is-active', item === chip));
+  }));
+  if (reduceMotionQuery.matches || !finePointerQuery.matches) return;
 
   let frame = 0;
-  let pointerActive = false;
-  let pointerX = .5;
-  let pointerY = .5;
-
+  let active = false;
+  let visible = true;
+  let x = .5;
+  let y = .5;
   const render = (): void => {
     frame = 0;
-    letters.forEach((letter, index) => {
-      const center = (index + .5) / letters.length;
-      const distance = Math.max(0, 1 - Math.abs(pointerX - center) * 2.1);
-      const x = pointerActive ? (pointerX - .5) * 10 * (1 - Math.abs(center - .5)) : 0;
-      const y = pointerActive ? (pointerY - .5) * 11 * distance : 0;
-      const rotate = pointerActive ? (pointerX - .5) * 1.4 * distance : 0;
-      letter.style.transform = `translate3d(${x.toFixed(2)}px, ${y.toFixed(2)}px, 0) rotate(${rotate.toFixed(2)}deg)`;
-      letter.classList.toggle('is-moving', pointerActive);
+    const moveX = active ? (x - .5) * 18 : 0;
+    const moveY = active ? (y - .5) * 18 : 0;
+    orb.style.transform = `translate3d(calc(-50% + ${moveX.toFixed(1)}px), calc(-50% + ${moveY.toFixed(1)}px), 0) scale(${active ? '1.025' : '1'})`;
+    chips.forEach((chip, index) => {
+      const factor = index % 2 === 0 ? -1 : 1;
+      chip.style.transform = active ? `translate3d(${(moveX * .32 * factor).toFixed(1)}px, ${(moveY * .32 * factor).toFixed(1)}px, 0)` : '';
     });
   };
-
-  const schedule = (): void => {
-    if (!frame) frame = requestAnimationFrame(render);
-  };
-
-  stage.classList.add('is-interactive');
-  stage.addEventListener('pointerenter', () => { pointerActive = true; });
-  stage.addEventListener('pointermove', (event) => {
-    const rect = stage.getBoundingClientRect();
-    pointerX = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
-    pointerY = Math.min(1, Math.max(0, (event.clientY - rect.top) / rect.height));
-    pointerActive = true;
-    schedule();
+  const schedule = (): void => { if (visible && !frame) frame = requestAnimationFrame(render); };
+  object.addEventListener('pointermove', (event) => {
+    const rect = object.getBoundingClientRect();
+    x = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
+    y = Math.min(1, Math.max(0, (event.clientY - rect.top) / rect.height));
+    active = true; schedule();
   }, { passive: true });
-  stage.addEventListener('pointerleave', () => {
-    pointerActive = false;
-    pointerX = .5;
-    pointerY = .5;
-    schedule();
-  });
+  object.addEventListener('pointerleave', () => { active = false; schedule(); });
+  if ('IntersectionObserver' in window) new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; }, { threshold: .05 }).observe(object);
 }
 
 function initReveals(): void {

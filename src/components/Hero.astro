@@ -1,71 +1,49 @@
 ---
 import BrandMark from './BrandMark.astro';
-import { siteConfig } from '../config/site';
 ---
 
 <section class="hero" id="top" aria-labelledby="hero-title">
+  <div class="hero-light hero-light--violet"></div><div class="hero-light hero-light--cyan"></div>
   <div class="site-container hero-inner">
-    <div class="hero-copy" data-reveal>
-      <p class="kicker">Независимый digital-специалист</p>
-      <h1 id="hero-title">Создаю сайты и цифровые решения, которые помогают находить клиентов и экономить время.</h1>
-      <p class="hero-lead">Разрабатываю лендинги и сайты под ключ, настраиваю CRM, автоматизирую рутинные процессы и собираю понятную аналитику.</p>
-      <div class="hero-actions">
-        <a class="button button-primary" href="#work">Посмотреть работы</a>
-        <a class="button button-secondary" href={siteConfig.telegramUrl} target="_blank" rel="noreferrer">Написать в Telegram</a>
-      </div>
-      <p class="service-line">Сайты <span>·</span> CRM <span>·</span> Автоматизация <span>·</span> Аналитика</p>
+    <div class="hero-copy" data-reveal="mask">
+      <p class="kicker">Сайты и автоматизация без лишней сложности</p>
+      <h1 id="hero-title">Делаю сайты, которые помогают выглядеть профессионально и получать больше обращений.</h1>
+      <p class="hero-lead">Работаю со специалистами, самозанятыми и небольшими командами. Могу собрать сайт с нуля, подключить CRM, автоматизировать рутину и настроить аналитику.</p>
+      <div class="hero-actions"><a class="button button-primary" href="#work">Посмотреть проекты</a><a class="button button-secondary" href="#contact">Обсудить задачу</a></div>
     </div>
 
-    <div class="wordmark-stage" aria-hidden="true" data-hero-mark>
-      <span class="stage-index">TS / 01</span>
-      <div class="letter-grid">
-        <span data-hero-letter>T</span><span data-hero-letter>S</span><span data-hero-letter>B</span><span data-hero-letter>L</span><span data-hero-letter>V</span>
-      </div>
-      <div class="stage-cursor"></div>
-      <div class="stage-meta"><span>Система</span><span>Порядок</span><span>Результат</span></div>
+    <div class="hero-object" data-hero-object data-reveal="depth" aria-label="Сайты, CRM, автоматизация и аналитика">
+      <span class="hero-wordmark">TSBLV</span>
+      <div class="hero-orb" data-hero-orb><span></span></div>
+      <button class="service-chip chip-site" type="button" data-service-chip="sites"><i></i>Сайты</button>
+      <button class="service-chip chip-crm" type="button" data-service-chip="crm"><i></i>CRM</button>
+      <button class="service-chip chip-auto" type="button" data-service-chip="automation"><i></i>Автоматизация</button>
+      <button class="service-chip chip-data" type="button" data-service-chip="analytics"><i></i>Аналитика</button>
+      <span class="hero-orbit orbit-one"></span><span class="hero-orbit orbit-two"></span>
+      <p class="object-note">Наведите, чтобы посмотреть ближе</p>
     </div>
 
-    <div class="hero-brand" data-reveal>
-      <BrandMark variant="full" size="medium" href={null} />
-      <p><span>Работаю напрямую</span><span>и отвечаю за результат</span></p>
-    </div>
+    <div class="hero-brand" data-reveal><BrandMark variant="full" size="medium" href={null} /><p>Работаю напрямую<br/>и остаюсь на связи после запуска</p></div>
   </div>
 </section>
 
 <style>
-  .hero { overflow: clip; padding: clamp(4rem, 8vw, 7.5rem) 0 clamp(5rem, 10vw, 9rem); }
-  .hero-inner { display: grid; gap: 3.5rem; }
-  .hero-copy { position: relative; z-index: 2; max-width: 59rem; }
-  h1 { max-width: 57rem; margin: 0; font-size: clamp(2.55rem, 7.4vw, 6.6rem); font-weight: 550; line-height: .97; letter-spacing: -.065em; text-wrap: balance; }
-  .kicker { margin: 0 0 1.25rem; color: var(--accent); font-size: .69rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
-  .hero-lead { max-width: 42rem; margin: clamp(1.75rem, 3vw, 2.75rem) 0 0; color: var(--muted); font-size: clamp(1rem, 1.55vw, 1.28rem); line-height: 1.55; }
-  .hero-actions { display: flex; flex-wrap: wrap; gap: .65rem; margin-top: 2rem; }
-  .service-line { display: flex; flex-wrap: wrap; gap: .45rem; margin: 2rem 0 0; color: var(--muted); font-size: .73rem; font-weight: 650; letter-spacing: .08em; text-transform: uppercase; }
-  .service-line span { color: var(--accent); }
-  .wordmark-stage { position: relative; min-height: clamp(12rem, 25vw, 22rem); overflow: hidden; border-block: 1px solid var(--line); }
-  .stage-index { position: absolute; top: 1rem; left: 0; color: var(--muted); font-size: .62rem; font-weight: 700; letter-spacing: .16em; }
-  .letter-grid { display: grid; height: 100%; min-height: inherit; grid-template-columns: repeat(5, 1fr); align-items: end; }
-  .letter-grid span { display: grid; height: 72%; place-items: end center; border-left: 1px solid var(--line); font-size: clamp(5rem, 17vw, 15rem); font-weight: 760; line-height: .68; letter-spacing: -.12em; will-change: auto; }
-  .wordmark-stage.is-interactive .letter-grid span { transition: transform .55s cubic-bezier(.22,1,.36,1); }
-  .wordmark-stage.is-interactive .letter-grid span.is-moving { transition-duration: 0s; will-change: transform; }
-  .letter-grid span:last-child { border-right: 1px solid var(--line); }
-  .stage-cursor { position: absolute; z-index: 2; top: 0; bottom: 0; left: 0; width: 2px; background: var(--accent); animation: cursor-scan 1.5s .35s cubic-bezier(.76,0,.24,1) both; }
-  .stage-meta { position: absolute; right: .75rem; bottom: .8rem; left: .75rem; display: flex; justify-content: space-between; color: var(--muted); font-size: .55rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; }
-  .hero-brand { display: flex; align-items: center; justify-content: space-between; gap: 2rem; }
-  .hero-brand p { margin: 0; color: var(--muted); font-size: .72rem; line-height: 1.55; text-align: right; }
-  .hero-brand p span { display: block; }
-  @keyframes cursor-scan { from { transform: translateX(0); } to { transform: translateX(calc(var(--container-width) - 2px)); } }
-  @media (max-width: 47.99rem) {
-    .hero { padding-top: 3rem; }
-    h1 { font-size: clamp(2.55rem, 12vw, 4.2rem); }
-    .hero-actions { display: grid; }
-    .wordmark-stage { margin-inline: calc(var(--gutter) * -1); }
-    .stage-index { left: var(--gutter); }
-    .letter-grid span { font-size: clamp(4.5rem, 26vw, 7rem); }
-    .stage-meta { right: var(--gutter); left: var(--gutter); }
-    .hero-brand { align-items: flex-start; flex-direction: column; }
-    .hero-brand p { text-align: left; }
-    @keyframes cursor-scan { from { transform: translateX(0); } to { transform: translateX(calc(100vw - 2px)); } }
-  }
-  @media (prefers-reduced-motion: reduce) { .stage-cursor { right: 0; left: auto; animation: none; } }
+  .hero { position:relative; overflow:clip; padding:clamp(4.5rem,8vw,8.5rem) 0 clamp(5rem,9vw,9rem); }
+  .hero::before { position:absolute; inset:0; pointer-events:none; background:radial-gradient(circle at 50% -15%,color-mix(in srgb,var(--lavender) 55%,transparent),transparent 43%); content:''; }
+  .hero-light { position:absolute; width:clamp(16rem,35vw,34rem); aspect-ratio:1; border-radius:50%; filter:blur(25px); opacity:.65; pointer-events:none; }
+  .hero-light--violet { top:8%; right:-8%; background:var(--lavender); }.hero-light--cyan { bottom:12%; left:-12%; background:var(--cyan); opacity:.42; }
+  .hero-inner { position:relative; display:grid; gap:clamp(3.5rem,7vw,7rem); }.hero-copy { position:relative; z-index:2; max-width:50rem; }
+  .kicker { margin:0 0 1.2rem; color:var(--violet); font-size:.7rem; font-weight:760; letter-spacing:.12em; text-transform:uppercase; }
+  h1 { margin:0; font-size:clamp(2.7rem,6.9vw,6.6rem); font-weight:560; line-height:.96; letter-spacing:-.07em; text-wrap:balance; }
+  .hero-lead { max-width:42rem; margin:1.8rem 0 0; color:var(--muted); font-size:clamp(1rem,1.5vw,1.22rem); line-height:1.6; }.hero-actions { display:flex; flex-wrap:wrap; gap:.7rem; margin-top:2rem; }
+  .hero-object { position:relative; min-height:clamp(23rem,41vw,37rem); overflow:hidden; isolation:isolate; border:1px solid var(--glass-line); border-radius:clamp(1.6rem,3vw,3rem); background:linear-gradient(135deg,color-mix(in srgb,var(--glass) 80%,transparent),color-mix(in srgb,var(--paper-raised) 46%,transparent)); box-shadow:var(--shadow-lg),inset 0 1px 0 rgba(255,255,255,.65); backdrop-filter:blur(14px); }
+  .hero-wordmark { position:absolute; z-index:-1; top:50%; left:50%; color:color-mix(in srgb,var(--ink) 12%,transparent); font-size:clamp(6rem,20vw,19rem); font-weight:760; letter-spacing:-.115em; line-height:.6; transform:translate(-50%,-50%); white-space:nowrap; }
+  .hero-orb { position:absolute; top:50%; left:50%; width:clamp(10rem,21vw,19rem); aspect-ratio:1; border:1px solid rgba(255,255,255,.58); border-radius:50%; background:radial-gradient(circle at 30% 25%,rgba(255,255,255,.92),rgba(255,255,255,.08) 30%,transparent 52%),conic-gradient(from 120deg,var(--peach),var(--cyan),var(--lavender),var(--violet),var(--peach)); box-shadow:0 2rem 5rem color-mix(in srgb,var(--violet) 25%,transparent),inset -1rem -1rem 2rem rgba(255,255,255,.24); transform:translate(-50%,-50%); transition:transform .55s cubic-bezier(.22,1,.36,1); }
+  .hero-orb::after { position:absolute; inset:10%; border:1px solid rgba(255,255,255,.5); border-radius:50%; content:''; }.hero-orb span { position:absolute; top:15%; left:24%; width:20%; aspect-ratio:1; border-radius:50%; background:rgba(255,255,255,.8); filter:blur(5px); }
+  .service-chip { position:absolute; display:inline-flex; align-items:center; gap:.5rem; padding:.62rem .85rem; border:1px solid var(--glass-line); border-radius:999px; background:color-mix(in srgb,var(--paper) 60%,transparent); box-shadow:0 .75rem 1.8rem rgba(44,36,68,.11),inset 0 1px 0 rgba(255,255,255,.72); backdrop-filter:blur(12px); color:var(--ink); font:650 clamp(.65rem,1vw,.82rem)/1 var(--font-sans); cursor:pointer; transition:transform .3s cubic-bezier(.22,1,.36,1),background .25s ease,box-shadow .25s ease; }.service-chip i { width:.43rem; height:.43rem; border-radius:50%; background:var(--violet); box-shadow:0 0 0 .2rem color-mix(in srgb,var(--violet) 15%,transparent); }.service-chip:hover,.service-chip:focus-visible,.service-chip.is-active { background:var(--paper); box-shadow:0 1rem 2.5rem rgba(44,36,68,.18); transform:translateY(-.3rem) scale(1.04); }.chip-site { top:16%; left:13%; }.chip-crm { top:20%; right:13%; }.chip-auto { bottom:17%; left:18%; }.chip-data { right:18%; bottom:13%; }.chip-crm i{background:var(--cyan)}.chip-auto i{background:var(--peach)}.chip-data i{background:var(--lavender)}
+  .hero-orbit { position:absolute; z-index:-1; border:1px solid color-mix(in srgb,var(--violet) 25%,transparent); border-radius:50%; }.orbit-one{top:8%;right:11%;width:42%;aspect-ratio:1}.orbit-two{bottom:-22%;left:24%;width:55%;aspect-ratio:1;border-color:color-mix(in srgb,var(--cyan) 40%,transparent)}.object-note { position:absolute; right:1.2rem; bottom:1rem; margin:0; color:var(--muted); font-size:.58rem; letter-spacing:.09em; text-transform:uppercase; }
+  .hero-brand { display:flex; align-items:center; justify-content:space-between; gap:2rem; }.hero-brand p { margin:0; color:var(--muted); font-size:.72rem; line-height:1.6; text-align:right; }
+  @media (min-width:64rem){.hero-inner{grid-template-columns:minmax(0,.95fr) minmax(27rem,.95fr);align-items:center}.hero-brand{grid-column:1/-1}.hero-object{grid-column:2;grid-row:1/3}.hero-copy{grid-column:1}.hero-brand{grid-row:2}}
+  @media (max-width:35rem){.hero-object{margin-inline:calc(var(--gutter)*-1);border-radius:1.3rem}.chip-site{left:7%}.chip-crm{right:7%}.chip-auto{left:9%}.chip-data{right:8%}.object-note{display:none}.hero-brand{align-items:flex-start;flex-direction:column}.hero-brand p{text-align:left}}
+  @media (prefers-reduced-motion:reduce){.service-chip,.hero-orb{transition:none}}
 </style>

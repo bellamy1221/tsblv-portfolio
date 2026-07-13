@@ -1,31 +1,4 @@
-<section class="section about" id="about" aria-labelledby="about-title">
-  <div class="site-container about-layout">
-    <div class="about-heading" data-reveal>
-      <p class="section-label">Обо мне</p>
-      <h2 id="about-title">Работаете напрямую со мной</h2>
-    </div>
-    <div class="about-copy" data-reveal>
-      <p class="about-lead">Без менеджеров и длинных цепочек согласований. Я сам погружаюсь в задачу, предлагаю решение, разрабатываю проект и отвечаю за результат.</p>
-      <ul>
-        <li><span>01</span>Прямое общение</li>
-        <li><span>02</span>Понятные этапы</li>
-        <li><span>03</span>Решение под конкретную задачу</li>
-        <li><span>04</span>Поддержка после запуска</li>
-      </ul>
-    </div>
-  </div>
-</section>
-
+<section class="section about" id="about" aria-labelledby="about-title"><div class="site-container about-layout"><div class="about-heading" data-reveal="mask"><p class="section-label">Обо мне</p><h2 id="about-title">Вы работаете напрямую со мной</h2><span class="availability"><i></i>Открыт к новым задачам</span></div><div class="about-copy" data-reveal="soft"><p>Без менеджеров и передачи задачи между разными людьми. Я сам обсуждаю проект, предлагаю решения, делаю сайт и остаюсь на связи после запуска.</p><div class="about-points"><span>Прямое общение</span><span>Понятные этапы</span><span>Один человек отвечает за результат</span><span>Поддержка после запуска</span></div></div></div></section>
 <style>
-  .about { border-top: 1px solid var(--line); }
-  .about-layout { display: grid; gap: 3rem; }
-  .about-heading h2 { max-width: 38rem; }
-  .about-lead { max-width: 49rem; margin: 0; font-size: clamp(1.35rem, 2.7vw, 2.45rem); font-weight: 500; line-height: 1.25; letter-spacing: -.045em; }
-  ul { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0; margin: 3rem 0 0; padding: 0; border-top: 1px solid var(--line-strong); list-style: none; }
-  li { display: flex; min-height: 4.5rem; align-items: center; gap: 1rem; border-bottom: 1px solid var(--line); color: var(--muted); font-size: .86rem; }
-  li:nth-child(odd) { padding-right: 1rem; }
-  li:nth-child(even) { padding-left: 1rem; border-left: 1px solid var(--line); }
-  li span { color: var(--accent); font-size: .6rem; font-weight: 700; }
-  @media (min-width: 64rem) { .about-layout { grid-template-columns: .7fr 1.3fr; } }
-  @media (max-width: 35rem) { ul { grid-template-columns: 1fr; } li:nth-child(even) { padding-left: 0; border-left: 0; } }
+.about{position:relative}.about-layout{display:grid;gap:3rem}.about-heading h2{max-width:39rem}.availability{display:inline-flex;align-items:center;gap:.5rem;margin-top:1.8rem;padding:.55rem .75rem;border:1px solid var(--line);border-radius:999px;background:color-mix(in srgb,var(--cyan) 27%,transparent);color:var(--muted);font-size:.7rem;font-weight:650}.availability i{width:.5rem;height:.5rem;border-radius:50%;background:#6da87d;box-shadow:0 0 0 .2rem rgba(109,168,125,.16)}.about-copy>p{max-width:50rem;margin:0;font-size:clamp(1.45rem,2.7vw,2.55rem);font-weight:520;line-height:1.25;letter-spacing:-.05em}.about-points{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:2.5rem}.about-points span{padding:.65rem .85rem;border:1px solid var(--line);border-radius:999px;color:var(--muted);font-size:.75rem}@media(min-width:64rem){.about-layout{grid-template-columns:.8fr 1.2fr}.about-copy{padding-top:3.8rem}}
 </style>
