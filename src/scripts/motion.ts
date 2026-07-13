@@ -132,9 +132,14 @@ function initHeroInteraction(): void {
     const dy = active ? (y - 0.5) * 2 : 0;
     scene.style.setProperty('--scene-x', `${(dx * 5).toFixed(2)}px`);
     scene.style.setProperty('--scene-y', `${(dy * 5).toFixed(2)}px`);
-    lens.style.setProperty('--lens-rotate-x', `${(-dy * 4.5).toFixed(2)}deg`);
-    lens.style.setProperty('--lens-rotate-y', `${(dx * 5.5).toFixed(2)}deg`);
-    lens.style.setProperty('--lens-scale', pressed ? '0.965' : active ? '1.018' : '1');
+    scene.style.setProperty('--lens-shift-x', `${(dx * 10).toFixed(2)}px`);
+    scene.style.setProperty('--lens-edge-x', `${(x * 100).toFixed(1)}%`);
+    scene.style.setProperty('--lens-edge-y', `${(y * 100).toFixed(1)}%`);
+    lens.style.setProperty('--lens-rotate-x', `${(-dy * 6.5).toFixed(2)}deg`);
+    lens.style.setProperty('--lens-rotate-y', `${(dx * 7.5).toFixed(2)}deg`);
+    lens.style.setProperty('--lens-scale', pressed ? '0.958' : active ? '1.022' : '1');
+    lens.style.setProperty('--lens-edge-x', `${(x * 100).toFixed(1)}%`);
+    lens.style.setProperty('--lens-edge-y', `${(y * 100).toFixed(1)}%`);
     highlight.style.setProperty('--highlight-x', `${(x * 100).toFixed(1)}%`);
     highlight.style.setProperty('--highlight-y', `${(y * 100).toFixed(1)}%`);
     orbitLayers.forEach((layer, index) => {
@@ -217,27 +222,89 @@ function initProjectParallax(): void {
   if (!finePointerQuery.matches || reduceMotionQuery.matches) return;
   document.querySelectorAll<HTMLElement>('[data-project-scene]').forEach((scene) => {
     let frame = 0;
+    let visible = true;
     let x = 0;
     let y = 0;
+    let pointerX = 50;
+    let pointerY = 50;
     const render = (): void => {
       frame = 0;
       scene.style.setProperty('--project-x', `${x.toFixed(2)}px`);
       scene.style.setProperty('--project-y', `${y.toFixed(2)}px`);
       scene.style.setProperty('--project-back-x', `${(-x * 0.35).toFixed(2)}px`);
       scene.style.setProperty('--project-back-y', `${(-y * 0.35).toFixed(2)}px`);
+      scene.style.setProperty('--pointer-x', `${pointerX.toFixed(1)}%`);
+      scene.style.setProperty('--pointer-y', `${pointerY.toFixed(1)}%`);
     };
     scene.addEventListener('pointermove', (event) => {
+      if (!visible) return;
       const rect = scene.getBoundingClientRect();
-      x = ((event.clientX - rect.left) / rect.width - 0.5) * 8;
-      y = ((event.clientY - rect.top) / rect.height - 0.5) * 8;
+      const localX = (event.clientX - rect.left) / rect.width;
+      const localY = (event.clientY - rect.top) / rect.height;
+      x = (localX - 0.5) * 10;
+      y = (localY - 0.5) * 10;
+      pointerX = localX * 100;
+      pointerY = localY * 100;
       if (!frame) frame = requestAnimationFrame(render);
     }, { passive: true });
     scene.addEventListener('pointerleave', () => {
       x = 0;
       y = 0;
+      pointerX = 50;
+      pointerY = 50;
       if (!frame) frame = requestAnimationFrame(render);
     });
+
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(([entry]) => {
+        visible = entry.isIntersecting;
+        if (!visible && frame) {
+          cancelAnimationFrame(frame);
+          frame = 0;
+        }
+      }, { threshold: 0.04 }).observe(scene);
+    }
   });
+}
+
+function initFooterLight(): void {
+  const stage = document.querySelector<HTMLElement>('[data-footer-light]');
+  if (!stage || !finePointerQuery.matches || reduceMotionQuery.matches) return;
+
+  let frame = 0;
+  let visible = false;
+  let x = 50;
+  let y = 50;
+
+  const render = (): void => {
+    frame = 0;
+    stage.style.setProperty('--footer-light-x', `${x.toFixed(1)}%`);
+    stage.style.setProperty('--footer-light-y', `${y.toFixed(1)}%`);
+  };
+
+  stage.addEventListener('pointermove', (event) => {
+    if (!visible) return;
+    const rect = stage.getBoundingClientRect();
+    x = ((event.clientX - rect.left) / rect.width) * 100;
+    y = ((event.clientY - rect.top) / rect.height) * 100;
+    if (!frame) frame = requestAnimationFrame(render);
+  }, { passive: true });
+
+  stage.addEventListener('pointerleave', () => {
+    x = 50;
+    y = 50;
+    if (visible && !frame) frame = requestAnimationFrame(render);
+  });
+
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting;
+      if (!visible && frame) {
+        cancelAnimationFrame(frame);
+        frame = 0;
+      }
+    }, { threshold: 0.04 }).observe(stage);
+  }
 }
 
 function initSequences(): void {
@@ -290,6 +357,7 @@ export function initMotion(): void {
   initCaseToggles();
   initPointerLights();
   initProjectParallax();
+  initFooterLight();
   initSequences();
   initEntrances();
 }

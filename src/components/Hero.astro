@@ -48,7 +48,7 @@ import BrandMark from './BrandMark.astro';
 <style>
   .hero {
     position: relative;
-    padding: clamp(5.5rem, 7vw, 7rem) 0 clamp(4rem, 6vw, 6rem);
+    padding: clamp(5.15rem, 6vw, 6.35rem) 0 clamp(3.5rem, 4.75vw, 4.75rem);
   }
 
   .hero-grid {
@@ -102,6 +102,9 @@ import BrandMark from './BrandMark.astro';
   .hero-scene {
     --scene-x: 0px;
     --scene-y: 0px;
+    --lens-shift-x: 0px;
+    --lens-edge-x: 50%;
+    --lens-edge-y: 50%;
     position: relative;
     min-height: clamp(23rem, 38vw, 32rem);
     overflow: hidden;
@@ -109,24 +112,40 @@ import BrandMark from './BrandMark.astro';
     border: 1px solid var(--line-strong);
     border-radius: 1.35rem;
     background:
-      conic-gradient(from 222deg at 66% 46%, transparent 0 23%, rgba(240, 201, 40, 0.11) 30%, rgba(255, 255, 255, 0.18) 35%, rgba(220, 52, 65, 0.08) 41%, transparent 50% 100%),
-      linear-gradient(138deg, rgba(255, 255, 255, 0.33), rgba(16, 18, 22, 0.09) 48%, rgba(255, 255, 255, 0.12));
+      radial-gradient(ellipse 70% 46% at 4% 18%, rgba(182, 31, 44, 0.25), transparent 58%),
+      radial-gradient(ellipse 64% 42% at 96% 84%, rgba(240, 201, 40, 0.27), transparent 58%),
+      conic-gradient(from 222deg at 66% 46%, transparent 0 21%, rgba(240, 201, 40, 0.22) 29%, rgba(255, 252, 235, 0.42) 35%, rgba(190, 35, 47, 0.16) 42%, transparent 52% 100%),
+      linear-gradient(138deg, rgba(255, 255, 255, 0.52), rgba(68, 77, 85, 0.1) 50%, rgba(255, 255, 255, 0.24));
     box-shadow: var(--shadow-lg), inset 0 1px 0 rgba(255, 255, 255, 0.62);
     backdrop-filter: blur(16px) saturate(115%);
   }
 
   html[data-theme='dark'] .hero-scene {
     background:
-      conic-gradient(from 222deg at 66% 46%, transparent 0 23%, rgba(240, 201, 40, 0.08) 30%, rgba(220, 229, 235, 0.1) 35%, rgba(220, 52, 65, 0.07) 41%, transparent 50% 100%),
-      linear-gradient(138deg, rgba(255, 255, 255, 0.07), rgba(16, 18, 22, 0.16) 48%, rgba(255, 255, 255, 0.04));
+      radial-gradient(ellipse 70% 46% at 4% 18%, rgba(182, 31, 44, 0.15), transparent 58%),
+      radial-gradient(ellipse 64% 42% at 96% 84%, rgba(240, 201, 40, 0.14), transparent 58%),
+      conic-gradient(from 222deg at 66% 46%, transparent 0 21%, rgba(240, 201, 40, 0.1) 29%, rgba(220, 229, 235, 0.15) 35%, rgba(181, 31, 43, 0.1) 42%, transparent 52% 100%),
+      linear-gradient(138deg, rgba(255, 255, 255, 0.09), rgba(16, 18, 22, 0.18) 50%, rgba(255, 255, 255, 0.055));
   }
 
   .hero-scene::before {
+    z-index: 4;
     position: absolute;
     inset: 0;
     background: linear-gradient(108deg, transparent 30%, rgba(255, 255, 255, 0.3) 48%, transparent 65%);
     background-position: 130% 0;
     background-size: 220% 100%;
+    content: '';
+    pointer-events: none;
+  }
+
+  .hero-scene::after {
+    position: absolute;
+    z-index: -1;
+    inset: -20%;
+    background:
+      radial-gradient(circle at var(--lens-edge-x) var(--lens-edge-y), rgba(255, 255, 255, 0.22), transparent 19%),
+      conic-gradient(from 188deg at 48% 52%, transparent 0 32%, rgba(181, 31, 43, 0.12) 38%, rgba(255, 252, 235, 0.2) 42%, rgba(240, 201, 40, 0.14) 47%, transparent 54% 100%);
     content: '';
     pointer-events: none;
   }
@@ -150,12 +169,12 @@ import BrandMark from './BrandMark.astro';
     z-index: -1;
     top: 50%;
     left: 50%;
-    color: color-mix(in srgb, var(--text) 44%, transparent);
+    color: color-mix(in srgb, var(--text) 51%, transparent);
     font-size: clamp(6rem, 17vw, 15rem);
     font-weight: 780;
     line-height: 0.6;
     letter-spacing: -0.075em;
-    text-shadow: 0 -1px rgba(255, 255, 255, 0.55), 0 1.5rem 3rem rgba(16, 18, 22, 0.16);
+    text-shadow: 0 -1px rgba(255, 255, 255, 0.7), 0 1.5rem 3rem rgba(16, 18, 22, 0.2);
     transform: translate(calc(-50% + var(--scene-x)), calc(-50% + var(--scene-y)));
     transition: transform 520ms var(--ease-out);
     white-space: nowrap;
@@ -167,7 +186,8 @@ import BrandMark from './BrandMark.astro';
     left: 50%;
     width: clamp(10.5rem, 20vw, 17rem);
     aspect-ratio: 1;
-    transform: translate(-50%, -50%);
+    transform: translate(calc(-50% + var(--lens-shift-x)), -50%);
+    transition: transform 520ms var(--ease-out);
     perspective: 700px;
   }
 
@@ -175,27 +195,48 @@ import BrandMark from './BrandMark.astro';
     --lens-rotate-x: 0deg;
     --lens-rotate-y: 0deg;
     --lens-scale: 1;
+    --lens-edge-x: 50%;
+    --lens-edge-y: 50%;
     position: absolute;
     inset: 0;
     border: 1px solid rgba(255, 255, 255, 0.68);
     border-radius: 50%;
     background:
-      radial-gradient(circle at 34% 28%, rgba(255, 255, 255, 0.42), transparent 26%),
-      conic-gradient(from 145deg, rgba(220, 52, 65, 0.16), rgba(255, 255, 255, 0.07) 22%, rgba(240, 201, 40, 0.2) 39%, rgba(255, 255, 255, 0.12) 58%, rgba(220, 52, 65, 0.09) 76%, rgba(255, 255, 255, 0.18));
+      radial-gradient(circle at var(--lens-edge-x) var(--lens-edge-y), rgba(255, 255, 255, 0.56), transparent 25%),
+      conic-gradient(from calc(130deg + var(--lens-rotate-y)), rgba(181, 31, 43, 0.25), rgba(255, 252, 235, 0.15) 23%, rgba(240, 201, 40, 0.28) 40%, rgba(255, 255, 255, 0.15) 58%, rgba(181, 31, 43, 0.14) 76%, rgba(255, 255, 255, 0.22));
     box-shadow:
       0 2rem 5rem rgba(16, 18, 22, 0.24),
       inset 1rem 1rem 2rem rgba(255, 255, 255, 0.17),
       inset -1rem -1rem 2rem rgba(16, 18, 22, 0.14);
-    backdrop-filter: blur(2px) brightness(1.08) contrast(1.05);
+    backdrop-filter: blur(2.5px) brightness(1.14) contrast(1.07) saturate(1.08);
     transform: rotateX(var(--lens-rotate-x)) rotateY(var(--lens-rotate-y)) scale(var(--lens-scale));
     transition: transform 480ms var(--ease-out), box-shadow 420ms var(--ease-out);
     transform-style: preserve-3d;
+  }
+
+  .hero-lens::before {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    content: 'TSBLV';
+    color: color-mix(in srgb, var(--text) 64%, transparent);
+    font-size: clamp(6rem, 17vw, 15rem);
+    font-weight: 780;
+    line-height: 0.6;
+    letter-spacing: -0.075em;
+    text-shadow:
+      -1px 0 rgba(181, 31, 43, 0.28),
+      1px 0 rgba(240, 201, 40, 0.28),
+      0 -1px rgba(255, 255, 255, 0.72);
+    transform: translate(calc(-50% + var(--scene-x)), calc(-50% + var(--scene-y))) scaleX(1.025);
+    white-space: nowrap;
   }
 
   .lens-highlight {
     --highlight-x: 35%;
     --highlight-y: 28%;
     position: absolute;
+    z-index: 2;
     inset: 0;
     border-radius: inherit;
     background: radial-gradient(circle at var(--highlight-x) var(--highlight-y), rgba(255, 255, 255, 0.72), transparent 17%);
@@ -205,6 +246,7 @@ import BrandMark from './BrandMark.astro';
 
   .lens-rim {
     position: absolute;
+    z-index: 3;
     inset: 7%;
     border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: inherit;

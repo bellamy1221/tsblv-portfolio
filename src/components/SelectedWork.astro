@@ -89,7 +89,7 @@ import ProjectPreview from './ProjectPreview.astro';
 
   .case-list {
     display: grid;
-    gap: clamp(4rem, 8vw, 7rem);
+    gap: clamp(4.5rem, 6vw, 5.5rem);
   }
 
   .case-study {
@@ -104,6 +104,8 @@ import ProjectPreview from './ProjectPreview.astro';
     --project-y: 0px;
     --project-back-x: 0px;
     --project-back-y: 0px;
+    --pointer-x: 50%;
+    --pointer-y: 50%;
     grid-column: 1 / span 8;
     padding: 0.55rem;
   }
@@ -113,6 +115,20 @@ import ProjectPreview from './ProjectPreview.astro';
     filter: saturate(0.92) contrast(1.02);
     transform: translate(var(--project-back-x), var(--project-back-y));
     transition: transform 520ms var(--ease-out), filter 420ms var(--ease-out), box-shadow 420ms var(--ease-out);
+  }
+
+  .case-preview-interactive::before {
+    position: absolute;
+    z-index: 2;
+    inset: -1px;
+    border-radius: clamp(1.1rem, 2.2vw, 2rem);
+    background:
+      radial-gradient(circle at var(--pointer-x) var(--pointer-y), rgba(255, 255, 255, 0.2), transparent 25%),
+      linear-gradient(122deg, rgba(181, 31, 43, 0.22), transparent 14% 78%, rgba(240, 201, 40, 0.2));
+    content: '';
+    opacity: 0.48;
+    pointer-events: none;
+    transition: opacity 420ms var(--ease-out);
   }
 
   .case-visual :global(.preview-main),
@@ -131,6 +147,7 @@ import ProjectPreview from './ProjectPreview.astro';
     background-position: 115% 0;
     background-size: 220% 100%;
     content: '';
+    z-index: 3;
     pointer-events: none;
     transition: background-position 700ms var(--ease-out);
   }
@@ -139,6 +156,23 @@ import ProjectPreview from './ProjectPreview.astro';
   .case-study:focus-within .case-preview-interactive {
     filter: saturate(1) contrast(1.04);
     box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.24);
+  }
+
+  .case-study:hover .case-preview-interactive::before,
+  .case-study:focus-within .case-preview-interactive::before {
+    opacity: 0.76;
+  }
+
+  .case-entry .case-visual::before,
+  .case-entry .case-visual::after {
+    opacity: 0;
+    transform: scale(0.25);
+  }
+
+  .case-entry.is-motion-visible .case-visual::before,
+  .case-entry.is-motion-visible .case-visual::after {
+    opacity: 1;
+    transform: scale(1);
   }
 
   .case-study:hover .case-preview-interactive::after,
@@ -220,12 +254,25 @@ import ProjectPreview from './ProjectPreview.astro';
   }
 
   .case-toggle span {
+    display: grid;
+    width: 1.45rem;
+    height: 1.45rem;
+    place-items: center;
+    border: 1px solid rgba(240, 201, 40, 0.42);
+    border-radius: 50%;
+    color: var(--flag-yellow);
     font-size: 1.1rem;
-    transition: transform 340ms var(--ease-out);
+    line-height: 1;
+    transition: transform 420ms var(--ease-out), background-color 320ms var(--ease-out);
   }
 
   .case-toggle[aria-expanded='true'] span {
     transform: rotate(45deg);
+  }
+
+  .case-toggle:hover span,
+  .case-toggle:focus-visible span {
+    background: rgba(240, 201, 40, 0.1);
   }
 
   .case-details-grid {

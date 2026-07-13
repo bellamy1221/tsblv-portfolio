@@ -52,13 +52,22 @@ import { siteConfig } from '../config/site';
 
   .header-shell,
   .mobile-menu {
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    background: linear-gradient(120deg, rgba(23, 26, 31, 0.52), rgba(16, 18, 22, 0.44));
-    box-shadow: var(--shadow-sm), inset 0 1px 0 rgba(255, 255, 255, 0.34);
-    backdrop-filter: blur(22px) saturate(125%);
+    border: 1px solid rgba(17, 19, 23, 0.16);
+    background: linear-gradient(120deg, rgba(248, 250, 251, 0.66), rgba(220, 229, 235, 0.54));
+    box-shadow: 0 0.8rem 2.4rem rgba(25, 30, 36, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.82);
+    backdrop-filter: blur(24px) saturate(132%);
+    transition: background 520ms var(--ease-out), border-color 520ms var(--ease-out), box-shadow 520ms var(--ease-out);
+  }
+
+  :global(html[data-theme='dark']) .header-shell,
+  :global(html[data-theme='dark']) .mobile-menu {
+    border-color: rgba(255, 255, 255, 0.2);
+    background: linear-gradient(120deg, rgba(35, 39, 45, 0.57), rgba(18, 21, 26, 0.5));
+    box-shadow: 0 0.8rem 2.4rem rgba(0, 0, 0, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.26);
   }
 
   .header-shell {
+    position: relative;
     display: flex;
     height: 3.35rem;
     align-items: center;
@@ -70,10 +79,19 @@ import { siteConfig } from '../config/site';
   .header-shell::after {
     position: absolute;
     top: 1px;
-    right: 12%;
-    left: 12%;
+    right: 7%;
+    left: 7%;
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.55), transparent);
+    background: linear-gradient(
+      90deg,
+      transparent 0 9%,
+      rgba(181, 31, 43, 0.44) 18%,
+      rgba(255, 255, 255, 0.7) 35%,
+      transparent 48% 59%,
+      rgba(255, 255, 255, 0.62) 69%,
+      rgba(240, 201, 40, 0.48) 79%,
+      transparent 92%
+    );
     content: '';
     pointer-events: none;
   }
@@ -84,13 +102,23 @@ import { siteConfig } from '../config/site';
   }
 
   .site-header.is-scrolled .header-shell {
-    background: linear-gradient(120deg, rgba(23, 26, 31, 0.62), rgba(16, 18, 22, 0.54));
+    background: linear-gradient(120deg, rgba(248, 250, 251, 0.72), rgba(220, 229, 235, 0.62));
+  }
+
+  :global(html[data-theme='dark']) .site-header.is-scrolled .header-shell {
+    background: linear-gradient(120deg, rgba(35, 39, 45, 0.65), rgba(18, 21, 26, 0.58));
   }
 
   .header-shell :global(.brand-mark) {
+    --brand-color: #171a1f;
+    --brand-muted: rgba(23, 26, 31, 0.62);
+    --brand-line: rgba(23, 26, 31, 0.24);
+  }
+
+  :global(html[data-theme='dark']) .header-shell :global(.brand-mark) {
     --brand-color: #f8fafb;
-    --brand-muted: rgba(248, 250, 251, 0.66);
-    --brand-line: rgba(255, 255, 255, 0.32);
+    --brand-muted: rgba(248, 250, 251, 0.68);
+    --brand-line: rgba(255, 255, 255, 0.3);
   }
 
   .desktop-nav {
@@ -106,7 +134,7 @@ import { siteConfig } from '../config/site';
   }
 
   .desktop-nav a {
-    color: rgba(255, 255, 255, 0.74);
+    color: rgba(17, 19, 23, 0.7);
     font-size: 0.73rem;
     font-weight: 700;
     text-decoration: none;
@@ -115,6 +143,15 @@ import { siteConfig } from '../config/site';
 
   .desktop-nav a:hover,
   .desktop-nav a:focus-visible {
+    color: #111317;
+  }
+
+  :global(html[data-theme='dark']) .desktop-nav a {
+    color: rgba(255, 255, 255, 0.76);
+  }
+
+  :global(html[data-theme='dark']) .desktop-nav a:hover,
+  :global(html[data-theme='dark']) .desktop-nav a:focus-visible {
     color: #fff;
   }
 
@@ -132,10 +169,10 @@ import { siteConfig } from '../config/site';
     height: 2.4rem;
     place-items: center;
     padding: 0;
-    border: 1px solid rgba(255, 255, 255, 0.17);
+    border: 1px solid rgba(17, 19, 23, 0.14);
     border-radius: 0.75rem;
-    background: rgba(255, 255, 255, 0.08);
-    color: #fff;
+    background: rgba(255, 255, 255, 0.38);
+    color: #171a1f;
     cursor: pointer;
     transition: transform 320ms var(--ease-out), background-color 320ms var(--ease-out), border-color 320ms var(--ease-out);
   }
@@ -143,8 +180,20 @@ import { siteConfig } from '../config/site';
   .theme-toggle:hover,
   .menu-button:hover {
     border-color: rgba(240, 201, 40, 0.5);
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.64);
     transform: translateY(-1px);
+  }
+
+  :global(html[data-theme='dark']) .theme-toggle,
+  :global(html[data-theme='dark']) .menu-button {
+    border-color: rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.09);
+    color: #fff;
+  }
+
+  :global(html[data-theme='dark']) .theme-toggle:hover,
+  :global(html[data-theme='dark']) .menu-button:hover {
+    background: rgba(255, 255, 255, 0.16);
   }
 
   .theme-icon {
@@ -174,9 +223,9 @@ import { siteConfig } from '../config/site';
 
   .header-cta {
     padding: 0.66rem 0.9rem;
-    border: 1px solid rgba(255, 255, 255, 0.25);
+    border: 1px solid rgba(17, 19, 23, 0.18);
     border-radius: 0.75rem;
-    background: rgba(255, 255, 255, 0.12);
+    background: rgba(17, 19, 23, 0.88);
     color: #f8fafb;
     font-size: 0.7rem;
     font-weight: 760;
@@ -186,8 +235,17 @@ import { siteConfig } from '../config/site';
 
   .header-cta:hover {
     border-color: var(--flag-yellow);
-    background: rgba(255, 255, 255, 0.18);
+    background: #171a1f;
     transform: translateY(-1px);
+  }
+
+  :global(html[data-theme='dark']) .header-cta {
+    border-color: rgba(255, 255, 255, 0.24);
+    background: rgba(255, 255, 255, 0.12);
+  }
+
+  :global(html[data-theme='dark']) .header-cta:hover {
+    background: rgba(255, 255, 255, 0.19);
   }
 
   .menu-button,
@@ -268,17 +326,25 @@ import { siteConfig } from '../config/site';
     }
 
     .mobile-menu li + li {
-      border-top: 1px solid rgba(255, 255, 255, 0.14);
+      border-top: 1px solid rgba(17, 19, 23, 0.12);
     }
 
     .mobile-menu a:not(.button) {
       display: flex;
       min-height: 2.7rem;
       align-items: center;
-      color: rgba(255, 255, 255, 0.9);
+      color: rgba(17, 19, 23, 0.9);
       font-size: 0.88rem;
       font-weight: 700;
       text-decoration: none;
+    }
+
+    :global(html[data-theme='dark']) .mobile-menu li + li {
+      border-top-color: rgba(255, 255, 255, 0.14);
+    }
+
+    :global(html[data-theme='dark']) .mobile-menu a:not(.button) {
+      color: rgba(255, 255, 255, 0.9);
     }
 
     .mobile-menu[hidden] {
