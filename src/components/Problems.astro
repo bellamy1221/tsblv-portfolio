@@ -1,7 +1,21 @@
 ---
 import { problems } from '../data/home';
 ---
-<section class="section problems" aria-labelledby="problems-title"><div class="site-container problems-layout"><div class="section-intro" data-reveal="mask"><p class="section-label">С чего начать</p><h2 id="problems-title">Можно прийти даже без готового ТЗ</h2><p>Расскажите, что сейчас не работает или чего не хватает. Я помогу разобраться и предложу понятный вариант решения.</p></div><ol class="problem-stack">{problems.map((problem,index)=><li data-reveal="soft" style={`--item:${index}`}><span>{problem.id}</span><h3>{problem.title}</h3><i aria-hidden="true">↗</i></li>)}</ol></div></section>
+
+<section class="section problems" aria-labelledby="problems-title">
+  <div class="site-container problems-layout">
+    <div class="section-intro" data-reveal="mask">
+      <p class="section-label">С чего начать</p>
+      <h2 id="problems-title">Можно прийти даже без готового ТЗ</h2>
+      <p>Расскажите, что сейчас не работает или чего не хватает. Я помогу разобраться и предложу понятный вариант решения.</p>
+    </div>
+    <ol class="problem-stack">
+      {problems.map((problem) => <li data-reveal="soft"><span>{problem.id}</span><h3>{problem.title}</h3></li>)}
+    </ol>
+  </div>
+</section>
+
 <style>
-.problems{background:linear-gradient(120deg,color-mix(in srgb,var(--lavender) 25%,transparent),transparent 55%)}.problems-layout{display:grid;gap:3rem}.section-intro p:last-child{max-width:29rem;margin:1.35rem 0 0;color:var(--muted);line-height:1.65}.problem-stack{display:grid;gap:.6rem;margin:0;padding:0;list-style:none}.problem-stack li{position:relative;display:grid;grid-template-columns:2.5rem 1fr auto;align-items:center;gap:1rem;min-height:4.75rem;padding:1rem 1.2rem;border:1px solid var(--line);border-radius:1rem;background:color-mix(in srgb,var(--glass) 72%,transparent);box-shadow:0 .45rem 1.2rem rgba(54,43,89,.05);backdrop-filter:blur(10px);transition:transform .25s ease,border-color .25s ease,background .25s ease}.problem-stack li:hover{z-index:2;border-color:color-mix(in srgb,var(--violet) 60%,transparent);background:var(--paper);transform:translateX(.5rem)}.problem-stack span{color:var(--violet);font-size:.62rem;font-weight:750}.problem-stack h3{margin:0;font-size:clamp(1rem,1.65vw,1.28rem);font-weight:600;letter-spacing:-.03em}.problem-stack i{color:var(--muted);font-style:normal}@media(min-width:64rem){.problems-layout{grid-template-columns:.8fr 1.2fr}.section-intro{position:sticky;top:7rem;align-self:start}.problem-stack li:nth-child(even){transform:translateX(2rem)}.problem-stack li:nth-child(even):hover{transform:translateX(2.5rem)}}
+  .problems-layout { display:grid; gap:2.5rem; }.section-intro p:last-child { max-width:29rem; margin:1.25rem 0 0; color:var(--muted); line-height:1.65; }.problem-stack { display:grid; gap:.6rem; margin:0; padding:0; list-style:none; }.problem-stack li { display:grid; grid-template-columns:2.5rem 1fr; align-items:center; gap:1rem; min-height:4.4rem; padding:1rem 1.2rem; border:1px solid var(--line); border-radius:1rem; background:color-mix(in srgb,var(--glass) 66%,transparent); box-shadow:0 .45rem 1.2rem rgba(54,43,89,.06); backdrop-filter:blur(9px); transition:border-color .25s ease,background .25s ease; }.problem-stack li:hover { border-color:color-mix(in srgb,var(--violet) 52%,transparent); background:color-mix(in srgb,var(--glass) 86%,transparent); }.problem-stack span { color:var(--violet); font-size:.62rem; font-weight:750; }.problem-stack h3 { margin:0; font-size:clamp(1rem,1.65vw,1.28rem); font-weight:600; letter-spacing:-.03em; }
+  @media(min-width:64rem) { .problems-layout { grid-template-columns:.8fr 1.2fr; }.section-intro { position:sticky; top:6.5rem; align-self:start; }.problem-stack li:nth-child(even) { transform:translateX(1.5rem); } }
 </style>

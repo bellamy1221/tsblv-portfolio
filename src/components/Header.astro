@@ -1,12 +1,49 @@
 ---
-import BrandMark from './BrandMark.astro'; import { siteConfig } from '../config/site';
+import BrandMark from './BrandMark.astro';
+import { siteConfig } from '../config/site';
 ---
-<header class="site-header" data-site-header><div class="header-shell">
-  <BrandMark variant="wordmark" size="small" href="#top" ariaLabel="TSBLV — в начало страницы" />
-  <nav class="desktop-nav" aria-label="Основная навигация"><ul>{siteConfig.navigation.map((item)=><li><a href={item.href}>{item.label}</a></li>)}</ul></nav>
-  <div class="header-actions"><button class="theme-toggle" type="button" data-theme-toggle aria-label="Включить тёмную тему" title="Включить тёмную тему"><svg class="theme-icon theme-icon--sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.25"></circle><path d="M12 2.5v2M12 19.5v2M21.5 12h-2M4.5 12h-2M18.72 5.28l-1.42 1.42M6.7 17.3l-1.42 1.42M18.72 18.72l-1.42-1.42M6.7 6.7 5.28 5.28"></path></svg><svg class="theme-icon theme-icon--moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.2 15.2A8.5 8.5 0 0 1 8.8 3.8a8.5 8.5 0 1 0 11.4 11.4Z"></path></svg></button><a class="header-cta" href="#contact">Написать</a><button class="menu-button" type="button" aria-expanded="false" aria-controls="mobile-menu" data-menu-button><span class="menu-icon" aria-hidden="true"><i></i><i></i></span><span class="sr-only">Открыть меню</span></button></div>
-</div><nav class="mobile-menu" id="mobile-menu" aria-label="Мобильная навигация" data-mobile-menu hidden><ul>{siteConfig.navigation.map((item)=><li><a href={item.href}>{item.label}</a></li>)}</ul><a class="button button-primary" href="#contact">Обсудить задачу</a></nav></header>
+
+<header class="site-header" data-site-header>
+  <div class="header-shell">
+    <BrandMark variant="wordmark" size="small" href="#top" ariaLabel="TSBLV — в начало страницы" />
+
+    <nav class="desktop-nav" aria-label="Основная навигация">
+      <ul>
+        {siteConfig.navigation.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+      </ul>
+    </nav>
+
+    <div class="header-actions">
+      <button class="theme-toggle" type="button" data-theme-toggle aria-label="Включить тёмную тему" title="Включить тёмную тему">
+        <svg class="theme-icon theme-icon--sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.25"></circle><path d="M12 2.5v2M12 19.5v2M21.5 12h-2M4.5 12h-2M18.72 5.28l-1.42 1.42M6.7 17.3l-1.42 1.42M18.72 18.72l-1.42-1.42M6.7 6.7 5.28 5.28"></path></svg>
+        <svg class="theme-icon theme-icon--moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.2 15.2A8.5 8.5 0 0 1 8.8 3.8a8.5 8.5 0 1 0 11.4 11.4Z"></path></svg>
+      </button>
+      <a class="header-cta" href="#contact">Написать</a>
+      <button class="menu-button" type="button" aria-expanded="false" aria-controls="mobile-menu" data-menu-button>
+        <span class="menu-icon" aria-hidden="true"><i></i><i></i></span>
+        <span class="sr-only">Открыть меню</span>
+      </button>
+    </div>
+  </div>
+
+  <nav class="mobile-menu" id="mobile-menu" aria-label="Мобильная навигация" data-mobile-menu hidden>
+    <ul>{siteConfig.navigation.map((item) => <li><a href={item.href}>{item.label}</a></li>)}</ul>
+    <a class="button button-primary" href="#contact">Обсудить задачу</a>
+  </nav>
+</header>
+
 <style>
- .site-header{position:fixed;z-index:50;top:.75rem;left:50%;width:min(calc(100% - 1.5rem),72rem);transform:translateX(-50%);transition:width .3s ease,top .3s ease}.header-shell,.mobile-menu{border:1px solid var(--glass-line);background:color-mix(in srgb,var(--glass) 78%,transparent);box-shadow:var(--shadow-sm),inset 0 1px 0 rgba(255,255,255,.58);backdrop-filter:blur(20px)}.header-shell{display:flex;height:3.45rem;align-items:center;gap:1.5rem;padding:.35rem .55rem .35rem 1rem;border-radius:1.15rem}.site-header.is-scrolled{top:.5rem;width:min(calc(100% - 1.5rem),64rem)}.desktop-nav{margin-left:auto}.desktop-nav ul{display:flex;gap:clamp(.9rem,2vw,1.8rem);margin:0;padding:0;list-style:none}.desktop-nav a{color:var(--muted);font-size:.73rem;font-weight:700;text-decoration:none;transition:color .2s ease}.desktop-nav a:hover,.desktop-nav a:focus-visible{color:var(--ink)}.header-actions{display:flex;align-items:center;gap:.45rem}.theme-toggle,.menu-button{position:relative;display:grid;width:2.5rem;height:2.5rem;place-items:center;padding:0;border:1px solid var(--glass-line);border-radius:.85rem;background:color-mix(in srgb,var(--paper) 45%,transparent);color:var(--ink);cursor:pointer;transition:transform .2s ease,background .2s ease}.theme-toggle:hover,.menu-button:hover{background:var(--paper-raised);transform:translateY(-1px)}.theme-icon{position:absolute;width:1rem;fill:none;stroke:currentColor;stroke-linecap:round;stroke-width:1.6;transition:.2s}.theme-icon--moon{opacity:0;transform:scale(.6) rotate(-25deg)}:global(html[data-theme='dark']) .theme-icon--sun{opacity:0;transform:scale(.6) rotate(25deg)}:global(html[data-theme='dark']) .theme-icon--moon{opacity:1;transform:none}.header-cta{padding:.68rem .92rem;border-radius:.8rem;background:var(--ink);color:var(--paper);font-size:.7rem;font-weight:750;text-decoration:none;transition:transform .2s ease,background .2s ease}.header-cta:hover{background:var(--violet);transform:translateY(-1px)}.menu-button,.mobile-menu{display:none}.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
- @media(max-width:47.99rem){.site-header{top:.5rem;width:calc(100% - 1.5rem)}.desktop-nav,.header-cta{display:none}.header-shell{height:3.3rem;padding-left:.9rem}.menu-button{display:grid}.menu-icon{display:grid;width:1rem;gap:.25rem}.menu-icon i{display:block;height:1px;background:currentColor;transition:transform .2s}.menu-button[aria-expanded='true'] i:first-child{transform:translateY(2.5px) rotate(45deg)}.menu-button[aria-expanded='true'] i:last-child{transform:translateY(-2.5px) rotate(-45deg)}.mobile-menu{display:grid;gap:.8rem;margin-top:.45rem;padding:1rem;border-radius:1.1rem;opacity:0;transform:translateY(-.5rem);transition:opacity .2s,transform .2s}.mobile-menu.is-open{opacity:1;transform:none}.mobile-menu ul{display:grid;margin:0;padding:0;list-style:none}.mobile-menu li+li{border-top:1px solid var(--line)}.mobile-menu a:not(.button){display:flex;min-height:2.7rem;align-items:center;color:var(--ink);font-size:.88rem;font-weight:700;text-decoration:none}.mobile-menu[hidden]{display:none}}
+  .site-header { position: fixed; z-index: 50; top: 0.7rem; left: 50%; width: min(calc(100% - 1.5rem), 64rem); transform: translateX(-50%); transition: top .25s ease, width .25s ease; }
+  .header-shell, .mobile-menu { border: 1px solid rgba(255,255,255,.18); background: linear-gradient(120deg, rgba(31,27,42,.76), rgba(47,36,65,.61)); box-shadow: var(--shadow-sm), inset 0 1px 0 rgba(255,255,255,.18); backdrop-filter: blur(22px) saturate(135%); }
+  .header-shell { display: flex; height: 3.35rem; align-items: center; gap: 1.35rem; padding: .35rem .48rem .35rem 1rem; border-radius: 1.1rem; }
+  .site-header.is-scrolled { top: .5rem; width: min(calc(100% - 1.5rem), 61rem); }
+  .site-header.is-scrolled .header-shell { background: linear-gradient(120deg, rgba(25,22,34,.87), rgba(45,32,62,.76)); }
+  :global(html[data-theme='dark']) .header-shell, :global(html[data-theme='dark']) .mobile-menu { background: linear-gradient(120deg, rgba(17,15,26,.83), rgba(37,29,52,.72)); }
+  .desktop-nav { margin-left: auto; }.desktop-nav ul { display: flex; gap: clamp(.85rem, 2vw, 1.7rem); margin: 0; padding: 0; list-style: none; }
+  .desktop-nav a { color: rgba(255,255,255,.76); font-size: .73rem; font-weight: 700; text-decoration: none; transition: color .2s ease; }.desktop-nav a:hover, .desktop-nav a:focus-visible { color: #fff; }
+  .header-actions { display: flex; align-items: center; gap: .42rem; }.theme-toggle, .menu-button { position: relative; display: grid; width: 2.4rem; height: 2.4rem; place-items: center; padding: 0; border: 1px solid rgba(255,255,255,.18); border-radius: .78rem; background: rgba(255,255,255,.08); color: #fff; cursor: pointer; transition: transform .2s ease, background .2s ease; }.theme-toggle:hover, .menu-button:hover { background: rgba(255,255,255,.16); transform: translateY(-1px); }
+  .theme-icon { position: absolute; width: 1rem; fill: none; stroke: currentColor; stroke-linecap: round; stroke-width: 1.6; transition: .2s; }.theme-icon--moon { opacity: 0; transform: scale(.6) rotate(-25deg); }:global(html[data-theme='dark']) .theme-icon--sun { opacity: 0; transform: scale(.6) rotate(25deg); }:global(html[data-theme='dark']) .theme-icon--moon { opacity: 1; transform: none; }
+  .header-cta { padding: .66rem .9rem; border-radius: .78rem; background: rgba(255,255,255,.93); color: #26202f; font-size: .7rem; font-weight: 760; text-decoration: none; transition: transform .2s ease, background .2s ease; }.header-cta:hover { background: var(--peach); transform: translateY(-1px); }
+  .menu-button, .mobile-menu { display: none; }.sr-only { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0); }
+  @media (max-width: 47.99rem) { .site-header { top: .65rem; width: calc(100% - 1.5rem); }.desktop-nav, .header-cta { display: none; }.header-shell { height: 3.2rem; padding-left: .9rem; }.menu-button { display: grid; }.menu-icon { display: grid; width: 1rem; gap: .25rem; }.menu-icon i { display: block; height: 1px; background: currentColor; transition: transform .2s; }.menu-button[aria-expanded='true'] i:first-child { transform: translateY(2.5px) rotate(45deg); }.menu-button[aria-expanded='true'] i:last-child { transform: translateY(-2.5px) rotate(-45deg); }.mobile-menu { display: grid; gap: .8rem; margin-top: .45rem; padding: 1rem; border-radius: 1.1rem; opacity: 0; transform: translateY(-.5rem); transition: opacity .2s, transform .2s; }.mobile-menu.is-open { opacity: 1; transform: none; }.mobile-menu ul { display: grid; margin: 0; padding: 0; list-style: none; }.mobile-menu li + li { border-top: 1px solid rgba(255,255,255,.14); }.mobile-menu a:not(.button) { display: flex; min-height: 2.7rem; align-items: center; color: rgba(255,255,255,.9); font-size: .88rem; font-weight: 700; text-decoration: none; }.mobile-menu[hidden] { display: none; } }
 </style>

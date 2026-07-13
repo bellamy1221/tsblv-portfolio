@@ -1,9 +1,28 @@
-export interface Problem { id:string; title:string; }
-export type PreviewKind='expert'|'local'|'leads';
-export interface ConceptCase { id:string; kind:'Концепт'; type:string; title:string; task:string; solution:string; services:string[]; preview:PreviewKind; }
-export interface Service { id:string; title:string; description:string; visual:'site'|'crm'|'automation'|'analytics'; }
-export interface ProcessStep { id:string; title:string; description:string; }
-export const problems:Problem[]=[{id:'01',title:'Нужен первый нормальный сайт'},{id:'02',title:'Услуга есть, а обращений мало'},{id:'03',title:'Сайт выглядит устаревшим'},{id:'04',title:'Заявки теряются в переписках'},{id:'05',title:'Слишком много приходится делать вручную'},{id:'06',title:'Непонятно, что действительно приносит клиентов'}];
-export const conceptCases:ConceptCase[]=[{id:'01',kind:'Концепт',type:'Лендинг специалиста',title:'Сайт для частного специалиста',task:'Показать экспертизу и превратить интерес посетителя в запись на консультацию.',solution:'Собрал спокойную структуру с ясным предложением, подходом к работе и коротким сценарием записи.',services:['Структура','Дизайн','Разработка'],preview:'expert'},{id:'02',kind:'Концепт',type:'Сайт локального сервиса',title:'Сайт для локального сервиса',task:'Понятно объяснить услуги, создать доверие и упростить обращение.',solution:'Выстроил быстрый путь от выбора услуги к контакту, добавил ответы на частые вопросы и заметные точки действия.',services:['Сайт услуг','Контент','Аналитика'],preview:'local'},{id:'03',kind:'Концепт',type:'Внутренняя система',title:'Система обработки заявок',task:'Собирать обращения, видеть статусы и не терять следующий шаг по каждому клиенту.',solution:'Спроектировал одно рабочее пространство с воронкой, уведомлениями и компактной аналитикой.',services:['CRM','Автоматизация','Аналитика'],preview:'leads'}];
-export const services:Service[]=[{id:'01',title:'Сайты',description:'Лендинг, портфолио или полноценный сайт под вашу задачу.',visual:'site'},{id:'02',title:'CRM',description:'Настрою понятную работу с заявками, клиентами и этапами сделок.',visual:'crm'},{id:'03',title:'Автоматизация',description:'Свяжу сервисы и уберу повторяющиеся действия, которые отнимают время.',visual:'automation'},{id:'04',title:'Аналитика',description:'Настрою сбор данных и отчёты без таблиц, в которых невозможно разобраться.',visual:'analytics'}];
-export const processSteps:ProcessStep[]=[{id:'01',title:'Разбираюсь в задаче',description:'Вы рассказываете, что происходит сейчас. Я задаю вопросы и фиксирую главное.'},{id:'02',title:'Собираю план',description:'Предлагаю формат, объём работ, сроки и понятную последовательность шагов.'},{id:'03',title:'Делаю и показываю',description:'Вы видите прогресс по этапам и спокойно принимаете ключевые решения.'},{id:'04',title:'Запускаю и остаюсь на связи',description:'Проверяю всё перед публикацией, передаю доступы и помогаю после запуска.'}];
+export interface Problem { id: string; title: string; }
+export type PreviewKind = 'expert' | 'local' | 'leads';
+export interface ConceptCase { id: string; kind: 'Концепт'; type: string; title: string; task: string; solution: string; services: string[]; preview: PreviewKind; }
+export interface Service { id: string; anchor: string; title: string; description: string; visual: 'site' | 'crm' | 'automation' | 'analytics'; }
+export interface ProcessStep { id: string; title: string; description: string; }
+
+export const problems: Problem[] = [
+  { id: '01', title: 'Нужен первый нормальный сайт' }, { id: '02', title: 'Услуга есть, а обращений мало' },
+  { id: '03', title: 'Сайт выглядит устаревшим' }, { id: '04', title: 'Заявки теряются в переписках' },
+  { id: '05', title: 'Слишком много приходится делать вручную' }, { id: '06', title: 'Непонятно, что действительно приносит клиентов' },
+];
+export const conceptCases: ConceptCase[] = [
+  { id: '01', kind: 'Концепт', type: 'Лендинг специалиста', title: 'Сайт для частного специалиста', task: 'Показать экспертизу и превратить интерес посетителя в запись на консультацию.', solution: 'Собрал спокойную структуру с ясным предложением, подходом к работе и коротким сценарием записи.', services: ['Структура', 'Дизайн', 'Разработка'], preview: 'expert' },
+  { id: '02', kind: 'Концепт', type: 'Сайт локального сервиса', title: 'Сайт для локального сервиса', task: 'Понятно объяснить услуги, создать доверие и упростить обращение.', solution: 'Выстроил быстрый путь от выбора услуги к контакту, добавил ответы на частые вопросы и заметные точки действия.', services: ['Сайт услуг', 'Контент', 'Аналитика'], preview: 'local' },
+  { id: '03', kind: 'Концепт', type: 'Внутренняя система', title: 'Система обработки заявок', task: 'Собирать обращения, видеть статусы и не терять следующий шаг по каждому клиенту.', solution: 'Спроектировал одно рабочее пространство с воронкой, уведомлениями и компактной аналитикой.', services: ['CRM', 'Автоматизация', 'Аналитика'], preview: 'leads' },
+];
+export const services: Service[] = [
+  { id: '01', anchor: 'service-sites', title: 'Сайты', description: 'Лендинг, портфолио или полноценный сайт под вашу задачу.', visual: 'site' },
+  { id: '02', anchor: 'service-crm', title: 'CRM', description: 'Настрою понятную работу с заявками, клиентами и этапами сделок.', visual: 'crm' },
+  { id: '03', anchor: 'service-automation', title: 'Автоматизация', description: 'Свяжу сервисы и уберу повторяющиеся действия, которые отнимают время.', visual: 'automation' },
+  { id: '04', anchor: 'service-analytics', title: 'Аналитика', description: 'Настрою сбор данных и отчёты без таблиц, в которых невозможно разобраться.', visual: 'analytics' },
+];
+export const processSteps: ProcessStep[] = [
+  { id: '01', title: 'Разбираюсь в задаче', description: 'Вы рассказываете, что происходит сейчас. Я задаю вопросы и фиксирую главное.' },
+  { id: '02', title: 'Собираю план', description: 'Предлагаю формат, объём работ, сроки и понятную последовательность шагов.' },
+  { id: '03', title: 'Делаю и показываю', description: 'Вы видите прогресс по этапам и спокойно принимаете ключевые решения.' },
+  { id: '04', title: 'Запускаю и остаюсь на связи', description: 'Проверяю всё перед публикацией, передаю доступы и помогаю после запуска.' },
+];
