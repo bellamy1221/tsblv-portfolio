@@ -2,6 +2,30 @@ const mobileBreakpoint = 768;
 const reduceMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
 const finePointerQuery = window.matchMedia('(hover: hover) and (pointer: fine)');
 
+let pointerFrame = 0;
+let pointerOwner: Element | null = null;
+let pointerWork: (() => void) | null = null;
+
+function schedulePointer(owner: Element, work: () => void): void {
+  pointerOwner = owner;
+  pointerWork = work;
+  if (pointerFrame) return;
+  pointerFrame = requestAnimationFrame(() => {
+    pointerFrame = 0;
+    const nextWork = pointerWork;
+    pointerWork = null;
+    nextWork?.();
+  });
+}
+
+function cancelPointer(owner: Element): void {
+  if (pointerOwner !== owner) return;
+  if (pointerFrame) cancelAnimationFrame(pointerFrame);
+  pointerFrame = 0;
+  pointerOwner = null;
+  pointerWork = null;
+}
+
 type Theme = 'light' | 'dark';
 type ViewTransitionDocument = Document & {
   startViewTransition?: (update: () => void) => { finished: Promise<void> };
@@ -107,89 +131,15 @@ function initHeader(): void {
   updateHeader();
 }
 
-function initHeroLens(): void {
-  const viewport = document.querySelector<HTMLElement>('[data-hero-viewport]');
-  const stage = document.querySelector<HTMLElement>('[data-hero-scene]');
-  const lens = document.querySelector<HTMLElement>('[data-hero-lens]');
-  const highlight = document.querySelector<HTMLElement>('[data-lens-highlight]');
-  if (!viewport || !stage || !lens || !highlight || reduceMotionQuery.matches || !finePointerQuery.matches) return;
-
-  let frame = 0;
-  let visible = true;
-  let active = false;
-  let pressed = false;
-  let x = 0.5;
-  let y = 0.5;
-
-  const render = (): void => {
-    frame = 0;
-    const dx = active ? (x - 0.5) * 2 : 0;
-    const dy = active ? (y - 0.5) * 2 : 0;
-    stage.style.setProperty('--lens-x', `${(dx * 92).toFixed(2)}px`);
-    stage.style.setProperty('--lens-y', `${(dy * 42).toFixed(2)}px`);
-    stage.style.setProperty('--lens-rx', `${(-dy * 5.5).toFixed(2)}deg`);
-    stage.style.setProperty('--lens-ry', `${(dx * 6.5).toFixed(2)}deg`);
-    stage.style.setProperty('--lens-scale', pressed ? '0.965' : active ? '1.012' : '1');
-    stage.style.setProperty('--light-x', `${(x * 100).toFixed(1)}%`);
-    stage.style.setProperty('--light-y', `${(y * 100).toFixed(1)}%`);
-    highlight.style.setProperty('--highlight-x', `${(x * 100).toFixed(1)}%`);
-    highlight.style.setProperty('--highlight-y', `${(y * 100).toFixed(1)}%`);
-  };
-
-  const schedule = (): void => {
-    if (visible && !frame) frame = requestAnimationFrame(render);
-  };
-
-  viewport.addEventListener('pointermove', (event) => {
-    const rect = viewport.getBoundingClientRect();
-    x = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
-    y = Math.min(1, Math.max(0, (event.clientY - rect.top) / rect.height));
-    active = true;
-    schedule();
-  }, { passive: true });
-  viewport.addEventListener('pointerdown', () => { pressed = true; schedule(); });
-  viewport.addEventListener('pointerup', () => { pressed = false; schedule(); });
-  viewport.addEventListener('pointerleave', () => {
-    active = false;
-    pressed = false;
-    x = 0.5;
-    y = 0.5;
-    schedule();
-  });
-
-  observeVisibility(viewport, (isVisible) => {
-    visible = isVisible;
-    if (!visible && frame) {
-      cancelAnimationFrame(frame);
-      frame = 0;
-    }
-  });
-}
-
-function initCaseToggles(): void {
-  document.querySelectorAll<HTMLButtonElement>('[data-case-toggle]').forEach((button) => {
-    const panel = button.parentElement?.querySelector<HTMLElement>('[data-case-panel]');
-    if (!panel) return;
-    panel.classList.add('is-collapsible');
-    button.addEventListener('click', () => {
-      const open = button.getAttribute('aria-expanded') !== 'true';
-      button.setAttribute('aria-expanded', String(open));
-      panel.classList.toggle('is-open', open);
-    });
-  });
-}
-
 function initPointerLights(): void {
   if (!finePointerQuery.matches || reduceMotionQuery.matches) return;
 
   document.querySelectorAll<HTMLElement>('[data-pointer-light]').forEach((element) => {
-    let frame = 0;
     let visible = true;
     let x = element.clientWidth / 2;
     let y = element.clientHeight / 2;
 
     const render = (): void => {
-      frame = 0;
       element.style.setProperty('--pointer-x', `${x.toFixed(1)}px`);
       element.style.setProperty('--pointer-y', `${y.toFixed(1)}px`);
     };
@@ -199,68 +149,12 @@ function initPointerLights(): void {
       const rect = element.getBoundingClientRect();
       x = event.clientX - rect.left;
       y = event.clientY - rect.top;
-      if (!frame) frame = requestAnimationFrame(render);
+      schedulePointer(element, render);
     }, { passive: true });
 
     observeVisibility(element, (isVisible) => {
       visible = isVisible;
-      if (!visible && frame) {
-        cancelAnimationFrame(frame);
-        frame = 0;
-      }
-    });
-  });
-}
-
-function initProjectParallax(): void {
-  if (!finePointerQuery.matches || reduceMotionQuery.matches) return;
-
-  document.querySelectorAll<HTMLElement>('[data-project-scene]').forEach((scene) => {
-    let frame = 0;
-    let visible = true;
-    let x = 0;
-    let y = 0;
-    let pointerX = 50;
-    let pointerY = 50;
-
-    const render = (): void => {
-      frame = 0;
-      scene.style.setProperty('--project-x', `${x.toFixed(2)}px`);
-      scene.style.setProperty('--project-y', `${y.toFixed(2)}px`);
-      scene.style.setProperty('--project-front-x', `${(x * 1.2).toFixed(2)}px`);
-      scene.style.setProperty('--project-front-y', `${(y * 1.2).toFixed(2)}px`);
-      scene.style.setProperty('--project-back-x', `${(-x * 0.32).toFixed(2)}px`);
-      scene.style.setProperty('--project-back-y', `${(-y * 0.32).toFixed(2)}px`);
-      scene.style.setProperty('--pointer-x', `${pointerX.toFixed(1)}%`);
-      scene.style.setProperty('--pointer-y', `${pointerY.toFixed(1)}%`);
-    };
-
-    scene.addEventListener('pointermove', (event) => {
-      if (!visible) return;
-      const rect = scene.getBoundingClientRect();
-      const localX = (event.clientX - rect.left) / rect.width;
-      const localY = (event.clientY - rect.top) / rect.height;
-      x = (localX - 0.5) * 10;
-      y = (localY - 0.5) * 10;
-      pointerX = localX * 100;
-      pointerY = localY * 100;
-      if (!frame) frame = requestAnimationFrame(render);
-    }, { passive: true });
-
-    scene.addEventListener('pointerleave', () => {
-      x = 0;
-      y = 0;
-      pointerX = 50;
-      pointerY = 50;
-      if (!frame) frame = requestAnimationFrame(render);
-    });
-
-    observeVisibility(scene, (isVisible) => {
-      visible = isVisible;
-      if (!visible && frame) {
-        cancelAnimationFrame(frame);
-        frame = 0;
-      }
+      if (!visible) cancelPointer(element);
     });
   });
 }
@@ -313,19 +207,142 @@ function initServices(): void {
   setActive(activeId);
 }
 
+function initWorkBrowser(): void {
+  const root = document.querySelector<HTMLElement>('[data-work-browser]');
+  const rows = Array.from(root?.querySelectorAll<HTMLElement>('[data-work-row]') ?? []);
+  const triggers = Array.from(root?.querySelectorAll<HTMLButtonElement>('[data-work-trigger]') ?? []);
+  const files = Array.from(root?.querySelectorAll<HTMLElement>('[data-work-file]') ?? []);
+  if (!root || rows.length === 0 || triggers.length === 0 || files.length === 0) return;
+
+  const setActive = (id: string): void => {
+    if (!rows.some((row) => row.dataset.workRow === id)) return;
+    rows.forEach((row) => row.classList.toggle('is-active', row.dataset.workRow === id));
+    triggers.forEach((trigger) => trigger.setAttribute('aria-expanded', String(trigger.dataset.workTrigger === id)));
+    files.forEach((file) => {
+      const active = file.dataset.workFile === id;
+      file.classList.toggle('is-active', active);
+      file.setAttribute('aria-hidden', String(!active));
+    });
+  };
+
+  triggers.forEach((trigger) => {
+    const id = trigger.dataset.workTrigger;
+    if (!id) return;
+    trigger.addEventListener('pointerenter', () => {
+      if (finePointerQuery.matches) setActive(id);
+    });
+    trigger.addEventListener('focus', () => setActive(id));
+    trigger.addEventListener('click', () => setActive(id));
+  });
+
+  if ('IntersectionObserver' in window && !reduceMotionQuery.matches) {
+    const observer = new IntersectionObserver((entries) => {
+      const activeEntry = entries
+        .filter((entry) => entry.isIntersecting)
+        .sort((a, b) => Math.abs(a.boundingClientRect.top - window.innerHeight * 0.45) - Math.abs(b.boundingClientRect.top - window.innerHeight * 0.45))[0];
+      const id = (activeEntry?.target as HTMLElement | undefined)?.dataset.workRow;
+      if (id) setActive(id);
+    }, { rootMargin: '-28% 0px -45% 0px', threshold: 0.01 });
+    rows.forEach((row) => observer.observe(row));
+  }
+
+  root.classList.add('is-enhanced');
+  setActive(rows[0].dataset.workRow ?? '01');
+}
+
+function initPortfolioFolder(): void {
+  const root = document.querySelector<HTMLElement>('[data-portfolio-folder]');
+  const trigger = root?.querySelector<HTMLButtonElement>('[data-folder-toggle]');
+  const workBrowser = document.querySelector<HTMLElement>('[data-work-browser]');
+  if (!root || !trigger) return;
+
+  const setOpen = (open: boolean): void => {
+    root.classList.toggle('is-open', open);
+    trigger.setAttribute('aria-expanded', String(open));
+    trigger.setAttribute('aria-label', open ? 'Перейти к примерам работ' : 'Открыть папку портфолио');
+  };
+
+  trigger.addEventListener('click', () => {
+    const wasOpen = root.classList.contains('is-open');
+    setOpen(true);
+    if (workBrowser) window.setTimeout(() => workBrowser.scrollIntoView({ behavior: reduceMotionQuery.matches ? 'auto' : 'smooth', block: 'start' }), wasOpen ? 0 : 520);
+  });
+
+  if ('IntersectionObserver' in window && !reduceMotionQuery.matches) {
+    new IntersectionObserver(([entry], observer) => {
+      if (!entry.isIntersecting) return;
+      setOpen(true);
+      observer.disconnect();
+    }, { threshold: 0.62 }).observe(root);
+  }
+}
+
+function initProcessJourney(): void {
+  const root = document.querySelector<HTMLElement>('[data-process-journey]');
+  const steps = Array.from(root?.querySelectorAll<HTMLElement>('[data-process-step]') ?? []);
+  if (!root || steps.length === 0) return;
+
+  const setActive = (id: string): void => {
+    steps.forEach((step) => step.classList.toggle('is-active', step.dataset.processStep === id));
+  };
+
+  steps.forEach((step) => {
+    const id = step.dataset.processStep;
+    if (!id) return;
+    step.addEventListener('pointerenter', () => {
+      if (finePointerQuery.matches) setActive(id);
+    });
+    step.addEventListener('focus', () => setActive(id));
+  });
+
+  if ('IntersectionObserver' in window && !reduceMotionQuery.matches) {
+    const stepObserver = new IntersectionObserver((entries) => {
+      const activeEntry = entries
+        .filter((entry) => entry.isIntersecting)
+        .sort((a, b) => Math.abs(a.boundingClientRect.top - window.innerHeight * 0.42) - Math.abs(b.boundingClientRect.top - window.innerHeight * 0.42))[0];
+      const id = (activeEntry?.target as HTMLElement | undefined)?.dataset.processStep;
+      if (id) setActive(id);
+    }, { rootMargin: '-28% 0px -42% 0px', threshold: 0.01 });
+    steps.forEach((step) => stepObserver.observe(step));
+
+    let visible = false;
+    let frame = 0;
+    const renderTitle = (): void => {
+      frame = 0;
+      if (!visible) return;
+      const rect = root.getBoundingClientRect();
+      const progress = Math.min(1, Math.max(0, (window.innerHeight - rect.top) / (window.innerHeight + rect.height)));
+      root.style.setProperty('--journey-title-x', `${((0.5 - progress) * 10).toFixed(2)}vw`);
+    };
+    const scheduleTitle = (): void => {
+      if (!frame) frame = requestAnimationFrame(renderTitle);
+    };
+    observeVisibility(root, (isVisible) => {
+      visible = isVisible;
+      if (visible) scheduleTitle();
+    });
+    window.addEventListener('scroll', scheduleTitle, { passive: true });
+    window.addEventListener('resize', scheduleTitle, { passive: true });
+  }
+}
+
 function initFooterLight(): void {
   const stage = document.querySelector<HTMLElement>('[data-footer-light]');
   if (!stage || !finePointerQuery.matches || reduceMotionQuery.matches) return;
 
-  let frame = 0;
   let visible = false;
   let x = 50;
   let y = 50;
 
   const render = (): void => {
-    frame = 0;
+    const dx = (x - 50) / 50;
+    const dy = (y - 50) / 50;
     stage.style.setProperty('--footer-light-x', `${x.toFixed(1)}%`);
     stage.style.setProperty('--footer-light-y', `${y.toFixed(1)}%`);
+    stage.style.setProperty('--footer-shadow-x', `${(-dx * 2.6).toFixed(2)}px`);
+    stage.style.setProperty('--footer-shadow-y', `${(2.6 - dy * 1.6).toFixed(2)}px`);
+    stage.style.setProperty('--footer-grain-x', `${(dx * 2).toFixed(2)}px`);
+    stage.style.setProperty('--footer-grain-y', `${(dy * 2).toFixed(2)}px`);
   };
 
   stage.addEventListener('pointermove', (event) => {
@@ -333,76 +350,184 @@ function initFooterLight(): void {
     const rect = stage.getBoundingClientRect();
     x = ((event.clientX - rect.left) / rect.width) * 100;
     y = ((event.clientY - rect.top) / rect.height) * 100;
-    if (!frame) frame = requestAnimationFrame(render);
+    schedulePointer(stage, render);
   }, { passive: true });
 
   stage.addEventListener('pointerleave', () => {
     x = 50;
     y = 50;
-    if (visible && !frame) frame = requestAnimationFrame(render);
+    if (visible) schedulePointer(stage, render);
   });
 
   observeVisibility(stage, (isVisible) => {
     visible = isVisible;
-    if (!visible && frame) {
-      cancelAnimationFrame(frame);
-      frame = 0;
-    }
+    if (!visible) cancelPointer(stage);
   });
 }
 
 function initSequences(): void {
   const sequences = Array.from(document.querySelectorAll<HTMLElement>('[data-sequence]'));
+  const revealAll = (): void => sequences.forEach((sequence) => sequence.classList.add('is-sequence-visible'));
   if (reduceMotionQuery.matches || !('IntersectionObserver' in window)) {
-    sequences.forEach((sequence) => sequence.classList.add('is-sequence-visible'));
+    revealAll();
     return;
   }
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (!entry.isIntersecting) return;
-      entry.target.classList.add('is-sequence-visible');
-      observer.unobserve(entry.target);
-    });
-  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.1 });
+  const pending = new Set<HTMLElement>();
+  let fallbackFrame = 0;
+  let observer: IntersectionObserver;
 
-  sequences.forEach((sequence) => observer.observe(sequence));
+  const stopFallback = (): void => {
+    window.removeEventListener('scroll', scheduleFallback);
+    window.removeEventListener('resize', scheduleFallback);
+    if (fallbackFrame) cancelAnimationFrame(fallbackFrame);
+    fallbackFrame = 0;
+  };
+
+  const reveal = (sequence: HTMLElement): void => {
+    if (!pending.delete(sequence)) return;
+    sequence.classList.add('is-sequence-visible');
+    observer.unobserve(sequence);
+    if (pending.size === 0) {
+      observer.disconnect();
+      stopFallback();
+    }
+  };
+
+  const checkFallback = (): void => {
+    fallbackFrame = 0;
+    pending.forEach((sequence) => {
+      const rect = sequence.getBoundingClientRect();
+      if (rect.top < window.innerHeight * 0.96 && rect.bottom > 0) reveal(sequence);
+    });
+  };
+
+  function scheduleFallback(): void {
+    if (!fallbackFrame) fallbackFrame = requestAnimationFrame(checkFallback);
+  }
+
+  try {
+    observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) reveal(entry.target as HTMLElement);
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.1 });
+  } catch {
+    revealAll();
+    return;
+  }
+
+  sequences.forEach((sequence) => {
+    try {
+      observer.observe(sequence);
+      pending.add(sequence);
+    } catch {
+      sequence.classList.add('is-sequence-visible');
+    }
+  });
+
+  if (pending.size === 0) {
+    observer.disconnect();
+    return;
+  }
+
+  document.documentElement.classList.add('sequence-ready');
+  window.addEventListener('scroll', scheduleFallback, { passive: true });
+  window.addEventListener('resize', scheduleFallback, { passive: true });
+  scheduleFallback();
 }
 
 function initEntrances(): void {
   const elements = Array.from(document.querySelectorAll<HTMLElement>('[data-motion]'));
   if (reduceMotionQuery.matches || !('IntersectionObserver' in window)) return;
-  document.documentElement.classList.add('motion-ready');
+  const pending = new Set<HTMLElement>();
+  let fallbackFrame = 0;
+  let observer: IntersectionObserver;
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (!entry.isIntersecting) return;
-      const element = entry.target as HTMLElement;
-      element.classList.add('is-motion-visible');
-      observer.unobserve(element);
+  const stopFallback = (): void => {
+    window.removeEventListener('scroll', scheduleFallback);
+    window.removeEventListener('resize', scheduleFallback);
+    if (fallbackFrame) cancelAnimationFrame(fallbackFrame);
+    fallbackFrame = 0;
+  };
+
+  const reveal = (element: HTMLElement): void => {
+    if (!pending.delete(element)) return;
+    element.classList.add('is-motion-visible');
+    observer.unobserve(element);
+
+    const delay = Number(element.dataset.motionDelay ?? 0);
+    window.setTimeout(() => {
+      element.classList.remove('is-motion-pending', 'is-motion-visible');
+      element.style.removeProperty('transition-delay');
+    }, 1100 + (Number.isFinite(delay) ? delay : 0));
+
+    if (pending.size === 0) {
+      observer.disconnect();
+      stopFallback();
+    }
+  };
+
+  const checkFallback = (): void => {
+    fallbackFrame = 0;
+    pending.forEach((element) => {
+      const rect = element.getBoundingClientRect();
+      if (rect.top < window.innerHeight * 0.96 && rect.bottom > 0) reveal(element);
     });
-  }, { rootMargin: '0px 0px -6% 0px', threshold: 0.05 });
+  };
+
+  function scheduleFallback(): void {
+    if (!fallbackFrame) fallbackFrame = requestAnimationFrame(checkFallback);
+  }
+
+  try {
+    observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) reveal(entry.target as HTMLElement);
+      });
+    }, { rootMargin: '0px 0px -6% 0px', threshold: 0.05 });
+  } catch {
+    return;
+  }
 
   elements.forEach((element) => {
-    if (element.getBoundingClientRect().top < window.innerHeight * 0.94) {
-      element.classList.add('is-motion-visible');
+    const rect = element.getBoundingClientRect();
+    if (rect.top < window.innerHeight * 0.94 && rect.bottom > 0) {
       return;
     }
+
+    try {
+      observer.observe(element);
+      pending.add(element);
+    } catch {
+      return;
+    }
+  });
+
+  if (pending.size === 0) {
+    observer.disconnect();
+    return;
+  }
+
+  document.documentElement.classList.add('motion-ready');
+  pending.forEach((element) => {
     element.classList.add('is-motion-pending');
     const delay = Number(element.dataset.motionDelay ?? 0);
-    if (delay > 0) element.style.transitionDelay = `${delay}ms`;
-    observer.observe(element);
+    if (Number.isFinite(delay) && delay > 0) element.style.transitionDelay = `${delay}ms`;
   });
+  window.addEventListener('scroll', scheduleFallback, { passive: true });
+  window.addEventListener('resize', scheduleFallback, { passive: true });
+  scheduleFallback();
 }
 
 export function initMotion(): void {
   initTheme();
   initHeader();
-  initHeroLens();
-  initCaseToggles();
   initPointerLights();
-  initProjectParallax();
   initServices();
+  initPortfolioFolder();
+  initWorkBrowser();
+  initProcessJourney();
   initFooterLight();
   initSequences();
   initEntrances();

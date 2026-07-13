@@ -15,9 +15,9 @@ export interface SiteConfig {
 // Replace these two contact values before publishing the site.
 export const siteConfig: SiteConfig = {
   name: 'TSBLV',
-  title: 'TSBLV — сайты, автоматизация и цифровые решения',
+  title: 'TSBLV — превращаю идеи в сильные цифровые продукты',
   description:
-    'Создание сайтов, настройка CRM, автоматизация процессов и аналитика для специалистов, самозанятых и небольших команд.',
+    'Помогаю специалистам и небольшим командам превращать идеи в сайты, CRM и цифровые системы, которые вызывают доверие и поддерживают рост.',
   email: 'hello@tsblv.com',
   telegramUrl: 'https://t.me/tsblv',
   navigation: [

@@ -2,224 +2,186 @@
 import { processSteps } from '../data/home';
 ---
 
-<section class="section process" id="process" aria-labelledby="process-title">
-  <div class="site-container">
-    <div class="content-grid process-heading" data-motion="clip">
-      <div>
-        <p class="section-label">Процесс</p>
-        <h2 id="process-title">Как проходит работа</h2>
-      </div>
-      <p>Четыре понятных этапа — без длинных цепочек согласований.</p>
+<section class="process" id="process" aria-labelledby="process-title" data-process-journey>
+  <div class="process-title" aria-hidden="true">ПУТЬ ПРОЕКТА</div>
+
+  <div class="site-container content-grid process-heading" data-motion="clip">
+    <div>
+      <p class="section-label">05 / От идеи до запуска</p>
+      <h2 id="process-title">Каждый этап<br />можно увидеть</h2>
     </div>
+    <p>Не скрываю работу за финальной презентацией. Вы видите, как идея становится системой, а система — продуктом.</p>
+  </div>
 
-    <div class="process-route" data-sequence>
-      <svg class="route-svg route-svg--desktop" viewBox="0 0 1000 120" preserveAspectRatio="none" aria-hidden="true">
-        <defs><linearGradient id="route-desktop" x1="0" x2="1"><stop stop-color="var(--red)"/><stop offset=".18" stop-color="var(--white)"/><stop offset=".82" stop-color="var(--white)"/><stop offset="1" stop-color="var(--yellow)"/></linearGradient></defs>
-        <path class="route-base" d="M24 76 C170 22 246 108 355 64 S552 26 658 68 S826 109 976 50" pathLength="1"></path>
-        <path class="route-progress route-progress--desktop" d="M24 76 C170 22 246 108 355 64 S552 26 658 68 S826 109 976 50" pathLength="1"></path>
-        <path class="route-highlight" d="M24 76 C170 22 246 108 355 64 S552 26 658 68 S826 109 976 50" pathLength="1"></path>
-        <g class="route-nodes">
-          <circle cx="24" cy="76" r="7"></circle><circle cx="355" cy="64" r="7"></circle><circle cx="658" cy="68" r="7"></circle><circle cx="976" cy="50" r="7"></circle>
-        </g>
-      </svg>
+  <div class="site-container process-list">
+    {processSteps.map((step, index) => (
+      <article
+        class:list={['process-step', index === 0 && 'is-active']}
+        data-process-step={step.id}
+        tabindex="0"
+      >
+        <div class="process-step__copy">
+          <span>STEP / {step.id}</span>
+          <h3>{step.title}</h3>
+          <p>{step.description}</p>
+          <small>Видео этапа появится здесь</small>
+          <div class="process-data" aria-hidden="true">
+            <span><b>Цель</b><i></i></span>
+            <span><b>Решение</b><i></i></span>
+            <span><b>Результат</b><i></i></span>
+            <em></em>
+          </div>
+        </div>
 
-      <svg class="route-svg route-svg--mobile" viewBox="0 0 80 640" preserveAspectRatio="none" aria-hidden="true">
-        <defs><linearGradient id="route-mobile" x1="0" y1="0" x2="0" y2="1"><stop stop-color="var(--red)"/><stop offset=".18" stop-color="var(--white)"/><stop offset=".82" stop-color="var(--white)"/><stop offset="1" stop-color="var(--yellow)"/></linearGradient></defs>
-        <path class="route-base" d="M38 24 C12 92 67 136 38 184 S13 296 42 344 S67 456 37 504" pathLength="1"></path>
-        <path class="route-progress route-progress--mobile" d="M38 24 C12 92 67 136 38 184 S13 296 42 344 S67 456 37 504" pathLength="1"></path>
-        <path class="route-highlight" d="M38 24 C12 92 67 136 38 184 S13 296 42 344 S67 456 37 504" pathLength="1"></path>
-        <g class="route-nodes">
-          <circle cx="38" cy="24" r="6"></circle><circle cx="38" cy="184" r="6"></circle><circle cx="42" cy="344" r="6"></circle><circle cx="37" cy="504" r="6"></circle>
-        </g>
-      </svg>
-
-      <ol>
-        {processSteps.map((step, index) => (
-          <li data-motion="row" data-motion-delay={index * 80}>
-            <span>{step.id}</span>
-            <h3>{step.title}</h3>
-            <p>{step.description}</p>
-          </li>
-        ))}
-      </ol>
-    </div>
+        <div class="process-frame" data-video-slot={`/videos/process-${step.id}.mp4`} aria-label={`Место для будущего ролика этапа ${step.id}`}>
+          <div class="process-frame__top"><span>TSBLV / PROCESS</span><strong>{step.id} / 04</strong></div>
+          <div class="process-frame__scene" aria-hidden="true">
+            <span class="process-shape process-shape--one"></span>
+            <span class="process-shape process-shape--two"></span>
+            <span class="process-shape process-shape--three"></span>
+            <svg viewBox="0 0 800 420" preserveAspectRatio="none">
+              <path d="M28 318C170 318 170 92 340 92S500 336 772 120" pathLength="1" />
+            </svg>
+            <div class="process-frame__message"><span>В ДЕЙСТВИИ</span><strong>{step.title}</strong></div>
+          </div>
+          <div class="process-frame__bottom"><span>PLACEHOLDER / MP4</span><i></i><span>00:{String((index + 1) * 7).padStart(2, '0')}</span></div>
+        </div>
+      </article>
+    ))}
   </div>
 </section>
 
 <style>
-  .process-heading {
-    align-items: end;
-    margin-bottom: clamp(2.5rem, 4vw, 3.8rem);
-  }
-
-  .process-heading > div {
-    grid-column: 1 / span 7;
-  }
-
-  .process-heading > p {
-    grid-column: 9 / -1;
-    margin: 0;
-    color: var(--text-muted);
-    line-height: 1.6;
-  }
-
-  .process-route {
+  .process {
     position: relative;
-    padding-top: 4.8rem;
+    isolation: isolate;
+    overflow: hidden;
+    padding: clamp(7rem, 8vw, 9rem) 0 clamp(7rem, 9vw, 10rem);
+    color: var(--white);
+    margin-block: -1px;
+    background: transparent;
   }
 
-  .process-route ol {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: clamp(1rem, 2.3vw, 2.5rem);
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  .process-route li {
-    min-width: 0;
-  }
-
-  .process-route li > span {
-    color: var(--red);
-    font-size: 0.62rem;
+  .process-title {
+    width: 104%;
+    margin-left: -2%;
+    color: rgba(247, 245, 239, 0.92);
+    font-size: clamp(5.8rem, 15vw, 14.5rem);
     font-weight: 760;
+    line-height: 0.72;
+    letter-spacing: -0.075em;
+    white-space: nowrap;
+    transform: translateX(var(--journey-title-x, 0));
+    transition: transform 100ms linear;
   }
 
-  .process-route h3 {
-    max-width: 17rem;
-    margin: 0.75rem 0 0;
-    font-size: clamp(1.15rem, 2vw, 1.55rem);
-    font-weight: 620;
-    line-height: 1.1;
-    letter-spacing: -0.04em;
+  .process-heading { align-items: end; margin-top: clamp(4rem, 7vw, 7rem); }
+  .process-heading > div { grid-column: 1 / span 8; }
+  .process-heading > p { grid-column: 9 / -1; max-width: 28rem; margin: 0 0 0.5rem; color: rgba(247, 245, 239, 0.58); line-height: 1.65; }
+  .process-heading .section-label { color: var(--yellow); }
+  .process-heading h2 { font-size: clamp(3.2rem, 6vw, 6.4rem); }
+
+  .process-list { display: grid; margin-top: clamp(4rem, 7vw, 7rem); }
+  .process-step {
+    display: grid;
+    min-height: clamp(27rem, 40vw, 36rem);
+    grid-template-columns: minmax(16rem, 0.72fr) minmax(31rem, 1.28fr);
+    gap: clamp(2rem, 6vw, 7rem);
+    align-items: center;
+    padding-block: clamp(3rem, 5vw, 5rem);
+    outline: none;
   }
 
-  .process-route li p {
-    max-width: 18rem;
-    margin: 0.75rem 0 0;
-    color: var(--text-muted);
-    font-size: 0.84rem;
-    line-height: 1.6;
+  .process-step__copy { align-self: start; padding-top: clamp(1rem, 5vw, 4rem); opacity: 0.42; transform: translateY(1.2rem); transition: opacity 700ms ease, transform 900ms var(--ease-out); }
+  .process-step.is-active .process-step__copy,
+  .process-step:hover .process-step__copy,
+  .process-step:focus-visible .process-step__copy { opacity: 1; transform: none; }
+  .process-step__copy > span { color: var(--yellow); font-size: 0.56rem; font-weight: 720; letter-spacing: 0.15em; }
+  .process-step__copy h3 { max-width: 28rem; margin: 1.2rem 0 0; font-size: clamp(2rem, 3.4vw, 3.8rem); font-weight: 530; line-height: 0.98; letter-spacing: -0.055em; }
+  .process-step__copy p { max-width: 28rem; margin: 1.1rem 0 0; color: rgba(247, 245, 239, 0.58); font-size: 0.86rem; line-height: 1.65; }
+  .process-step__copy small { display: inline-flex; align-items: center; gap: 0.55rem; margin-top: 1.5rem; color: rgba(247, 245, 239, 0.38); font-size: 0.56rem; }
+  .process-step__copy small::before { width: 0.42rem; height: 0.42rem; border-radius: 50%; background: var(--red); content: ''; box-shadow: 0 0 1.1rem rgba(181, 31, 43, 0.65); }
+
+  .process-data { position: relative; display: grid; max-width: 27rem; grid-template-columns: repeat(3, 1fr); gap: 0.45rem; margin-top: clamp(2rem, 4vw, 3.5rem); padding-top: 1rem; }
+  .process-data::before { position: absolute; top: 0; right: 0; left: 0; height: 1px; background: linear-gradient(90deg, rgba(181, 31, 43, 0.75), rgba(247, 245, 239, 0.18), rgba(228, 185, 31, 0.75)); content: ''; transform-origin: left; }
+  .process-data span { position: relative; display: grid; min-height: 4.5rem; align-content: space-between; padding: 0.65rem; border-radius: 0.8rem; background: rgba(247, 245, 239, 0.045); }
+  .process-data b { color: rgba(247, 245, 239, 0.56); font-size: 0.48rem; font-weight: 620; letter-spacing: 0.1em; text-transform: uppercase; }
+  .process-data i { width: 0.5rem; aspect-ratio: 1; border-radius: 50%; background: var(--red); box-shadow: 0 0 1.4rem rgba(181, 31, 43, 0.6); }
+  .process-data span:nth-child(2) i { background: var(--white); box-shadow: 0 0 1.4rem rgba(247, 245, 239, 0.3); }
+  .process-data span:nth-child(3) i { background: var(--yellow); box-shadow: 0 0 1.4rem rgba(228, 185, 31, 0.55); }
+  .process-data em { position: absolute; top: 0; left: 0; width: 20%; height: 1px; background: var(--white); box-shadow: 0 0 1rem rgba(247, 245, 239, 0.6); animation: process-data-run 2.4s var(--ease-out) infinite; }
+
+  .process-frame {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 16 / 10;
+    border-radius: 0.9rem;
+    background: #1c1f24;
+    box-shadow: 0 3rem 8rem rgba(0, 0, 0, 0.42);
+    opacity: 0.38;
+    transform: perspective(70rem) rotateY(-3deg) scale(0.94);
+    transition: opacity 700ms ease, transform 1000ms var(--ease-out), box-shadow 700ms ease;
   }
 
-  .route-svg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 7.5rem;
-    overflow: visible;
-  }
+  .process-step.is-active .process-frame,
+  .process-step:hover .process-frame,
+  .process-step:focus-visible .process-frame { opacity: 1; box-shadow: 0 3.5rem 9rem rgba(0, 0, 0, 0.52); transform: perspective(70rem) rotateY(0) scale(1); }
+  .process-frame__top,
+  .process-frame__bottom { position: absolute; z-index: 3; right: 0; left: 0; display: flex; align-items: center; justify-content: space-between; padding-inline: 1rem; color: rgba(247, 245, 239, 0.42); font-size: 0.46rem; letter-spacing: 0.12em; }
+  .process-frame__top { top: 0; height: 2.6rem; }
+  .process-frame__bottom { bottom: 0; height: 2.8rem; }
+  .process-frame__bottom i { width: 40%; height: 0.16rem; overflow: hidden; border-radius: 999px; background: rgba(247, 245, 239, 0.12); }
+  .process-frame__bottom i::after { display: block; width: 34%; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--red), var(--yellow)); content: ''; transform: translateX(-100%); }
+  .process-step.is-active .process-frame__bottom i::after { animation: process-progress 5.5s linear infinite; }
 
-  .route-svg path {
-    fill: none;
-    vector-effect: non-scaling-stroke;
-  }
+  .process-frame__scene { position: absolute; inset: 2.6rem 0 2.8rem; overflow: hidden; background: radial-gradient(circle at 65% 30%, rgba(247, 245, 239, 0.09), transparent 32%), linear-gradient(145deg, #17191d, #262a31); }
+  .process-frame__scene::after { position: absolute; inset: 0; background-image: linear-gradient(rgba(247, 245, 239, 0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(247, 245, 239, 0.025) 1px, transparent 1px); background-size: 2.5rem 2.5rem; content: ''; mask-image: linear-gradient(to bottom, transparent, #000 20% 80%, transparent); }
+  .process-frame__scene svg { position: absolute; z-index: 2; inset: 12% 5%; width: 90%; height: 76%; }
+  .process-frame__scene path { fill: none; stroke: rgba(247, 245, 239, 0.24); stroke-width: 1.2; stroke-dasharray: 0.08 0.92; stroke-linecap: round; }
+  .process-step.is-active .process-frame__scene path { stroke: var(--yellow); animation: process-route 6s linear infinite; }
 
-  .route-base {
-    stroke: var(--line-strong);
-    stroke-width: 1.2;
-  }
+  .process-shape { position: absolute; z-index: 1; display: block; border-radius: 999px; filter: blur(0.4px); animation: process-float 7s ease-in-out infinite alternate; }
+  .process-shape--one { top: 13%; left: 8%; width: 28%; aspect-ratio: 1.8; background: radial-gradient(circle at 70% 25%, rgba(247, 245, 239, 0.52), rgba(181, 31, 43, 0.46) 46%, transparent 74%); transform: rotate(18deg); }
+  .process-shape--two { right: 8%; bottom: 8%; width: 34%; aspect-ratio: 1; background: radial-gradient(circle at 35% 24%, rgba(247, 245, 239, 0.44), rgba(228, 185, 31, 0.38) 48%, transparent 74%); animation-delay: -2.4s; }
+  .process-shape--three { top: 38%; left: 48%; width: 8%; aspect-ratio: 2.2; background: var(--red); transform: rotate(-14deg); animation-delay: -4s; }
+  .process-step:nth-child(even) .process-shape--one { background: radial-gradient(circle at 70% 25%, rgba(247, 245, 239, 0.46), rgba(228, 185, 31, 0.4) 46%, transparent 74%); }
+  .process-step:nth-child(even) .process-shape--two { background: radial-gradient(circle at 35% 24%, rgba(247, 245, 239, 0.5), rgba(181, 31, 43, 0.4) 48%, transparent 74%); }
+  .process-frame__message { position: absolute; z-index: 3; top: 50%; left: 50%; display: grid; width: 70%; justify-items: center; text-align: center; transform: translate(-50%, -50%); }
+  .process-frame__message span { color: var(--yellow); font-size: 0.48rem; letter-spacing: 0.16em; }
+  .process-frame__message strong { margin-top: 0.7rem; font-size: clamp(1.5rem, 3vw, 3.6rem); font-weight: 520; line-height: 0.95; letter-spacing: -0.05em; }
 
-  .route-progress {
-    stroke-width: 1.7;
-    stroke-dasharray: 1;
-    stroke-dashoffset: 1;
-    transition: stroke-dashoffset 1100ms var(--ease-out);
-  }
+  @keyframes process-progress { to { transform: translateX(294%); } }
+  @keyframes process-route { to { stroke-dashoffset: -1; } }
+  @keyframes process-float { from { translate: -0.4rem 0.4rem; scale: 0.96; } to { translate: 0.65rem -0.8rem; scale: 1.06; } }
+  @keyframes process-data-run { from { translate: 0; } to { translate: 400% 0; } }
 
-  .route-progress--desktop { stroke: url(#route-desktop); }
-  .route-progress--mobile { stroke: url(#route-mobile); }
-
-  .route-highlight {
-    stroke: var(--yellow);
-    stroke-width: 2.5;
-    stroke-linecap: round;
-    stroke-dasharray: 0.06 0.94;
-    stroke-dashoffset: 1;
-    opacity: 0;
-  }
-
-  .route-nodes circle {
-    fill: var(--page);
-    stroke: var(--line-strong);
-    stroke-width: 1.5;
-    vector-effect: non-scaling-stroke;
-    transform-box: fill-box;
-    transform-origin: center;
-    transform: scale(0.6);
-    transition: transform 420ms var(--ease-out), fill 420ms ease, stroke 420ms ease;
-  }
-
-  .process-route.is-sequence-visible .route-progress {
-    stroke-dashoffset: 0;
-  }
-
-  .process-route.is-sequence-visible .route-highlight {
-    opacity: 1;
-    animation: route-travel 1.6s 800ms var(--ease-out) both;
-  }
-
-  .process-route.is-sequence-visible .route-nodes circle {
-    fill: var(--dark);
-    stroke: var(--white);
-    transform: scale(1);
-  }
-
-  .process-route.is-sequence-visible .route-nodes circle:nth-child(2) { transition-delay: 160ms; }
-  .process-route.is-sequence-visible .route-nodes circle:nth-child(3) { transition-delay: 320ms; }
-  .process-route.is-sequence-visible .route-nodes circle:first-child { stroke: var(--red); fill: var(--red); }
-  .process-route.is-sequence-visible .route-nodes circle:nth-child(4) { transition-delay: 480ms; stroke: var(--yellow); fill: var(--yellow); }
-
-  .route-svg--mobile {
-    display: none;
-  }
-
-  @keyframes route-travel {
-    from { stroke-dashoffset: 1; }
-    to { stroke-dashoffset: 0; }
+  @media (max-width: 63.99rem) {
+    .process-heading > div,
+    .process-heading > p { grid-column: 1 / -1; }
+    .process-heading > p { margin-top: 1.25rem; }
+    .process-step { min-height: 30rem; grid-template-columns: minmax(14rem, 0.7fr) minmax(24rem, 1.3fr); gap: 2.5rem; }
   }
 
   @media (max-width: 47.99rem) {
-    .process-heading > div,
-    .process-heading > p {
-      grid-column: 1 / -1;
-    }
+    .process { padding: 7.5rem 0 8.5rem; }
+    .process-title { width: auto; margin-left: -0.3rem; font-size: clamp(4.4rem, 22vw, 7.5rem); }
+    .process-heading { margin-top: 3.5rem; }
+    .process-heading h2 { font-size: clamp(3rem, 14vw, 4.7rem); }
+    .process-list { margin-top: 2.5rem; }
+    .process-step { min-height: 0; grid-template-columns: 1fr; gap: 1.5rem; padding-block: 3.5rem; }
+    .process-step__copy { padding-top: 0; opacity: 1; transform: none; }
+    .process-data { margin-top: 1.5rem; }
+    .process-frame { width: calc(100% + 0.5rem); margin-left: -0.25rem; opacity: 1; transform: none; }
+    .process-frame__message strong { font-size: clamp(1.25rem, 6vw, 2rem); }
+  }
 
-    .process-heading > p {
-      margin-top: 1.25rem;
-    }
-
-    .process-route {
-      min-height: 40rem;
-      padding: 0 0 0 4.5rem;
-    }
-
-    .process-route ol {
-      display: grid;
-      height: 40rem;
-      grid-template-columns: 1fr;
-      grid-template-rows: repeat(4, 1fr);
-      gap: 0;
-    }
-
-    .process-route li {
-      align-self: start;
-      padding-top: 0.15rem;
-    }
-
-    .route-svg--desktop {
-      display: none;
-    }
-
-    .route-svg--mobile {
-      display: block;
-      top: 0;
-      left: 0;
-      width: 3.5rem;
-      height: 40rem;
-    }
+  @media (prefers-reduced-motion: reduce) {
+    .process-title { transform: none !important; }
+    .process-shape,
+    .process-frame__scene path,
+    .process-frame__bottom i::after,
+    .process-data em { animation: none !important; }
+    .process-step__copy,
+    .process-frame { transition: none; }
   }
 </style>

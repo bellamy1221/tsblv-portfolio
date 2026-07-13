@@ -1,0 +1,107 @@
+<div class="site-loader" data-site-loader aria-hidden="true">
+  <div class="site-loader__glow site-loader__glow--red"></div>
+  <div class="site-loader__glow site-loader__glow--yellow"></div>
+  <div class="site-loader__mark">
+    <span>TSBLV</span>
+    <small>ALANIA / WORLDWIDE</small>
+  </div>
+  <div class="site-loader__track"><i data-loader-progress></i></div>
+  <p><span data-loader-value>0</span><small>%</small></p>
+</div>
+
+<script is:inline>
+  (() => {
+    const loader = document.querySelector('[data-site-loader]');
+    if (!loader) return;
+
+    document.body.classList.add('is-loading');
+    const value = loader.querySelector('[data-loader-value]');
+    const progress = loader.querySelector('[data-loader-progress]');
+    const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const startedAt = performance.now();
+    let visualProgress = reduceMotion ? 100 : 8;
+    let frame = 0;
+    let finished = false;
+
+    const paint = () => {
+      if (value) value.textContent = String(Math.round(visualProgress));
+      if (progress) progress.style.transform = `scaleX(${visualProgress / 100})`;
+    };
+
+    const tick = () => {
+      visualProgress += (88 - visualProgress) * 0.055;
+      paint();
+      if (visualProgress < 87.5) frame = requestAnimationFrame(tick);
+    };
+
+    const finish = () => {
+      if (finished) return;
+      finished = true;
+      cancelAnimationFrame(frame);
+      visualProgress = 100;
+      paint();
+      const elapsed = performance.now() - startedAt;
+      const minimum = reduceMotion ? 0 : 850;
+      window.setTimeout(() => {
+        loader.classList.add('is-complete');
+        document.body.classList.remove('is-loading');
+        window.setTimeout(() => { loader.hidden = true; }, reduceMotion ? 0 : 760);
+      }, Math.max(0, minimum - elapsed));
+    };
+
+    paint();
+    if (!reduceMotion) frame = requestAnimationFrame(tick);
+    if (document.readyState === 'complete') finish();
+    else window.addEventListener('load', finish, { once: true });
+    window.setTimeout(finish, 2800);
+  })();
+</script>
+
+<style>
+  .site-loader {
+    position: fixed;
+    z-index: 1000;
+    inset: 0;
+    display: grid;
+    overflow: hidden;
+    place-items: center;
+    background: #9c9794;
+    color: #f3f0e8;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 720ms var(--ease-out), visibility 720ms;
+  }
+
+  .site-loader[hidden],
+  .site-loader.is-complete { opacity: 0; visibility: hidden; pointer-events: none; }
+  :global(html:not(.js)) .site-loader { display: none; }
+
+  .site-loader::after {
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.78' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.25'/%3E%3C/svg%3E");
+    content: '';
+    mix-blend-mode: soft-light;
+    opacity: 0.24;
+    pointer-events: none;
+  }
+
+  .site-loader__glow { position: absolute; width: min(42rem, 62vw); aspect-ratio: 1; border-radius: 50%; filter: blur(5rem); opacity: 0.24; animation: loader-drift 3.6s ease-in-out infinite alternate; }
+  .site-loader__glow--red { top: -28%; left: -12%; background: var(--red); }
+  .site-loader__glow--yellow { right: -14%; bottom: -34%; background: var(--yellow); animation-delay: -1.8s; }
+  .site-loader__mark { position: relative; z-index: 1; display: grid; justify-items: center; gap: 0.45rem; }
+  .site-loader__mark span { font-size: clamp(1.15rem, 2vw, 1.7rem); font-weight: 760; letter-spacing: -0.055em; }
+  .site-loader__mark small { color: rgba(243, 240, 232, 0.62); font-size: 0.46rem; letter-spacing: 0.18em; }
+  .site-loader__track { position: absolute; right: 0; bottom: 0; left: 0; height: 0.28rem; background: rgba(17, 19, 23, 0.18); }
+  .site-loader__track i { display: block; width: 100%; height: 100%; background: linear-gradient(90deg, var(--red), #f3f0e8 52%, var(--yellow)); transform: scaleX(0); transform-origin: left; transition: transform 140ms linear; }
+  .site-loader > p { position: absolute; right: clamp(1rem, 3vw, 2.5rem); bottom: clamp(1rem, 3vw, 2.2rem); z-index: 1; display: flex; align-items: baseline; margin: 0; font-size: clamp(2.8rem, 6vw, 6.5rem); font-weight: 430; line-height: 0.8; letter-spacing: -0.07em; }
+  .site-loader > p small { margin-left: 0.2rem; font-size: 0.55rem; letter-spacing: 0.08em; }
+
+  @keyframes loader-drift { to { translate: 8% 10%; scale: 1.12; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .site-loader,
+    .site-loader__track i { transition: none; }
+    .site-loader__glow { animation: none; }
+  }
+</style>

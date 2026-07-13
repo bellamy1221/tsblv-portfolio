@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import MotionProvider from '../components/MotionProvider.astro';
+import SiteLoader from '../components/SiteLoader.astro';
 import { siteConfig } from '../config/site';
 
 interface Props {
@@ -22,6 +23,7 @@ const canonicalURL = Astro.site ? new URL(Astro.url.pathname, Astro.site) : unde
 <html lang="ru" data-theme="light">
   <head>
     <script is:inline>
+      document.documentElement.classList.add('js');
       try {
         const savedTheme = localStorage.getItem('tsblv-theme');
         if (savedTheme === 'dark') document.documentElement.dataset.theme = 'dark';
@@ -45,6 +47,7 @@ const canonicalURL = Astro.site ? new URL(Astro.url.pathname, Astro.site) : unde
     <title>{title}</title>
   </head>
   <body>
+    <SiteLoader />
     <div class="theme-veil" data-theme-veil aria-hidden="true"></div>
     <a class="skip-link" href="#main-content">Перейти к содержимому</a>
     <slot />

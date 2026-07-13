@@ -4,8 +4,8 @@ import { services } from '../data/home';
 
 <section class="section services" id="services" aria-labelledby="services-title">
   <div class="site-container content-grid services-heading" data-motion="clip">
-    <p class="section-label">Услуги</p>
-    <h2 id="services-title">Что могу сделать</h2>
+    <p class="section-label">04 / Инструменты роста</p>
+    <h2 id="services-title">Всё, что помогает идее<br />стать сильным продуктом</h2>
   </div>
 
   <div class="site-container services-interactive" data-services>
@@ -23,12 +23,12 @@ import { services } from '../data/home';
 
     <div class="service-stage" data-service-stage aria-live="polite">
       <div class="service-visual is-active" data-service-visual="service-sites" aria-label="Схема сборки сайта">
-        <span class="visual-caption">Структура страницы</span>
+        <span class="visual-caption">Первое впечатление</span>
         <div class="site-demo"><i></i><header></header><main><b></b><b></b><b></b><em></em></main><footer></footer></div>
       </div>
 
       <div class="service-visual" data-service-visual="service-crm" aria-label="Связи в CRM">
-        <span class="visual-caption">Клиенты и этапы</span>
+        <span class="visual-caption">Путь клиента</span>
         <svg class="crm-demo" viewBox="0 0 620 420" aria-hidden="true">
           <path d="M112 215 248 112 385 199 512 92M112 215l146 112 127-128 126 116" pathLength="1" />
           <circle cx="112" cy="215" r="38"/><circle cx="248" cy="112" r="28"/><circle cx="385" cy="199" r="43"/><circle cx="512" cy="92" r="24"/><circle cx="258" cy="327" r="31"/><circle cx="511" cy="315" r="34"/>
@@ -36,12 +36,12 @@ import { services } from '../data/home';
       </div>
 
       <div class="service-visual" data-service-visual="service-automation" aria-label="Автоматизированный сигнал между сервисами">
-        <span class="visual-caption">Связанный сценарий</span>
+        <span class="visual-caption">Время возвращается</span>
         <div class="automation-demo"><span>Форма</span><i></i><span>CRM</span><i></i><span>Уведомление</span><b></b></div>
       </div>
 
       <div class="service-visual" data-service-visual="service-analytics" aria-label="Аналитическая панель">
-        <span class="visual-caption">Понятный отчёт</span>
+        <span class="visual-caption">Рост в цифрах</span>
         <div class="analytics-demo"><header><span>Обращения</span><b>—</b><small>пример данных</small></header><div class="bars"><i></i><i></i><i></i><i></i><i></i><i></i></div><svg viewBox="0 0 520 150" aria-hidden="true"><path d="M6 130 85 102 162 112 238 65 316 80 395 38 514 12" pathLength="1"/></svg></div>
       </div>
     </div>
@@ -50,11 +50,12 @@ import { services } from '../data/home';
 
 <style>
   .services {
-    border-bottom: 1px solid var(--line);
+    overflow: hidden;
+    padding-bottom: clamp(2.75rem, 3.5vw, 4rem);
   }
 
   .services-heading {
-    margin-bottom: clamp(2.5rem, 5vw, 4.5rem);
+    margin-bottom: clamp(2rem, 4vw, 3.5rem);
   }
 
   .services-heading .section-label {
@@ -72,12 +73,25 @@ import { services } from '../data/home';
     align-items: stretch;
   }
 
-  .service-list {
-    border-top: 1px solid var(--line-strong);
-  }
+  .service-list { position: relative; }
 
   .service-row {
-    border-bottom: 1px solid var(--line);
+    position: relative;
+  }
+
+  .service-row::after {
+    position: absolute;
+    right: 2%;
+    bottom: -0.4rem;
+    left: 2%;
+    height: 0.8rem;
+    background: radial-gradient(ellipse at 30% 50%, color-mix(in srgb, var(--text) 14%, transparent), transparent 68%);
+    content: '';
+    opacity: 0.42;
+    pointer-events: none;
+    transform: scaleX(0.72);
+    transform-origin: left;
+    transition: opacity 440ms ease, transform 620ms var(--ease-out), background 440ms ease;
   }
 
   .service-row button {
@@ -120,17 +134,22 @@ import { services } from '../data/home';
     color: var(--red);
   }
 
-  .service-row.is-active {
-    border-bottom-color: var(--yellow);
-  }
+  .service-row.is-active::after,
+  .service-row:focus-within::after,
+  .service-row:hover::after { background: radial-gradient(ellipse at 42% 50%, color-mix(in srgb, var(--yellow) 48%, transparent), color-mix(in srgb, var(--red) 15%, transparent) 38%, transparent 72%); opacity: 0.88; transform: scaleX(1); }
 
   .service-stage {
     position: relative;
-    min-height: 31rem;
+    min-height: 28rem;
     overflow: hidden;
-    border-top: 1px solid var(--line-strong);
-    border-bottom: 1px solid var(--line-strong);
-    background: linear-gradient(145deg, color-mix(in srgb, var(--page) 92%, var(--metal)), var(--page));
+    border-radius: clamp(1.5rem, 3vw, 3rem);
+    background:
+      radial-gradient(circle at 14% 12%, rgba(181, 31, 43, 0.08), transparent 34%),
+      radial-gradient(circle at 88% 82%, rgba(var(--brand-yellow-rgb), 0.12), transparent 38%),
+      linear-gradient(145deg, color-mix(in srgb, var(--page) 90%, var(--metal)), var(--page));
+    background-size: 130% 130%, 135% 135%, 100% 100%;
+    box-shadow: 0 2rem 5rem color-mix(in srgb, var(--text) 9%, transparent);
+    animation: service-stage-drift 15s ease-in-out infinite alternate;
   }
 
   .service-visual {
@@ -231,6 +250,11 @@ import { services } from '../data/home';
     100% { left: 84%; background: var(--yellow); }
   }
 
+  @keyframes service-stage-drift {
+    from { background-position: 0% 0%, 100% 100%, 0 0; }
+    to { background-position: 18% 12%, 78% 82%, 0 0; }
+  }
+
   @media (max-width: 63.99rem) {
     .services-interactive { grid-template-columns: 1fr; gap: 2rem; }
     .service-stage { min-height: 27rem; }
@@ -245,5 +269,9 @@ import { services } from '../data/home';
     .automation-demo { grid-template-columns: 1fr 0.35fr 1fr 0.35fr 1.25fr; inset-inline: 4%; }
     .automation-demo span { min-height: 4.5rem; font-size: 0.58rem; }
     .analytics-demo { inset-inline: 4%; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .service-stage { animation: none; }
   }
 </style>

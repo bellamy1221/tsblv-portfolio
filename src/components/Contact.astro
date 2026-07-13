@@ -4,12 +4,12 @@ import { siteConfig } from '../config/site';
 
 <section class="contact" id="contact" aria-labelledby="contact-title" data-pointer-light data-sequence>
   <div class="site-container contact-inner">
-    <p class="section-label" data-motion="row">Следующий шаг</p>
-    <h2 id="contact-title" data-motion="clip"><span>Есть идея?</span><span>Давайте превратим её в работающий проект.</span></h2>
+    <p class="section-label" data-motion="row">07 / Время начать</p>
+    <h2 id="contact-title" data-motion="clip"><span>Давайте превратим</span><span>вашу мечту в продукт.</span></h2>
     <div class="content-grid contact-bottom" data-motion="text">
-      <p>Можно написать даже с сырой идеей. Я задам несколько вопросов и предложу, с чего лучше начать.</p>
+      <p>Не нужна идеальная формулировка. Достаточно идеи и желания двигаться вперёд — я помогу увидеть первый сильный шаг и собрать путь к запуску.</p>
       <div class="contact-actions">
-        <a class="button button-light" href={siteConfig.telegramUrl} target="_blank" rel="noreferrer">Написать в Telegram</a>
+        <a class="button button-light" href={siteConfig.telegramUrl} target="_blank" rel="noreferrer">Начать в Telegram</a>
         <a class="button button-outline-light" href={`mailto:${siteConfig.email}`}>Написать на почту</a>
       </div>
     </div>
@@ -20,14 +20,25 @@ import { siteConfig } from '../config/site';
   .contact {
     --pointer-x: 68%;
     --pointer-y: 42%;
+    --contact-warm-edge: #111317;
     position: relative;
     overflow: hidden;
-    padding: clamp(7rem, 12vw, 12rem) 0 clamp(5rem, 8vw, 8rem);
+    padding: clamp(6.5rem, 8vw, 8.5rem) 0 clamp(6.5rem, 8vw, 8.5rem);
     color: var(--white);
     background:
-      radial-gradient(ellipse 34% 52% at var(--pointer-x) var(--pointer-y), rgba(255, 255, 255, 0.12), transparent 68%),
-      conic-gradient(from 218deg at 72% 48%, transparent 0 27%, rgba(181, 31, 43, 0.13) 34%, rgba(247, 245, 239, 0.11) 40%, rgba(228, 185, 31, 0.12) 46%, transparent 54% 100%),
-      linear-gradient(to bottom, transparent, var(--dark) 12rem, var(--dark));
+      radial-gradient(ellipse 34% 50% at var(--pointer-x) var(--pointer-y), rgba(255, 255, 255, 0.11), transparent 70%),
+      conic-gradient(from 218deg at 72% 48%, transparent 0 27%, rgba(181, 31, 43, 0.12) 34%, rgba(247, 245, 239, 0.1) 40%, rgba(216, 173, 34, 0.13) 46%, transparent 54% 100%),
+      radial-gradient(ellipse 34% 24% at 28% 103%, rgba(181, 31, 43, 0.24), transparent 72%),
+      radial-gradient(ellipse 42% 26% at 74% 104%, rgba(var(--brand-yellow-rgb), 0.25), transparent 74%),
+      linear-gradient(
+        to bottom,
+        transparent 0,
+        color-mix(in srgb, var(--page) 72%, var(--dark)) 3rem,
+        color-mix(in srgb, var(--page) 38%, var(--dark)) 6rem,
+        color-mix(in srgb, var(--page) 12%, var(--dark)) 9rem,
+        var(--dark) 12rem 78%,
+        var(--contact-warm-edge) 100%
+      );
   }
 
   .contact::before {
@@ -40,12 +51,28 @@ import { siteConfig } from '../config/site';
     pointer-events: none;
   }
 
+  .contact::after {
+    position: absolute;
+    right: -8%;
+    bottom: -9rem;
+    left: -8%;
+    height: clamp(12rem, 22vw, 22rem);
+    background:
+      radial-gradient(ellipse at 25% 72%, rgba(181, 31, 43, 0.19), transparent 41%),
+      radial-gradient(ellipse at 73% 70%, rgba(232, 201, 88, 0.2), transparent 43%);
+    content: '';
+    filter: blur(18px);
+    opacity: 0.8;
+    pointer-events: none;
+  }
+
   .contact.is-sequence-visible::before {
     animation: contact-sweep 2.2s 300ms var(--ease-out) both;
   }
 
   .contact-inner {
     position: relative;
+    z-index: 1;
   }
 
   .contact .section-label {
@@ -55,9 +82,9 @@ import { siteConfig } from '../config/site';
   .contact h2 {
     display: grid;
     max-width: 88rem;
-    font-size: clamp(4rem, 10.5vw, 11.5rem);
-    line-height: 0.82;
-    letter-spacing: -0.085em;
+    font-size: clamp(3.8rem, 8.8vw, 9.5rem);
+    line-height: 0.88;
+    letter-spacing: -0.065em;
   }
 
   .contact h2 span:first-child {
@@ -65,14 +92,13 @@ import { siteConfig } from '../config/site';
   }
 
   .contact h2 span:last-child {
-    padding-left: 8vw;
+    padding-left: 5vw;
   }
 
   .contact-bottom {
     align-items: end;
-    margin-top: clamp(2.5rem, 6vw, 5rem);
+    margin-top: clamp(2rem, 4vw, 3.5rem);
     padding-top: 1.25rem;
-    border-top: 1px solid var(--line-dark);
   }
 
   .contact-bottom > p {
@@ -103,8 +129,8 @@ import { siteConfig } from '../config/site';
   }
 
   @media (max-width: 47.99rem) {
-    .contact { padding-top: 5rem; }
-    .contact h2 { font-size: clamp(3.5rem, 18vw, 6rem); }
+    .contact { padding: 5.5rem 0 6.5rem; }
+    .contact h2 { font-size: clamp(3.2rem, 15vw, 5.2rem); }
     .contact-actions { align-items: stretch; flex-direction: column; }
   }
 </style>

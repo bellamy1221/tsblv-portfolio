@@ -63,6 +63,9 @@ const { kind } = Astro.props;
           <div class="pipeline-column"><strong>Встреча <i>1</i></strong><span class="lead-card"><b>Заявка #181</b><small>Звонок · завтра</small></span></div>
           <div class="pipeline-side"><small>Интеграции</small><span>Почта</span><span>Telegram</span><svg viewBox="0 0 160 70"><path d="M3 61 25 47 48 52 70 28 92 36 116 19 139 24 157 7" fill="none" stroke="currentColor" stroke-width="2"/></svg></div>
         </div>
+        <div class="automation-flow">
+          <span>lead</span><i></i><span>CRM</span><i></i><span>automation</span><i></i><span>result</span><b></b>
+        </div>
       </div>
     </div>
   )}
@@ -74,6 +77,17 @@ const { kind } = Astro.props;
     border: 1px solid rgba(247, 245, 239, 0.24);
     border-radius: 0.35rem;
     box-shadow: 0 2.5rem 6rem rgba(0, 0, 0, 0.3);
+    transition: clip-path 900ms var(--ease-out), opacity 650ms ease;
+  }
+
+  :global(.sequence-ready .case-study) .browser-preview {
+    clip-path: inset(0 0 100% 0);
+    opacity: 0.35;
+  }
+
+  :global(.sequence-ready .case-study.is-sequence-visible) .browser-preview {
+    clip-path: inset(0);
+    opacity: 1;
   }
 
   .browser-bar {
@@ -86,7 +100,11 @@ const { kind } = Astro.props;
     background: #e7e6e1;
     color: #77797d;
     font-size: 0.46rem;
+    transition: transform 620ms 220ms var(--ease-out), opacity 420ms 220ms ease;
   }
+
+  :global(.sequence-ready .case-study) .browser-bar { opacity: 0; transform: translateY(-100%); }
+  :global(.sequence-ready .case-study.is-sequence-visible) .browser-bar { opacity: 1; transform: none; }
 
   .browser-bar > span:last-child { grid-column: 2; }
   .browser-dots { display: flex; gap: 0.25rem; }
@@ -103,7 +121,7 @@ const { kind } = Astro.props;
   .preview-nav b { padding: 0.5rem 0.7rem; border: 1px solid currentColor; font-weight: 650; }
 
   .expert-screen {
-    min-height: clamp(25rem, 54vw, 50rem);
+    min-height: clamp(18rem, 32vw, 30rem);
     padding: clamp(1.2rem, 3vw, 3rem);
     background: #e9e5da;
     color: #1d2421;
@@ -111,21 +129,24 @@ const { kind } = Astro.props;
 
   .expert-layout {
     display: grid;
-    min-height: clamp(22rem, 47vw, 44rem);
+    min-height: clamp(16rem, 26vw, 24rem);
     grid-template-columns: 1.12fr 0.88fr;
     align-items: center;
     gap: clamp(1rem, 3vw, 3rem);
   }
 
   .expert-copy {
-    transform: translateY(1.5rem);
-    opacity: 0;
     transition: transform 820ms var(--ease-out), opacity 620ms ease;
+  }
+
+  :global(.sequence-ready .case-study:not(.is-sequence-visible)) .expert-copy {
+    opacity: 0;
+    transform: translateY(1.5rem);
   }
 
   :global(.case-study.is-sequence-visible) .expert-copy { transform: none; opacity: 1; }
   .expert-copy small, .local-layout > small { font-size: clamp(0.42rem, 0.65vw, 0.62rem); font-weight: 720; letter-spacing: 0.12em; text-transform: uppercase; }
-  .expert-copy .preview-heading { max-width: 40rem; margin: 1rem 0; font-family: Georgia, serif; font-size: clamp(1.8rem, 4.7vw, 5rem); font-weight: 400; line-height: 0.94; letter-spacing: -0.06em; }
+  .expert-copy .preview-heading { max-width: 40rem; margin: 1rem 0; font-family: Georgia, serif; font-size: clamp(1.6rem, 3.6vw, 3.8rem); font-weight: 400; line-height: 0.94; letter-spacing: -0.06em; }
   .expert-copy > p:not(.preview-heading) { max-width: 22rem; color: #626963; font-size: clamp(0.58rem, 1vw, 0.9rem); }
   .preview-button { display: inline-flex; width: max-content; margin-top: 1rem; padding: 0.7rem 0.9rem; background: #30343a; color: #f7f5ef; font-size: clamp(0.48rem, 0.72vw, 0.68rem); }
 
@@ -134,24 +155,44 @@ const { kind } = Astro.props;
     align-self: end;
     overflow: hidden;
     background: #d2cdc2;
-    transform: translateY(2rem);
     transition: transform 900ms 120ms var(--ease-out);
   }
 
+  :global(.sequence-ready .case-study:not(.is-sequence-visible)) .expert-portrait { transform: translateY(2rem); }
+
   :global(.case-study.is-sequence-visible) .expert-portrait { transform: none; }
-  .expert-portrait svg { display: block; width: 100%; max-height: 42rem; }
+  .expert-portrait svg { display: block; width: 100%; max-height: 24rem; }
   .expert-portrait span { position: absolute; right: 0.75rem; bottom: 0.75rem; color: white; font-size: 0.46rem; letter-spacing: 0.1em; }
 
   .local-screen {
-    min-height: clamp(24rem, 48vw, 44rem);
+    min-height: clamp(18rem, 31vw, 29rem);
     padding: clamp(1.2rem, 3vw, 3rem);
     background: #30343a;
     color: #f7f5ef;
   }
 
+  .local-layout > small,
+  .local-layout .preview-heading,
+  .local-actions {
+    transition: opacity 520ms ease, transform 720ms var(--ease-out);
+  }
+
+  :global(.sequence-ready .case-study:not(.is-sequence-visible)) .local-layout > small,
+  :global(.sequence-ready .case-study:not(.is-sequence-visible)) .local-layout .preview-heading,
+  :global(.sequence-ready .case-study:not(.is-sequence-visible)) .local-actions {
+    opacity: 0;
+    transform: translateX(-1rem);
+  }
+
+  .local-layout .preview-heading { transition-delay: 90ms; }
+  .local-actions { transition-delay: 180ms; }
+  :global(.case-study.is-sequence-visible) .local-layout > small,
+  :global(.case-study.is-sequence-visible) .local-layout .preview-heading,
+  :global(.case-study.is-sequence-visible) .local-actions { opacity: 1; transform: none; }
+
   .local-screen .preview-nav b { border-color: var(--yellow); color: var(--yellow); }
-  .local-layout { position: relative; display: grid; min-height: clamp(21rem, 40vw, 37rem); align-content: start; padding-top: clamp(2rem, 5vw, 5rem); }
-  .local-layout .preview-heading { max-width: 61rem; margin: 0.8rem 0; font-size: clamp(2rem, 5.6vw, 6rem); font-weight: 540; line-height: 0.9; letter-spacing: -0.07em; }
+  .local-layout { position: relative; display: grid; min-height: clamp(15rem, 24vw, 22rem); align-content: start; padding-top: clamp(1.25rem, 2.5vw, 2.5rem); }
+  .local-layout .preview-heading { max-width: 61rem; margin: 0.8rem 0; font-size: clamp(1.8rem, 4.6vw, 4.8rem); font-weight: 540; line-height: 0.9; letter-spacing: -0.07em; }
   .local-actions { display: flex; align-items: center; gap: 1rem; }
   .local-actions .preview-button { margin: 0; background: var(--yellow); color: #1b1d20; }
   .local-actions > span:last-child { color: rgba(247, 245, 239, 0.55); font-size: clamp(0.43rem, 0.68vw, 0.64rem); }
@@ -163,7 +204,7 @@ const { kind } = Astro.props;
 
   .leads-screen {
     display: grid;
-    min-height: clamp(25rem, 48vw, 44rem);
+    min-height: clamp(18rem, 30vw, 28rem);
     grid-template-columns: clamp(2.5rem, 5vw, 4.5rem) 1fr;
     background: #171a1f;
     color: #f3f2ee;
@@ -184,7 +225,7 @@ const { kind } = Astro.props;
   .lead-summary b { font-size: clamp(0.85rem, 1.6vw, 1.5rem); }
   .lead-summary em { position: absolute; right: 0.5rem; bottom: 0.35rem; color: var(--yellow); font-size: 0.38rem; font-style: normal; }
   .pipeline { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)) 0.7fr; gap: 0.55rem; margin-top: 0.65rem; }
-  .pipeline-column, .pipeline-side { min-width: 0; min-height: clamp(11rem, 21vw, 19rem); padding: clamp(0.55rem, 1.1vw, 0.9rem); border: 1px solid rgba(247, 245, 239, 0.11); background: #1c2025; }
+  .pipeline-column, .pipeline-side { min-width: 0; min-height: clamp(8rem, 13vw, 12rem); padding: clamp(0.55rem, 1.1vw, 0.9rem); border: 1px solid rgba(247, 245, 239, 0.11); background: #1c2025; }
   .pipeline-column > strong { display: flex; justify-content: space-between; color: #aeb2b7; font-size: clamp(0.4rem, 0.65vw, 0.62rem); }
   .pipeline-column strong i { color: var(--yellow); font-style: normal; }
   .lead-card { display: grid; gap: 0.35rem; margin-top: 0.6rem; padding: clamp(0.55rem, 1vw, 0.8rem); border-left: 2px solid var(--red); background: #292e35; }
@@ -198,6 +239,90 @@ const { kind } = Astro.props;
   .pipeline-side span { padding: 0.45rem; border: 1px solid rgba(247, 245, 239, 0.1); font-size: clamp(0.38rem, 0.58vw, 0.55rem); }
   .pipeline-side svg { width: 100%; margin-top: auto; color: var(--yellow); }
 
+  .lead-summary > span,
+  .pipeline-column,
+  .pipeline-side {
+    transition: opacity 480ms ease, transform 650ms var(--ease-out);
+  }
+
+  :global(.sequence-ready .case-study:not(.is-sequence-visible)) .lead-summary > span,
+  :global(.sequence-ready .case-study:not(.is-sequence-visible)) .pipeline-column,
+  :global(.sequence-ready .case-study:not(.is-sequence-visible)) .pipeline-side {
+    opacity: 0;
+    transform: translateY(0.75rem);
+  }
+
+  :global(.case-study.is-sequence-visible) .lead-summary > span,
+  :global(.case-study.is-sequence-visible) .pipeline-column,
+  :global(.case-study.is-sequence-visible) .pipeline-side {
+    opacity: 1;
+    transform: none;
+  }
+
+  :global(.case-study.is-sequence-visible) .lead-summary > span:nth-child(2),
+  :global(.case-study.is-sequence-visible) .pipeline-column:nth-child(2) { transition-delay: 90ms; }
+  :global(.case-study.is-sequence-visible) .lead-summary > span:nth-child(3),
+  :global(.case-study.is-sequence-visible) .pipeline-column:nth-child(3) { transition-delay: 180ms; }
+  :global(.case-study.is-sequence-visible) .pipeline-side { transition-delay: 260ms; }
+
+  .automation-flow {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto 1fr auto 1fr auto 1fr auto;
+    align-items: center;
+    gap: 0.45rem;
+    margin-top: 0.75rem;
+    padding: 0.75rem;
+    border: 1px solid rgba(247, 245, 239, 0.11);
+    background: #15181d;
+    overflow: hidden;
+  }
+
+  .automation-flow span {
+    color: #aeb2b7;
+    font-size: clamp(0.38rem, 0.58vw, 0.55rem);
+    letter-spacing: 0.08em;
+  }
+
+  .automation-flow i {
+    height: 1px;
+    background: rgba(247, 245, 239, 0.2);
+  }
+
+  .automation-flow b {
+    position: absolute;
+    top: 50%;
+    left: 1rem;
+    width: 0.42rem;
+    height: 0.42rem;
+    border-radius: 50%;
+    background: var(--red);
+    box-shadow: 0 0 0.8rem rgba(181, 31, 43, 0.45);
+    opacity: 0;
+    transform: translateY(-50%);
+  }
+
+  :global(.case-study.is-sequence-visible) .automation-flow b {
+    animation: system-signal 2.25s 1050ms var(--ease-out) both;
+  }
+
+  .browser-preview:hover .automation-flow b {
+    animation: system-signal-hover 1.8s var(--ease-out) both;
+  }
+
+  @keyframes system-signal {
+    0% { left: 1rem; opacity: 0; }
+    8% { opacity: 1; }
+    45% { background: var(--white); box-shadow: 0 0 0.8rem rgba(247, 245, 239, 0.38); }
+    100% { left: calc(100% - 1.4rem); background: var(--yellow); opacity: 1; box-shadow: 0 0 0.8rem rgba(228, 185, 31, 0.4); }
+  }
+
+  @keyframes system-signal-hover {
+    0% { left: 1rem; opacity: 1; }
+    50% { background: var(--white); }
+    100% { left: calc(100% - 1.4rem); background: var(--yellow); opacity: 1; }
+  }
+
   @media (max-width: 35rem) {
     .preview-nav span { display: none; }
     .expert-layout { grid-template-columns: 1.1fr 0.9fr; gap: 0.75rem; }
@@ -206,5 +331,7 @@ const { kind } = Astro.props;
     .pipeline { grid-template-columns: repeat(3, 1fr); }
     .pipeline-side { display: none; }
     .lead-card--moving { transform: none !important; }
+    .automation-flow { gap: 0.25rem; padding-inline: 0.45rem; }
+    .automation-flow span { font-size: 0.34rem; }
   }
 </style>

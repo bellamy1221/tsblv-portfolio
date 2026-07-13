@@ -2,17 +2,21 @@
 @import "tailwindcss";
 
 :root {
-  --page: #f2f1ed;
-  --page-rgb: 242, 241, 237;
-  --text: #111317;
-  --text-muted: #62656a;
-  --graphite: #111317;
+  --page: #f1efe9;
+  --page-rgb: 241, 239, 233;
+  --text: #101010;
+  --text-muted: #686762;
+  --graphite: #101010;
   --metal: #30343a;
-  --dark: #15181d;
-  --dark-raised: #20242a;
-  --white: #f7f5ef;
+  --dark: #101010;
+  --dark-raised: #171717;
+  --white: #f3f0e8;
   --red: #b51f2b;
   --yellow: #e4b91f;
+  --brand-yellow: #d8ad22;
+  --brand-yellow-light: #e8c958;
+  --brand-ink: #111317;
+  --brand-yellow-rgb: 216, 173, 34;
   --line: rgba(17, 19, 23, 0.17);
   --line-strong: rgba(17, 19, 23, 0.34);
   --line-dark: rgba(247, 245, 239, 0.18);
@@ -21,16 +25,16 @@
   --focus: #b51f2b;
   --gutter: clamp(1rem, 3.2vw, 3rem);
   --container-width: min(calc(100vw - var(--gutter) * 2), 90rem);
-  --section-space: clamp(4.5rem, 6vw, 6.5rem);
+  --section-space: clamp(4.75rem, 7vw, 7.5rem);
   --font-sans: "Manrope Variable", Manrope, system-ui, sans-serif;
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   color-scheme: light;
 }
 
 html[data-theme="dark"] {
-  --page: #17191d;
-  --page-rgb: 23, 25, 29;
-  --text: #f1f0ec;
+  --page: #171717;
+  --page-rgb: 23, 23, 23;
+  --text: #f0eee7;
   --text-muted: #aeb0b4;
   --line: rgba(247, 245, 239, 0.15);
   --line-strong: rgba(247, 245, 239, 0.29);
@@ -55,6 +59,7 @@ html {
 
 body {
   position: relative;
+  isolation: isolate;
   min-width: 20rem;
   min-height: 100vh;
   margin: 0;
@@ -62,9 +67,27 @@ body {
   background: var(--page);
   color: var(--text);
   font-family: var(--font-sans);
+  font-weight: 450;
   font-optical-sizing: auto;
   text-rendering: optimizeLegibility;
   transition: background-color 560ms var(--ease-out), color 560ms var(--ease-out);
+}
+
+body::before {
+  position: fixed;
+  z-index: -1;
+  inset: -18%;
+  background:
+    radial-gradient(circle at 16% 24%, rgba(var(--brand-yellow-rgb), 0.12), transparent 31%),
+    radial-gradient(circle at 82% 68%, rgba(181, 31, 43, 0.08), transparent 34%),
+    radial-gradient(circle at 58% 42%, rgba(var(--page-rgb), 0.42), transparent 26%),
+    linear-gradient(125deg, color-mix(in srgb, var(--page) 94%, var(--yellow)), var(--page) 46%, color-mix(in srgb, var(--page) 95%, var(--red)));
+  content: '';
+  opacity: 0.72;
+  pointer-events: none;
+  transform: translate3d(-1.5%, -1%, 0) scale(1.02);
+  will-change: transform;
+  animation: ambient-page-drift 24s ease-in-out infinite alternate;
 }
 
 body::after {
@@ -80,6 +103,50 @@ body::after {
 
 body.menu-open {
   overflow: hidden;
+}
+
+body.is-loading {
+  overflow: hidden;
+}
+
+main {
+  --page: #111317;
+  --page-rgb: 17, 19, 23;
+  --text: #f0eee7;
+  --text-muted: #a9a8a3;
+  --line: rgba(247, 245, 239, 0.12);
+  --line-strong: rgba(247, 245, 239, 0.24);
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+  background: #111317;
+  color: var(--text);
+}
+
+main::before {
+  position: absolute;
+  z-index: -1;
+  inset: -4% -10%;
+  background:
+    radial-gradient(ellipse 44rem 60rem at 14% 9%, rgba(181, 31, 43, 0.12), transparent 72%),
+    radial-gradient(ellipse 52rem 72rem at 88% 22%, rgba(228, 185, 31, 0.1), transparent 74%),
+    radial-gradient(ellipse 48rem 74rem at 18% 47%, rgba(243, 240, 232, 0.055), transparent 76%),
+    radial-gradient(ellipse 56rem 80rem at 84% 70%, rgba(181, 31, 43, 0.09), transparent 76%),
+    radial-gradient(ellipse 52rem 72rem at 20% 93%, rgba(228, 185, 31, 0.08), transparent 76%);
+  content: '';
+  pointer-events: none;
+  transform: translate3d(0, -0.35%, 0) scale(1.01);
+  animation: main-atmosphere 18s ease-in-out infinite alternate;
+}
+
+main > section {
+  background: transparent !important;
+}
+
+@keyframes main-atmosphere {
+  0% { transform: translate3d(-1%, -0.35%, 0) scale(1.01); filter: saturate(0.86); }
+  52% { transform: translate3d(1.2%, 0.2%, 0) scale(1.025); filter: saturate(1); }
+  100% { transform: translate3d(-0.4%, 0.65%, 0) scale(1.015); filter: saturate(0.92); }
 }
 
 button,
@@ -136,10 +203,10 @@ p {
 
 h2 {
   margin: 0;
-  font-size: clamp(2.6rem, 5.7vw, 6.1rem);
-  font-weight: 520;
-  line-height: 0.92;
-  letter-spacing: -0.072em;
+  font-size: clamp(2.55rem, 5.2vw, 5.7rem);
+  font-weight: 490;
+  line-height: 0.96;
+  letter-spacing: -0.055em;
   text-wrap: balance;
 }
 
@@ -236,48 +303,49 @@ h2 {
 }
 
 .motion-ready [data-motion].is-motion-pending {
-  transition-property: opacity, transform, clip-path, filter;
+  transition-property: opacity, translate, scale, clip-path, filter;
   transition-timing-function: var(--ease-out);
 }
 
 .motion-ready [data-motion="clip"].is-motion-pending {
   opacity: 0;
   clip-path: inset(0 0 100% 0);
-  transform: translateY(0.6rem);
-  transition-duration: 820ms;
+  translate: 0 0.6rem;
+  transition-duration: 620ms;
 }
 
 .motion-ready [data-motion="row"].is-motion-pending {
   opacity: 0;
-  transform: translateX(-1.25rem);
-  transition-duration: 620ms;
+  translate: -1.25rem 0;
+  transition-duration: 520ms;
 }
 
 .motion-ready [data-motion="scene"].is-motion-pending {
   opacity: 0;
   clip-path: inset(8% 0 8% 0);
-  transform: scale(0.985);
-  transition-duration: 980ms;
+  scale: 0.985;
+  transition-duration: 720ms;
 }
 
 .motion-ready [data-motion="text"].is-motion-pending {
   opacity: 0;
   filter: blur(4px);
-  transition-duration: 720ms;
+  transition-duration: 560ms;
 }
 
 .motion-ready [data-motion="line"].is-motion-pending {
   opacity: 0;
-  transform: scaleX(0);
+  scale: 0 1;
   transform-origin: left center;
-  transition-duration: 1000ms;
+  transition-duration: 700ms;
 }
 
 .motion-ready [data-motion].is-motion-visible {
   opacity: 1;
   filter: none;
   clip-path: inset(0);
-  transform: none;
+  translate: 0;
+  scale: 1;
 }
 
 .theme-veil {
@@ -316,10 +384,16 @@ h2 {
   from { opacity: 0; }
 }
 
+@keyframes ambient-page-drift {
+  0% { transform: translate3d(-1.5%, -1%, 0) scale(1.02) rotate(-0.35deg); }
+  48% { transform: translate3d(1.2%, 1.6%, 0) scale(1.035) rotate(0.25deg); }
+  100% { transform: translate3d(-0.4%, 2.2%, 0) scale(1.025) rotate(-0.1deg); }
+}
+
 @media (max-width: 47.99rem) {
   :root {
     --gutter: 1rem;
-    --section-space: clamp(3.75rem, 13vw, 5rem);
+    --section-space: clamp(3.5rem, 11vw, 4.5rem);
   }
 
   .content-grid {
@@ -349,6 +423,11 @@ h2 {
     opacity: 1;
     filter: none;
     clip-path: none;
-    transform: none;
+    translate: 0;
+    scale: 1;
+  }
+
+  main::before {
+    animation: none;
   }
 }

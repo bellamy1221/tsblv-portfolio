@@ -6,433 +6,195 @@ import ProjectPreview from './ProjectPreview.astro';
 <section class="selected-work" id="work" aria-labelledby="work-title">
   <div class="site-container content-grid work-heading" data-motion="clip">
     <div>
-      <p class="section-label">Практика</p>
-      <h2 id="work-title">Избранные проекты</h2>
+      <p class="section-label">03 / Возможности в действии</p>
+      <h2 id="work-title">Откройте,<br />чем может стать идея</h2>
     </div>
-    <p>Концепции показывают мой подход к структуре, дизайну и рабочим системам. Это не реальные клиентские проекты.</p>
+    <p>Сначала — один собранный архив возможностей. Ниже — три самостоятельных концепта, которые показывают разные сценарии продукта.</p>
   </div>
 
-  <div class="case-list">
-    {conceptCases.map((project, index) => (
-      <article class:list={['case-study', `case-study--${index + 1}`]} data-sequence>
-        <div class="site-container case-title" data-motion="clip">
-          <div class="case-index"><span>{project.id}</span><strong>{project.kind}</strong></div>
-          <p>{project.type}</p>
-          <h3>{project.title}</h3>
-        </div>
+  <div class="site-container folder-intro" data-portfolio-folder data-sequence>
+    <p>CURIOUS? / OPEN THE ARCHIVE</p>
+    <div class="portfolio-folder">
+      <span class="portfolio-folder__back" aria-hidden="true"></span>
+      <span class="portfolio-folder__papers" aria-hidden="true">
+        <i><small>01</small><b>STRATEGY</b></i>
+        <i><small>02</small><b>DESIGN</b></i>
+        <i><small>03</small><b>BUILD</b></i>
+      </span>
+      <span class="portfolio-folder__front" aria-hidden="true">
+        <small>PORTFOLIO</small>
+        <strong>TSBLV</strong>
+      </span>
+      <button class="portfolio-folder__action" type="button" data-folder-toggle aria-expanded="false" aria-label="Открыть папку портфолио">→</button>
+    </div>
+    <span>Нажмите, чтобы открыть</span>
+  </div>
 
-        <div class="site-container case-scene" data-project-scene data-motion="scene">
-          <div class="case-preview" data-project-layer="back">
-            <ProjectPreview kind={project.preview} />
-          </div>
-          {index === 1 && (
-            <>
-              <span class="scene-fragment scene-fragment--one" data-project-layer="front" aria-hidden="true"><i></i><i></i><b></b></span>
-              <span class="scene-fragment scene-fragment--two" data-project-layer="front" aria-hidden="true"><i></i><b></b><b></b></span>
-            </>
-          )}
-        </div>
-
-        <div class="site-container content-grid case-details" data-motion="text">
-          <dl>
-            <div><dt>Задача</dt><dd>{project.task}</dd></div>
-            <div><dt>Решение</dt><dd>{project.solution}</dd></div>
-          </dl>
-          <div class="case-more">
-            <button type="button" aria-expanded="false" data-case-toggle>
-              Услуги проекта <span aria-hidden="true">+</span>
-            </button>
-            <div class="case-services" data-case-panel>
-              <div><ul aria-label="Услуги">{project.services.map((service) => <li>{service}</li>)}</ul></div>
+  <div class="site-container work-browser" data-work-browser>
+    <div class="work-index" aria-label="Концепции проектов">
+      {conceptCases.map((project, index) => (
+        <article class:list={['work-row', index === 0 && 'is-active']} data-work-row={project.id}>
+          <button
+            type="button"
+            data-work-trigger={project.id}
+            aria-controls={`work-preview-${project.id}`}
+            aria-expanded={index === 0 ? 'true' : 'false'}
+          >
+            <span>{project.id}</span>
+            <span class="work-row__title">{project.title}</span>
+            <small>{project.kind}</small>
+          </button>
+          <div class="work-row__detail">
+            <div>
+              <p><span>Задача</span>{project.task}</p>
+              <p><span>Решение</span>{project.solution}</p>
+              <ul aria-label="Услуги">{project.services.map((service) => <li>{service}</li>)}</ul>
             </div>
           </div>
-        </div>
-      </article>
-    ))}
+        </article>
+      ))}
+    </div>
+
+    <div class="work-preview-stage" aria-live="polite">
+      <span class="work-preview-caption">SELECTED CONCEPT / HOVER OR FOCUS</span>
+      {conceptCases.map((project, index) => (
+        <article
+          class:list={['case-preview', 'case-study', index === 0 && 'is-active']}
+          id={`work-preview-${project.id}`}
+          data-work-file={project.id}
+          aria-hidden={index === 0 ? 'false' : 'true'}
+          data-sequence
+        >
+          <div class="case-preview__meta"><span>{project.id} / {project.type}</span><strong>{project.kind}</strong></div>
+          <ProjectPreview kind={project.preview} />
+        </article>
+      ))}
+    </div>
   </div>
 </section>
 
-<style>
+<style is:global>
   .selected-work {
     position: relative;
-    overflow: hidden;
-    padding: clamp(6rem, 9vw, 9rem) 0;
+    isolation: isolate;
+    overflow: clip;
+    padding: clamp(7rem, 9vw, 10rem) 0 clamp(7rem, 9vw, 10rem);
     color: var(--white);
-  }
-
-  .selected-work::before {
-    position: absolute;
-    z-index: -2;
-    inset: -18rem 0;
-    background:
-      conic-gradient(from 224deg at 76% 34%, transparent 0 28%, rgba(228, 185, 31, 0.08) 34%, rgba(247, 245, 239, 0.08) 39%, rgba(181, 31, 43, 0.08) 45%, transparent 53% 100%),
-      linear-gradient(180deg, transparent, rgba(21, 24, 29, 0.96) 12rem, var(--dark) 26rem, var(--dark) calc(100% - 20rem), transparent);
-    content: '';
-    pointer-events: none;
-  }
-
-  .work-heading {
-    align-items: end;
-    margin-bottom: clamp(4.5rem, 7vw, 7rem);
-  }
-
-  .work-heading > div {
-    grid-column: 1 / span 8;
-  }
-
-  .work-heading > p {
-    grid-column: 9 / -1;
-    margin: 0;
-    color: rgba(247, 245, 239, 0.64);
-    font-size: 0.88rem;
-    line-height: 1.62;
-  }
-
-  .selected-work .section-label {
-    color: var(--yellow);
-  }
-
-  .case-list {
-    display: grid;
-    gap: clamp(7rem, 12vw, 12rem);
-  }
-
-  .case-study {
-    position: relative;
-  }
-
-  .case-title {
-    position: relative;
-    z-index: 3;
-  }
-
-  .case-index {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-bottom: 0.8rem;
-    border-bottom: 1px solid var(--line-dark);
-  }
-
-  .case-index span {
-    color: rgba(247, 245, 239, 0.54);
-    font-size: 0.62rem;
-  }
-
-  .case-index strong {
-    color: var(--yellow);
-    font-size: 0.59rem;
-    font-weight: 760;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-  }
-
-  .case-title > p {
-    margin: 1.2rem 0 0.6rem;
-    color: rgba(247, 245, 239, 0.55);
-    font-size: 0.64rem;
-    font-weight: 700;
-    letter-spacing: 0.13em;
-    text-transform: uppercase;
-  }
-
-  .case-title h3 {
-    max-width: 72rem;
-    margin: 0;
-    font-size: clamp(3rem, 7.8vw, 8.5rem);
-    font-weight: 520;
-    line-height: 0.88;
-    letter-spacing: -0.078em;
-  }
-
-  .case-scene {
-    --project-x: 0px;
-    --project-y: 0px;
-    --project-back-x: 0px;
-    --project-back-y: 0px;
-    --project-front-x: 0px;
-    --project-front-y: 0px;
-    --pointer-x: 50%;
-    --pointer-y: 50%;
-    position: relative;
-    margin-top: clamp(2rem, 4vw, 4rem);
-  }
-
-  .case-scene::after {
-    position: absolute;
-    z-index: 5;
-    inset: -1px;
-    background:
-      radial-gradient(circle at var(--pointer-x) var(--pointer-y), rgba(255, 255, 255, 0.16), transparent 21%),
-      linear-gradient(112deg, rgba(181, 31, 43, 0.16), transparent 14% 82%, rgba(228, 185, 31, 0.16));
-    content: '';
-    opacity: 0.42;
-    pointer-events: none;
-    transition: opacity 320ms ease;
-  }
-
-  .case-scene:hover::after {
-    opacity: 0.74;
-  }
-
-  .case-preview {
-    position: relative;
-    z-index: 1;
-    transform: translate(var(--project-back-x), var(--project-back-y));
-    transition: transform 520ms var(--ease-out), filter 420ms ease;
-  }
-
-  .case-scene:hover .case-preview {
-    filter: contrast(1.025) saturate(1.03);
-  }
-
-  .case-study--1 .case-scene {
-    width: min(calc(100% - var(--gutter)), 95rem);
-    margin-right: 0;
-  }
-
-  .case-study--1 .case-preview :global(.browser-preview) {
-    min-height: clamp(28rem, 58vw, 52rem);
-  }
-
-  .case-study--2 .case-title {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    column-gap: 1.5rem;
-  }
-
-  .case-study--2 .case-index,
-  .case-study--2 .case-title > p {
-    grid-column: 1 / span 4;
-  }
-
-  .case-study--2 .case-title h3 {
-    grid-column: 4 / -1;
-    margin-top: -1.2rem;
-  }
-
-  .case-study--2 .case-scene {
-    width: min(76rem, calc(100% - var(--gutter) * 2));
-    margin-right: 3vw;
-  }
-
-  .case-study--2 .case-preview {
-    transform: translate(calc(var(--project-back-x) - 2vw), var(--project-back-y)) rotate(-1.2deg);
-  }
-
-  .scene-fragment {
-    position: absolute;
-    z-index: 4;
-    display: grid;
-    gap: 0.65rem;
-    padding: 1rem;
-    border: 1px solid rgba(247, 245, 239, 0.3);
-    background: rgba(32, 36, 42, 0.9);
-    box-shadow: 0 1.5rem 3.5rem rgba(0, 0, 0, 0.28);
-    transform: translate(var(--project-x), var(--project-y));
-    transition: transform 520ms var(--ease-out);
-  }
-
-  .scene-fragment i,
-  .scene-fragment b {
-    display: block;
-    height: 0.4rem;
-    background: rgba(247, 245, 239, 0.28);
-  }
-
-  .scene-fragment i { width: 65%; background: var(--yellow); }
-  .scene-fragment b:nth-child(odd) { width: 82%; }
-
-  .scene-fragment--one {
-    top: 13%;
-    right: -3vw;
-    width: clamp(8rem, 16vw, 15rem);
-    transform: translate(var(--project-front-x), var(--project-front-y)) rotate(3deg);
-  }
-
-  .scene-fragment--two {
-    bottom: -5%;
-    left: 8%;
-    width: clamp(7rem, 13vw, 12rem);
-    transform: translate(var(--project-x), var(--project-y)) rotate(-4deg);
-  }
-
-  .case-study--3 {
-    padding-block: clamp(2rem, 5vw, 5rem);
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.025) 18% 82%, transparent);
-  }
-
-  .case-study--3 .case-title h3 {
-    max-width: 64rem;
-  }
-
-  .case-study--3 .case-scene {
-    width: min(calc(100% - var(--gutter)), 88rem);
-    margin-left: auto;
-  }
-
-  .case-details {
-    align-items: start;
-    margin-top: clamp(2rem, 4vw, 3.5rem);
-    padding-top: 1.25rem;
-    border-top: 1px solid var(--line-dark);
-  }
-
-  .case-details dl {
-    display: grid;
-    grid-column: 1 / span 9;
-    grid-template-columns: repeat(2, 1fr);
-    gap: clamp(1.5rem, 4vw, 4rem);
-    margin: 0;
-  }
-
-  .case-details dl > div {
-    display: grid;
-    grid-template-columns: 4rem 1fr;
-    gap: 1rem;
-  }
-
-  .case-details dt {
-    color: rgba(247, 245, 239, 0.48);
-    font-size: 0.62rem;
-  }
-
-  .case-details dd {
-    margin: 0;
-    color: rgba(247, 245, 239, 0.82);
-    font-size: 0.88rem;
-    line-height: 1.58;
-  }
-
-  .case-more {
-    grid-column: 10 / -1;
-  }
-
-  .case-more button {
-    display: flex;
-    width: 100%;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 0 0.75rem;
-    border: 0;
-    border-bottom: 1px solid var(--line-dark);
     background: transparent;
-    color: var(--white);
-    font-size: 0.7rem;
-    font-weight: 700;
-    cursor: pointer;
   }
 
-  .case-more button span {
-    color: var(--yellow);
-    font-size: 1.1rem;
-    transition: transform 360ms var(--ease-out);
-  }
+  .work-heading { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(19rem, 0.55fr); align-items: end; gap: clamp(2rem, 6vw, 7rem); margin-bottom: clamp(4rem, 7vw, 7rem); }
+  .work-heading > div,
+  .work-heading > p { grid-column: auto; min-width: 0; }
+  .work-heading > p { max-width: 29rem; margin: 0 0 0.4rem; color: rgba(247, 245, 239, 0.62); font-size: 0.9rem; line-height: 1.65; }
+  .work-heading h2 { font-size: clamp(3.1rem, 6.8vw, 7rem); }
+  .selected-work .section-label { color: var(--yellow); }
 
-  .case-more button[aria-expanded='true'] span {
-    transform: rotate(45deg);
-  }
+  .folder-intro { display: grid; min-height: clamp(26rem, 40vw, 36rem); place-items: center; align-content: center; gap: 1.2rem; }
+  .folder-intro > p { margin: 0; color: rgba(247, 245, 239, 0.42); font-size: 0.52rem; letter-spacing: 0.16em; }
+  .folder-intro > span { color: rgba(247, 245, 239, 0.44); font-size: 0.58rem; }
 
-  .case-services {
-    display: grid;
-    grid-template-rows: 1fr;
-    opacity: 1;
-    transition: grid-template-rows 440ms var(--ease-out), opacity 300ms ease;
-  }
-
-  .case-services.is-collapsible {
-    grid-template-rows: 0fr;
-    opacity: 0;
-  }
-
-  .case-services.is-collapsible.is-open {
-    grid-template-rows: 1fr;
-    opacity: 1;
-  }
-
-  .case-services > div {
-    min-height: 0;
+  .portfolio-folder {
+    position: relative;
+    width: min(42rem, 82vw);
+    aspect-ratio: 1.45;
+    padding: 0;
     overflow: hidden;
+    border: 0;
+    border-radius: 2.2rem;
+    background: transparent;
+    color: inherit;
+    isolation: isolate;
+    filter: drop-shadow(0 3rem 5rem rgba(0, 0, 0, 0.38));
+    perspective: 80rem;
   }
 
-  .case-services ul {
-    display: grid;
-    gap: 0.55rem;
-    margin: 0;
-    padding: 0.85rem 0 0;
-    color: rgba(247, 245, 239, 0.64);
-    font-size: 0.68rem;
-    list-style: none;
-  }
+  .portfolio-folder__back { position: absolute; right: 3%; bottom: 8%; left: 3%; height: 73%; border-radius: 2.2rem; background: linear-gradient(145deg, #343840, #202329); }
+  .portfolio-folder__back::before { position: absolute; top: -17%; left: 0; width: 42%; height: 28%; border-radius: 1.5rem 2.4rem 0 0; background: #30343b; content: ''; }
+  .portfolio-folder__papers { position: absolute; inset: 16% 9% 19%; overflow: hidden; }
+  .portfolio-folder__papers i { position: absolute; right: 0; bottom: 0; left: 0; display: flex; height: 88%; align-items: flex-start; justify-content: space-between; padding: 1.2rem 1.4rem; border-radius: 1.1rem; background: #f0eee7; color: #171717; font-style: normal; transform: translateY(64%); transition: transform 820ms var(--ease-out); }
+  .portfolio-folder__papers i:nth-child(1) { z-index: 3; }
+  .portfolio-folder__papers i:nth-child(2) { z-index: 2; background: #c72a35; color: #f3f0e8; transform: translateY(72%); }
+  .portfolio-folder__papers i:nth-child(3) { z-index: 1; background: #e4b91f; transform: translateY(80%); }
+  .portfolio-folder__papers small,
+  .portfolio-folder__papers b { font-size: 0.52rem; letter-spacing: 0.13em; }
+  .portfolio-folder__papers b { font-weight: 760; }
+
+  .portfolio-folder__front { position: absolute; z-index: 5; right: 1%; bottom: 1%; left: 1%; height: 48%; overflow: hidden; border-radius: 1.8rem 1.8rem 2.3rem 2.3rem; background: radial-gradient(circle at 84% 20%, rgba(228, 185, 31, 0.25), transparent 30%), radial-gradient(circle at 12% 90%, rgba(181, 31, 43, 0.34), transparent 36%), #282c33; box-shadow: inset 0 1px rgba(255, 255, 255, 0.12); transform-origin: bottom center; transition: transform 900ms var(--ease-out); }
+  .portfolio-folder__front::after { position: absolute; inset: 0; background: linear-gradient(112deg, transparent 34%, rgba(255, 255, 255, 0.15) 49%, transparent 64%); background-position: 140% 0; background-size: 240% 100%; content: ''; transition: background-position 1000ms var(--ease-out); }
+  .portfolio-folder__front small { position: absolute; top: 1.5rem; left: 1.6rem; font-size: 0.54rem; letter-spacing: 0.16em; }
+  .portfolio-folder__front strong { position: absolute; bottom: -0.12em; left: 4%; color: rgba(247, 245, 239, 0.13); font-size: clamp(5rem, 12vw, 11rem); font-weight: 780; line-height: 0.82; letter-spacing: -0.07em; }
+  .portfolio-folder__action { position: absolute; z-index: 9; right: 1.6rem; bottom: 32%; display: grid; width: 2.8rem; aspect-ratio: 1; place-items: center; padding: 0; border: 0; border-radius: 50%; background: var(--yellow); color: #171717; font: inherit; font-size: 1rem; cursor: pointer; transition: rotate 520ms var(--ease-out), scale 520ms var(--ease-out), background 360ms ease; }
+  .portfolio-folder:hover .portfolio-folder__front::after,
+  .portfolio-folder:focus-visible .portfolio-folder__front::after { background-position: -40% 0; }
+  .portfolio-folder:hover .portfolio-folder__action,
+  .portfolio-folder__action:focus-visible { rotate: 45deg; scale: 1.08; background: #f3f0e8; }
+  .folder-intro.is-open .portfolio-folder__papers i:nth-child(1) { transform: translateY(4%); }
+  .folder-intro.is-open .portfolio-folder__papers i:nth-child(2) { transform: translateY(18%); }
+  .folder-intro.is-open .portfolio-folder__papers i:nth-child(3) { transform: translateY(32%); }
+  .folder-intro.is-open .portfolio-folder__front { transform: rotateX(-7deg) translateY(0.8rem); }
+  .folder-intro.is-open .portfolio-folder__action { rotate: 90deg; }
+
+  .work-browser { display: grid; grid-template-columns: minmax(20rem, 0.78fr) minmax(32rem, 1.22fr); gap: clamp(3rem, 7vw, 8rem); align-items: start; margin-top: clamp(3.5rem, 6vw, 6rem); }
+  .work-index { display: grid; }
+  .work-row { position: relative; }
+  .work-row::after { position: absolute; right: 8%; bottom: 0; left: 8%; height: 1.1rem; background: radial-gradient(ellipse, rgba(247, 245, 239, 0.12), transparent 70%); content: ''; opacity: 0; transition: opacity 420ms ease, transform 620ms var(--ease-out); transform: scaleX(0.65); }
+  .work-row.is-active::after { opacity: 1; transform: scaleX(1); }
+  .work-row button { display: grid; width: 100%; grid-template-columns: 2.2rem 1fr auto; gap: 0.9rem; align-items: start; padding: 1.5rem 0; border: 0; background: transparent; color: rgba(247, 245, 239, 0.27); text-align: left; cursor: pointer; transition: color 480ms ease, transform 620ms var(--ease-out); }
+  .work-row button > span:first-child,
+  .work-row button small { padding-top: 0.42rem; font-size: 0.5rem; letter-spacing: 0.12em; }
+  .work-row button small { color: var(--yellow); text-transform: uppercase; }
+  .work-row__title { min-width: 0; font-size: clamp(1.75rem, 3.2vw, 3.45rem); font-weight: 520; line-height: 0.98; letter-spacing: -0.058em; overflow-wrap: anywhere; }
+  .work-row.is-active button,
+  .work-row button:hover,
+  .work-row button:focus-visible { color: var(--white); transform: translateX(0.4rem); }
+  .work-row__detail { display: grid; grid-template-rows: 0fr; opacity: 0; transition: grid-template-rows 650ms var(--ease-out), opacity 450ms ease; }
+  .work-row__detail > div { min-height: 0; overflow: hidden; }
+  .work-row.is-active .work-row__detail { grid-template-rows: 1fr; opacity: 1; }
+  .work-row__detail p { display: grid; grid-template-columns: 4.2rem minmax(0, 1fr); gap: 0.7rem; margin: 0 0 0.75rem 3.1rem; color: rgba(247, 245, 239, 0.58); font-size: 0.72rem; line-height: 1.55; }
+  .work-row__detail p span { color: rgba(247, 245, 239, 0.32); font-size: 0.48rem; letter-spacing: 0.1em; text-transform: uppercase; }
+  .work-row__detail ul { display: flex; flex-wrap: wrap; gap: 0.45rem 1rem; margin: 1rem 0 1.5rem 3.1rem; padding: 0; color: rgba(247, 245, 239, 0.7); font-size: 0.62rem; list-style: none; }
+  .work-row__detail li::before { display: inline-block; width: 0.28rem; height: 0.28rem; margin-right: 0.45rem; border-radius: 50%; background: var(--yellow); content: ''; }
+
+  .work-preview-stage { position: sticky; top: 3vh; min-height: clamp(31rem, 42vw, 40rem); }
+  .work-preview-caption { display: block; margin: 0 0 1rem; color: rgba(247, 245, 239, 0.4); font-size: 0.48rem; letter-spacing: 0.14em; }
+  .case-preview { position: absolute; top: 1.5rem; right: 0; left: 0; opacity: 0; visibility: hidden; transform: translateY(1.5rem) scale(0.975); transition: opacity 520ms ease, transform 800ms var(--ease-out), visibility 0s 800ms; }
+  .case-preview.is-active { z-index: 2; opacity: 1; visibility: visible; transform: none; transition-delay: 0s; }
+  .case-preview__meta { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.7rem; color: rgba(247, 245, 239, 0.45); font-size: 0.5rem; letter-spacing: 0.08em; }
+  .case-preview__meta strong { color: var(--yellow); }
 
   @media (max-width: 63.99rem) {
-    .work-heading > div,
-    .work-heading > p {
-      grid-column: 1 / -1;
-    }
-
-    .work-heading > p {
-      max-width: 34rem;
-      margin-top: 1.25rem;
-    }
-
-    .case-details dl,
-    .case-more {
-      grid-column: 1 / -1;
-    }
-
-    .case-more {
-      margin-top: 1.5rem;
-    }
+    .work-heading { grid-template-columns: 1fr; }
+    .work-heading > p { max-width: 34rem; margin-top: 1.25rem; }
+    .work-browser { grid-template-columns: minmax(18rem, 0.9fr) minmax(24rem, 1.1fr); gap: 2.5rem; }
+    .work-preview-stage { min-height: 33rem; }
   }
 
   @media (max-width: 47.99rem) {
-    .selected-work {
-      padding-block: 5.5rem;
-    }
+    .selected-work { padding-top: 8rem; }
+    .work-heading h2 { font-size: clamp(2.9rem, 14vw, 4.7rem); }
+    .folder-intro { min-height: 24rem; }
+    .portfolio-folder { width: 96%; border-radius: 1.3rem; }
+    .portfolio-folder__front { border-radius: 1.2rem 1.2rem 1.6rem 1.6rem; }
+    .portfolio-folder__front small { top: 1rem; left: 1rem; }
+    .portfolio-folder__action { right: 1rem; bottom: 31%; width: 2.2rem; }
+    .work-browser { grid-template-columns: 1fr; margin-top: 5rem; }
+    .work-row button { grid-template-columns: 1.7rem 1fr; gap: 0.55rem; }
+    .work-row button small { display: none; }
+    .work-row__title { font-size: clamp(1.65rem, 8vw, 2.6rem); }
+    .work-row__detail p { grid-template-columns: 1fr; gap: 0.3rem; margin-left: 2.25rem; }
+    .work-row__detail ul { margin-left: 2.25rem; }
+    .work-preview-stage { position: relative; top: auto; min-height: 23rem; }
+    .case-preview { top: 1.4rem; }
+  }
 
-    .case-list {
-      gap: 6rem;
-    }
-
-    .case-title h3 {
-      font-size: clamp(2.8rem, 14vw, 4.5rem);
-    }
-
-    .case-study--2 .case-title {
-      display: block;
-    }
-
-    .case-study--2 .case-title h3 {
-      margin-top: 0;
-    }
-
-    .case-study--1 .case-scene,
-    .case-study--2 .case-scene,
-    .case-study--3 .case-scene {
-      width: calc(100% - 0.5rem);
-      margin-inline: auto;
-    }
-
-    .case-study--2 .case-preview {
-      transform: translate(var(--project-back-x), var(--project-back-y));
-    }
-
-    .scene-fragment {
-      display: none;
-    }
-
-    .case-details {
-      display: block;
-    }
-
-    .case-details dl {
-      grid-template-columns: 1fr;
-      gap: 1.25rem;
-    }
-
-    .case-details dl > div {
-      grid-template-columns: 3.5rem 1fr;
-    }
+  @media (prefers-reduced-motion: reduce) {
+    .portfolio-folder__papers i,
+    .portfolio-folder__front,
+    .portfolio-folder__front::after,
+    .portfolio-folder__action,
+    .work-row button,
+    .work-row__detail,
+    .case-preview { transition: none; }
   }
 </style>

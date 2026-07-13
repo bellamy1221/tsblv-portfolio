@@ -1,0 +1,90 @@
+<div class="resend-cube" data-resend-cube>
+  <canvas data-resend-cube-canvas aria-label="Интерактивный куб — идея, собранная в работающую систему"></canvas>
+</div>
+
+<script>
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const roots = Array.from(document.querySelectorAll<HTMLElement>('[data-resend-cube]'));
+  const instances = new Map<HTMLElement, { dispose: () => void }>();
+
+  const loadCube = async (root: HTMLElement): Promise<void> => {
+    if (root.dataset.cubeState || reducedMotion.matches) return;
+    const canvas = root.querySelector<HTMLCanvasElement>('[data-resend-cube-canvas]');
+    if (!canvas) return;
+
+    root.dataset.cubeState = 'loading';
+
+    try {
+      const { Application } = await import('@splinetool/runtime');
+      const app = new Application(canvas, { renderMode: 'auto' });
+      await app.load('/static/resend-cube.splinecode');
+      app.setBackgroundColor('rgba(0, 0, 0, 0)');
+
+      let hiddenObjects = 0;
+      app.getAllObjects().forEach((object) => {
+        if (/orbit/i.test(object.name)) {
+          object.visible = false;
+          hiddenObjects += 1;
+        }
+      });
+
+      root.dataset.hiddenObjects = String(hiddenObjects);
+      root.dataset.cubeState = 'ready';
+      root.classList.add('is-ready');
+      instances.set(root, app);
+    } catch {
+      root.dataset.cubeState = 'unavailable';
+    }
+  };
+
+  if (!reducedMotion.matches && 'IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        observer.unobserve(entry.target);
+        void loadCube(entry.target as HTMLElement);
+      });
+    }, { rootMargin: '260px 0px', threshold: 0.01 });
+
+    roots.forEach((root) => observer.observe(root));
+  } else if (!reducedMotion.matches) {
+    roots.forEach((root) => void loadCube(root));
+  }
+
+  window.addEventListener('pagehide', () => {
+    instances.forEach((app) => app.dispose());
+    instances.clear();
+  }, { once: true });
+</script>
+
+<style>
+  .resend-cube {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1;
+    contain: layout paint;
+    cursor: grab;
+  }
+
+  .resend-cube:active { cursor: grabbing; }
+
+  canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+    display: block;
+    background: transparent;
+    opacity: 0;
+    transform: scale(0.94);
+    transition: opacity 620ms ease, transform 820ms var(--ease-out);
+  }
+
+  .resend-cube.is-ready canvas { opacity: 1; transform: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    canvas { display: none; }
+  }
+</style>
