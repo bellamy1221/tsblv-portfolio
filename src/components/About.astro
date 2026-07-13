@@ -1,167 +1,143 @@
+---
+import ResendCube from './ResendCube.astro';
+---
+
 <section class="section about" id="about" aria-labelledby="about-title">
-  <div class="site-container content-grid about-layout">
-    <div class="about-heading" data-motion="clip">
-      <p class="section-label">Обо мне</p>
-      <h2 id="about-title">Вы работаете напрямую со мной</h2>
-      <span class="availability"><i></i>Открыт к новым задачам</span>
+  <div class="site-container about-header" data-motion="row">
+    <p class="section-label">02 / Вместе к результату</p>
+    <span>Ваша идея остаётся в центре</span>
+  </div>
+
+  <div class="site-container about-layout">
+    <h2 id="about-title" data-motion="clip">
+      <span>Вы приносите мечту.</span>
+      <span>Я превращаю её в систему.</span>
+      <span>От первого смысла</span>
+      <span>до уверенного запуска.</span>
+    </h2>
+
+    <div class="about-object" data-sequence aria-hidden="true">
+      <ResendCube />
     </div>
 
-    <div class="about-copy" data-motion="fade-blur">
-      <p>Без менеджеров и передачи задачи между разными людьми. Я сам обсуждаю проект, предлагаю решения, делаю сайт и остаюсь на связи после запуска.</p>
+    <div class="about-copy" data-motion="text">
+      <p>Вы рассказываете, куда хотите прийти. Я помогаю увидеть сильную суть идеи и собираю всё необходимое — от структуры и визуального языка до разработки и запуска.</p>
+      <p>Мы работаем напрямую, поэтому замысел не теряется между людьми, а каждый шаг ведёт к продукту, которым хочется гордиться.</p>
     </div>
+  </div>
 
-    <div class="about-rail" data-sequence>
-      <div class="rail-line" data-motion="line-draw"></div>
-      <div class="rail-grid">
-        <div class="rail-item" data-pointer-light data-motion="fade-blur"><span>01</span><strong>Прямое общение</strong></div>
-        <div class="rail-item" data-pointer-light data-motion="fade-blur" data-motion-delay="70"><span>02</span><strong>Понятные этапы</strong></div>
-        <div class="rail-item" data-pointer-light data-motion="fade-blur" data-motion-delay="140"><span>03</span><strong>Один человек отвечает за результат</strong></div>
-        <div class="rail-item" data-pointer-light data-motion="fade-blur" data-motion-delay="210"><span>04</span><strong>Поддержка после запуска</strong></div>
-      </div>
-    </div>
+  <div class="site-container about-principles" data-sequence>
+    <article data-motion="row"><span>01</span><strong>Слышу вашу цель</strong><i aria-hidden="true"></i></article>
+    <article data-motion="row" data-motion-delay="70"><span>02</span><strong>Усиливаю идею</strong><i aria-hidden="true"></i></article>
+    <article data-motion="row" data-motion-delay="140"><span>03</span><strong>Показываю движение</strong><i aria-hidden="true"></i></article>
+    <article data-motion="row" data-motion-delay="210"><span>04</span><strong>Довожу до запуска</strong><i aria-hidden="true"></i></article>
   </div>
 </section>
 
 <style>
-  .about-layout {
-    align-items: start;
-    row-gap: clamp(2.5rem, 5vw, 4.5rem);
+  .about {
+    position: relative;
+    overflow: hidden;
+    margin-top: -1px;
+    padding: clamp(7rem, 9vw, 9.5rem) 0 clamp(5.5rem, 7vw, 7.5rem);
+    background: transparent;
   }
 
-  .about-heading {
-    grid-column: 1 / span 5;
-  }
-
-  .about-heading h2 {
-    max-width: 39rem;
-  }
-
-  .availability {
-    display: inline-flex;
+  .about-header {
+    position: relative;
+    display: flex;
     align-items: center;
-    gap: 0.5rem;
-    margin-top: 1.5rem;
-    padding: 0.55rem 0.75rem;
-    border: 1px solid var(--line);
-    border-radius: 999px;
-    background: var(--surface-glass);
-    color: var(--text-muted);
-    font-size: 0.7rem;
-    font-weight: 650;
-    backdrop-filter: blur(10px);
+    justify-content: space-between;
+    gap: 1rem;
+    padding-bottom: 1rem;
   }
 
-  .availability i {
-    width: 0.5rem;
-    height: 0.5rem;
-    border-radius: 50%;
-    background: var(--flag-yellow);
-    box-shadow: 0 0 0 0 rgba(240, 201, 40, 0.28);
-    animation: availability-pulse 3.5s ease-out infinite;
-  }
+  .about-header .section-label { margin: 0; }
+  .about-header > span { color: var(--text-muted); font-size: 0.62rem; }
+  .about-layout { position: relative; display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(18rem, 0.55fr); align-items: center; gap: clamp(2rem, 6vw, 7rem); margin-top: clamp(2.5rem, 4.5vw, 4.5rem); }
+  .about-layout::after { position: absolute; z-index: -1; top: 3%; right: -8%; width: clamp(22rem, 42vw, 42rem); aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle, rgba(243, 240, 232, 0.17), rgba(228, 185, 31, 0.08) 34%, transparent 69%); content: ''; filter: blur(1.5rem); animation: about-halo 7s ease-in-out infinite alternate; }
 
-  .about-copy {
-    grid-column: 7 / -1;
-    padding-top: 3.3rem;
-  }
-
-  .about-copy p {
-    max-width: 51rem;
-    margin: 0;
-    font-size: clamp(1.45rem, 2.7vw, 2.4rem);
-    font-weight: 520;
-    line-height: 1.25;
-    letter-spacing: -0.05em;
-  }
-
-  .about-rail {
+  .about h2 {
     position: relative;
-    grid-column: 1 / -1;
-    padding-top: 1.4rem;
-  }
-
-  .rail-line {
-    position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
-    height: 1px;
-    background: linear-gradient(90deg, var(--flag-red), var(--ice) 50%, var(--flag-yellow));
-  }
-
-  .rail-grid {
+    z-index: 2;
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    min-width: 0;
+    grid-column: auto;
+    max-width: 62rem;
+    font-size: clamp(3rem, 5.55vw, 5.95rem);
+    font-weight: 485;
+    line-height: 0.93;
+    letter-spacing: -0.058em;
   }
 
-  .rail-item {
-    --pointer-x: 50%;
-    --pointer-y: 50%;
+  .about h2 span:nth-child(2) { padding-left: 3vw; color: var(--text-muted); }
+  .about h2 span:nth-child(3),
+  .about h2 span:nth-child(4) { padding-left: 0.75vw; }
+  .about-copy { position: relative; z-index: 2; max-width: 52rem; grid-column: 1; padding: 0 0 0.4rem clamp(0rem, 5vw, 5rem); }
+  .about-copy p { margin: 0; color: var(--text-muted); font-size: clamp(0.86rem, 1.05vw, 0.98rem); line-height: 1.65; }
+  .about-copy p + p { margin-top: 0.9rem; }
+
+  .about-object {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    width: min(100%, 31rem);
+    aspect-ratio: 1;
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    place-items: center;
+  }
+
+  @keyframes about-halo { to { translate: -4% 5%; scale: 1.08; opacity: 0.72; } }
+
+  .about-principles {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin-top: clamp(3.5rem, 5.5vw, 5.5rem);
+  }
+
+  .about-principles article {
     position: relative;
     display: grid;
-    min-height: 6rem;
-    align-content: center;
-    gap: 0.55rem;
-    padding: 1rem clamp(0.8rem, 1.5vw, 1.3rem);
-    border-right: 1px solid var(--line);
-    background: radial-gradient(circle 7rem at var(--pointer-x) var(--pointer-y), rgba(255, 255, 255, 0.56), transparent 72%);
-    transition: background-color 340ms var(--ease-out), transform 340ms var(--ease-out);
+    min-height: 7rem;
+    align-content: space-between;
+    padding: 1.1rem 1.25rem 1.25rem;
+    overflow: hidden;
+    border-radius: 1.25rem;
+    transition: color 500ms var(--ease-out), transform 600ms var(--ease-out), box-shadow 600ms var(--ease-out);
   }
 
-  html[data-theme='dark'] .rail-item {
-    background: radial-gradient(circle 7rem at var(--pointer-x) var(--pointer-y), rgba(255, 255, 255, 0.07), transparent 72%);
-  }
-
-  .rail-item:first-child {
-    border-left: 1px solid var(--line);
-  }
-
-  .rail-item:hover {
-    background-color: var(--surface-glass);
-    transform: translateY(-2px);
-  }
-
-  .rail-item span {
-    color: var(--flag-red);
-    font-size: 0.6rem;
-    font-weight: 760;
-  }
-
-  .rail-item:nth-child(even) span {
-    color: color-mix(in srgb, var(--flag-yellow) 78%, var(--text));
-  }
-
-  .rail-item strong {
-    font-size: 0.8rem;
-    font-weight: 680;
-  }
-
-  @keyframes availability-pulse {
-    50% { box-shadow: 0 0 0 0.35rem rgba(240, 201, 40, 0); }
-  }
+  .about-principles article::before { position: absolute; inset: 0; border-radius: inherit; background: radial-gradient(circle at 20% 120%, rgba(181, 31, 43, 0.34), transparent 45%), radial-gradient(circle at 86% -20%, rgba(228, 185, 31, 0.24), transparent 42%), var(--dark); content: ''; opacity: 0; transform: scale(0.94) translateY(0.5rem); transition: opacity 500ms ease, transform 620ms var(--ease-out); }
+  .about-principles article > * { position: relative; z-index: 1; }
+  .about-principles article > span { color: var(--text-muted); font-size: 0.52rem; letter-spacing: 0.12em; }
+  .about-principles strong { max-width: 12rem; font-size: clamp(0.82rem, 1.1vw, 1rem); font-weight: 620; line-height: 1.25; }
+  .about-principles i { width: 2.75rem; height: 1px; background: linear-gradient(90deg, var(--red), #d9d6ce, var(--yellow)); transition: width 600ms var(--ease-out); }
+  .about-principles article:hover { color: var(--white); box-shadow: 0 1.4rem 3rem rgba(17, 19, 23, 0.12); transform: translateY(-0.3rem); }
+  .about-principles article:hover::before { opacity: 1; transform: none; }
+  .about-principles article:hover i { width: 100%; }
 
   @media (max-width: 63.99rem) {
-    .about-heading,
-    .about-copy {
-      grid-column: 1 / -1;
-    }
-
-    .about-copy {
-      padding-top: 0;
-    }
+    .about-layout { grid-template-columns: minmax(0, 1.25fr) minmax(15rem, 0.75fr); gap: 1.5rem; }
+    .about-copy { margin-top: 1.5rem; padding-left: 0; }
+    .about-object { width: min(100%, 24rem); }
   }
 
   @media (max-width: 47.99rem) {
-    .rail-grid {
-      grid-template-columns: 1fr;
-    }
+    .about { padding: 7.5rem 0 8.5rem; }
+    .about-header > span { display: none; }
+    .about h2 { font-size: clamp(2.85rem, 13.5vw, 4.5rem); }
+    .about h2 span:nth-child(2),
+    .about h2 span:nth-child(3),
+    .about h2 span:nth-child(4) { padding-left: 0; }
+    .about-layout { grid-template-columns: 1fr; }
+    .about-object { grid-column: 1; grid-row: auto; width: min(21rem, 88vw); margin: 0 auto; }
+    .about-copy { grid-column: 1; margin-top: 0.5rem; }
+    .about-principles { grid-template-columns: repeat(2, 1fr); margin-top: 3rem; }
+    .about-principles article { min-height: 6.5rem; }
+  }
 
-    .rail-item,
-    .rail-item:first-child {
-      min-height: 4.75rem;
-      border-right: 1px solid var(--line);
-      border-bottom: 1px solid var(--line);
-      border-left: 1px solid var(--line);
-    }
+  @media (prefers-reduced-motion: reduce) {
+    .about-principles article { transition: none; }
+    .about-layout::after { animation: none; }
   }
 </style>

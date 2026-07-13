@@ -2,347 +2,211 @@
 import BrandMark from './BrandMark.astro';
 ---
 
-<section class="hero" id="top" aria-labelledby="hero-title">
-  <div class="site-container content-grid hero-grid">
-    <div class="hero-copy" data-motion="clip">
-      <p class="kicker">Сайты и автоматизация без лишней сложности</p>
-      <h1 id="hero-title">Делаю сайты, которые помогают выглядеть профессионально и получать больше обращений.</h1>
-      <p class="hero-lead">Работаю со специалистами, самозанятыми и небольшими командами. Могу собрать сайт с нуля, подключить CRM, автоматизировать рутину и настроить аналитику.</p>
-      <div class="hero-actions">
-        <a class="button button-primary" href="#work">Посмотреть проекты</a>
-        <a class="button button-secondary" href="#contact">Обсудить задачу</a>
-      </div>
+<section class="hero" id="top" aria-labelledby="hero-title" data-pointer-light data-sequence>
+  <div class="hero-meta hero-meta--top" aria-hidden="true">
+    <span>01 / VISION</span>
+    <span>DIGITAL PRODUCTS FOR GROWTH</span>
+    <span>ALANIA / WORLDWIDE</span>
+  </div>
+
+  <div class="site-container hero-thesis">
+    <BrandMark variant="full" size="small" href={null} />
+    <p class="hero-kicker">Сильные идеи заслуживают сильной формы</p>
+    <h1 id="hero-title">
+      <span>Превращаю вашу идею</span>
+      <span>в цифровой продукт,</span>
+      <span>который хочется выбрать.</span>
+    </h1>
+    <p class="hero-lead">Создаю сайты и системы, которые помогают мечте обрести форму, бизнесу — расти, а клиенту — почувствовать доверие ещё до первого разговора.</p>
+    <div class="hero-actions">
+      <a class="button hero-button hero-button--primary" href="#work">Увидеть возможности</a>
+      <a class="button hero-button" href="#contact">Начать свой проект</a>
     </div>
+  </div>
 
-    <div class="hero-visual-entry" data-motion="scale-depth">
-      <div class="hero-scene tech-frame" data-hero-viewport data-hero-scene>
-        <span class="scene-index" aria-hidden="true">TS / REFRACTION 01</span>
-        <span class="hero-wordmark" aria-hidden="true">TSBLV</span>
-
-        <div class="orbit orbit--wide" data-orbit-depth="1" aria-hidden="true"></div>
-        <div class="orbit orbit--tight" data-orbit-depth="2" aria-hidden="true"></div>
-
-        <div class="lens-position">
-          <div class="hero-lens" data-hero-lens aria-hidden="true">
-            <span class="lens-highlight" data-lens-highlight></span>
-            <span class="lens-rim"></span>
-          </div>
-        </div>
-
-        <a class="service-chip chip-site" href="#service-sites" data-service-chip="service-sites"><i></i>Сайты</a>
-        <a class="service-chip chip-crm" href="#service-crm" data-service-chip="service-crm"><i></i>CRM</a>
-        <a class="service-chip chip-auto" href="#service-automation" data-service-chip="service-automation"><i></i>Автоматизация</a>
-        <a class="service-chip chip-data" href="#service-analytics" data-service-chip="service-analytics"><i></i>Аналитика</a>
-
-        <p class="object-note">Выберите направление</p>
-      </div>
-    </div>
-
-    <div class="hero-brand" data-motion="fade-blur">
-      <BrandMark variant="full" size="medium" href={null} />
-      <p>Работаю напрямую<br />и остаюсь на связи после запуска</p>
-    </div>
+  <div class="hero-signature" aria-hidden="true">
+    <div class="hero-shape hero-shape--one"></div>
+    <div class="hero-shape hero-shape--two"></div>
+    <div class="hero-shape hero-shape--three"></div>
+    <svg class="hero-signal-line" viewBox="0 0 1000 150" preserveAspectRatio="none">
+      <path class="hero-signal-base" d="M0 104C148 104 170 40 316 40S488 118 642 118 800 52 1000 52" pathLength="1" />
+      <path class="hero-signal-pulse" d="M0 104C148 104 170 40 316 40S488 118 642 118 800 52 1000 52" pathLength="1" />
+    </svg>
   </div>
 </section>
 
 <style>
   .hero {
+    --pointer-x: 62%;
+    --pointer-y: 38%;
     position: relative;
-    padding: clamp(5.5rem, 7vw, 7rem) 0 clamp(4rem, 6vw, 6rem);
-  }
-
-  .hero-grid {
-    align-items: center;
-    row-gap: clamp(2rem, 4vw, 3.5rem);
-  }
-
-  .hero-copy {
-    z-index: 2;
-    grid-column: 1 / span 6;
-  }
-
-  .kicker {
-    margin: 0 0 1rem;
-    color: var(--flag-red);
-    font-size: 0.7rem;
-    font-weight: 760;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-  }
-
-  h1 {
-    max-width: 48rem;
-    margin: 0;
-    font-size: clamp(2.7rem, 5.7vw, 5.65rem);
-    font-weight: 560;
-    line-height: 0.96;
-    letter-spacing: -0.07em;
-    text-wrap: balance;
-  }
-
-  .hero-lead {
-    max-width: 39rem;
-    margin: 1.45rem 0 0;
-    color: var(--text-muted);
-    font-size: clamp(1rem, 1.35vw, 1.16rem);
-    line-height: 1.6;
-  }
-
-  .hero-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.7rem;
-    margin-top: 1.65rem;
-  }
-
-  .hero-visual-entry {
-    grid-column: 7 / -1;
-  }
-
-  .hero-scene {
-    --scene-x: 0px;
-    --scene-y: 0px;
-    position: relative;
-    min-height: clamp(23rem, 38vw, 32rem);
+    min-height: max(44rem, 92svh);
     overflow: hidden;
+    color: #f0eee7;
+    background: transparent;
     isolation: isolate;
-    border: 1px solid var(--line-strong);
-    border-radius: 1.35rem;
-    background:
-      conic-gradient(from 222deg at 66% 46%, transparent 0 23%, rgba(240, 201, 40, 0.11) 30%, rgba(255, 255, 255, 0.18) 35%, rgba(220, 52, 65, 0.08) 41%, transparent 50% 100%),
-      linear-gradient(138deg, rgba(255, 255, 255, 0.33), rgba(16, 18, 22, 0.09) 48%, rgba(255, 255, 255, 0.12));
-    box-shadow: var(--shadow-lg), inset 0 1px 0 rgba(255, 255, 255, 0.62);
-    backdrop-filter: blur(16px) saturate(115%);
+    margin-bottom: -1px;
   }
 
-  html[data-theme='dark'] .hero-scene {
-    background:
-      conic-gradient(from 222deg at 66% 46%, transparent 0 23%, rgba(240, 201, 40, 0.08) 30%, rgba(220, 229, 235, 0.1) 35%, rgba(220, 52, 65, 0.07) 41%, transparent 50% 100%),
-      linear-gradient(138deg, rgba(255, 255, 255, 0.07), rgba(16, 18, 22, 0.16) 48%, rgba(255, 255, 255, 0.04));
-  }
-
-  .hero-scene::before {
+  .hero::before {
     position: absolute;
+    z-index: -1;
     inset: 0;
-    background: linear-gradient(108deg, transparent 30%, rgba(255, 255, 255, 0.3) 48%, transparent 65%);
-    background-position: 130% 0;
-    background-size: 220% 100%;
+    background:
+      linear-gradient(111deg, transparent 30%, rgba(255, 249, 222, 0.07) 48%, transparent 63%),
+      radial-gradient(ellipse 62% 26% at 50% 82%, rgba(216, 173, 34, 0.08), transparent 70%);
     content: '';
     pointer-events: none;
   }
 
-  .hero-visual-entry.is-motion-visible .hero-scene::before {
-    animation: scene-sheen 1.8s 350ms var(--ease-out) both;
+  .hero::after {
+    position: absolute;
+    z-index: 8;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.3'/%3E%3C/svg%3E");
+    content: '';
+    mix-blend-mode: soft-light;
+    opacity: 0.2;
+    pointer-events: none;
   }
 
-  .scene-index {
+  .hero-meta {
     position: absolute;
-    top: 1.15rem;
-    right: 1.25rem;
-    color: color-mix(in srgb, var(--text) 52%, transparent);
-    font-size: 0.54rem;
+    z-index: 5;
+    right: var(--gutter);
+    left: var(--gutter);
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    padding-block: 0.8rem;
+    color: rgba(247, 245, 239, 0.42);
+    font-size: 0.48rem;
+    font-weight: 670;
+    letter-spacing: 0.14em;
+  }
+
+  .hero-meta span:nth-child(2) { justify-self: center; }
+  .hero-meta span:last-child { justify-self: end; }
+  .hero-meta--top { top: 0; }
+
+  .hero-thesis {
+    position: relative;
+    z-index: 4;
+    display: grid;
+    min-height: max(44rem, 92svh);
+    align-content: start;
+    justify-items: center;
+    padding-top: clamp(5.5rem, 10vh, 7.5rem);
+    padding-bottom: clamp(15rem, 25vw, 22rem);
+    text-align: center;
+  }
+
+  .hero-thesis :global(.brand-mark) {
+    --brand-color: #f0eee7;
+    --brand-muted: rgba(240, 238, 231, 0.46);
+    --brand-line: rgba(240, 238, 231, 0.25);
+    margin-bottom: clamp(1.5rem, 3.5vh, 2.5rem);
+  }
+
+  .hero-kicker {
+    margin: 0 0 1.15rem;
+    color: var(--brand-yellow-light);
+    font-size: 0.58rem;
     font-weight: 720;
-    letter-spacing: 0.12em;
-  }
-
-  .hero-wordmark {
-    position: absolute;
-    z-index: -1;
-    top: 50%;
-    left: 50%;
-    color: color-mix(in srgb, var(--text) 44%, transparent);
-    font-size: clamp(6rem, 17vw, 15rem);
-    font-weight: 780;
-    line-height: 0.6;
-    letter-spacing: -0.075em;
-    text-shadow: 0 -1px rgba(255, 255, 255, 0.55), 0 1.5rem 3rem rgba(16, 18, 22, 0.16);
-    transform: translate(calc(-50% + var(--scene-x)), calc(-50% + var(--scene-y)));
-    transition: transform 520ms var(--ease-out);
-    white-space: nowrap;
-  }
-
-  .lens-position {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: clamp(10.5rem, 20vw, 17rem);
-    aspect-ratio: 1;
-    transform: translate(-50%, -50%);
-    perspective: 700px;
-  }
-
-  .hero-lens {
-    --lens-rotate-x: 0deg;
-    --lens-rotate-y: 0deg;
-    --lens-scale: 1;
-    position: absolute;
-    inset: 0;
-    border: 1px solid rgba(255, 255, 255, 0.68);
-    border-radius: 50%;
-    background:
-      radial-gradient(circle at 34% 28%, rgba(255, 255, 255, 0.42), transparent 26%),
-      conic-gradient(from 145deg, rgba(220, 52, 65, 0.16), rgba(255, 255, 255, 0.07) 22%, rgba(240, 201, 40, 0.2) 39%, rgba(255, 255, 255, 0.12) 58%, rgba(220, 52, 65, 0.09) 76%, rgba(255, 255, 255, 0.18));
-    box-shadow:
-      0 2rem 5rem rgba(16, 18, 22, 0.24),
-      inset 1rem 1rem 2rem rgba(255, 255, 255, 0.17),
-      inset -1rem -1rem 2rem rgba(16, 18, 22, 0.14);
-    backdrop-filter: blur(2px) brightness(1.08) contrast(1.05);
-    transform: rotateX(var(--lens-rotate-x)) rotateY(var(--lens-rotate-y)) scale(var(--lens-scale));
-    transition: transform 480ms var(--ease-out), box-shadow 420ms var(--ease-out);
-    transform-style: preserve-3d;
-  }
-
-  .lens-highlight {
-    --highlight-x: 35%;
-    --highlight-y: 28%;
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    background: radial-gradient(circle at var(--highlight-x) var(--highlight-y), rgba(255, 255, 255, 0.72), transparent 17%);
-    opacity: 0.66;
-    transition: background-position 300ms var(--ease-out);
-  }
-
-  .lens-rim {
-    position: absolute;
-    inset: 7%;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: inherit;
-    box-shadow: inset 0 0 1.2rem rgba(255, 255, 255, 0.12);
-  }
-
-  .orbit {
-    --orbit-x: 0px;
-    --orbit-y: 0px;
-    position: absolute;
-    z-index: -1;
-    border: 1px solid color-mix(in srgb, var(--ice) 36%, transparent);
-    border-radius: 50%;
-    transform: translate(var(--orbit-x), var(--orbit-y));
-    transition: transform 620ms var(--ease-out);
-  }
-
-  .orbit--wide {
-    top: 5%;
-    right: 7%;
-    width: 53%;
-    aspect-ratio: 1;
-  }
-
-  .orbit--tight {
-    bottom: -20%;
-    left: 20%;
-    width: 62%;
-    aspect-ratio: 1;
-    border-color: color-mix(in srgb, var(--flag-yellow) 24%, transparent);
-  }
-
-  .service-chip {
-    --chip-x: 0px;
-    --chip-y: 0px;
-    position: absolute;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.62rem 0.85rem;
-    border: 1px solid var(--line-strong);
-    border-radius: 999px;
-    background: var(--surface-glass-strong);
-    box-shadow: 0 0.75rem 1.8rem rgba(16, 18, 22, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.5);
-    backdrop-filter: blur(14px);
-    color: var(--text);
-    font: 650 clamp(0.65rem, 1vw, 0.82rem) / 1 var(--font-sans);
-    text-decoration: none;
-    transform: translate(var(--chip-x), var(--chip-y));
-    transition: transform 420ms var(--ease-out), background-color 320ms var(--ease-out), border-color 320ms var(--ease-out);
-  }
-
-  .service-chip i {
-    width: 0.43rem;
-    height: 0.43rem;
-    border-radius: 50%;
-    background: var(--flag-red);
-    box-shadow: 0 0 0 0.18rem rgba(220, 52, 65, 0.12);
-  }
-
-  .service-chip:hover,
-  .service-chip:focus-visible,
-  .service-chip.is-active {
-    border-color: var(--flag-yellow);
-    background: var(--surface-glass-strong);
-  }
-
-  .chip-site { top: 14%; left: 10%; }
-  .chip-crm { top: 19%; right: 10%; }
-  .chip-auto { bottom: 15%; left: 14%; }
-  .chip-data { right: 14%; bottom: 12%; }
-  .chip-crm i, .chip-data i { background: var(--flag-yellow); box-shadow: 0 0 0 0.18rem rgba(240, 201, 40, 0.12); }
-
-  .object-note {
-    position: absolute;
-    right: 1.2rem;
-    bottom: 1rem;
-    margin: 0;
-    color: color-mix(in srgb, var(--text) 58%, transparent);
-    font-size: 0.56rem;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
   }
 
-  .hero-brand {
-    display: flex;
-    grid-column: 1 / -1;
-    align-items: center;
-    justify-content: space-between;
-    gap: 2rem;
-    padding-top: 1.4rem;
-    border-top: 1px solid var(--line);
-  }
-
-  .hero-brand p {
+  h1 {
+    display: grid;
     margin: 0;
-    color: var(--text-muted);
-    font-size: 0.72rem;
-    line-height: 1.6;
-    text-align: right;
+    font-size: clamp(2.65rem, 5.4vw, 5.9rem);
+    font-weight: 480;
+    line-height: 0.96;
+    letter-spacing: -0.058em;
+    text-wrap: balance;
   }
 
-  @keyframes scene-sheen {
-    to { background-position: -25% 0; }
+  h1 span:first-child { color: rgba(240, 238, 231, 0.48); }
+
+  .hero-lead {
+    max-width: 43rem;
+    margin: 1.4rem 0 0;
+    color: rgba(240, 238, 231, 0.64);
+    font-size: clamp(0.92rem, 1.35vw, 1.12rem);
+    line-height: 1.58;
   }
 
-  @media (max-width: 63.99rem) {
-    .hero-copy,
-    .hero-visual-entry {
-      grid-column: 1 / -1;
-    }
+  .hero-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.6rem; margin-top: 1.35rem; }
+  .hero-button { border-color: rgba(247, 245, 239, 0.3); color: #f0eee7; }
+  .hero-button--primary { border-color: #f0eee7; background: #f0eee7; color: #111; }
+  .hero-button:hover,
+  .hero-button:focus-visible { border-color: var(--brand-yellow); background: var(--brand-yellow); color: #111; }
 
-    .hero-copy {
-      max-width: 56rem;
-    }
+  .hero-signature {
+    position: absolute;
+    z-index: 1;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: clamp(13rem, 22vw, 21rem);
+    overflow: hidden;
+    pointer-events: none;
   }
 
-  @media (max-width: 35rem) {
-    .hero {
-      padding-top: 5rem;
-    }
+  .hero-shape {
+    position: absolute;
+    border: 1px solid rgba(247, 245, 239, 0.08);
+    border-radius: 50%;
+    opacity: 0.58;
+    filter: saturate(0.85);
+    animation: hero-shape-float 10s ease-in-out infinite alternate;
+  }
 
-    .hero-scene {
-      min-height: 22rem;
-      margin-inline: calc(var(--gutter) * -0.5);
-    }
+  .hero-shape--one { bottom: -38%; left: 5%; width: clamp(14rem, 27vw, 28rem); aspect-ratio: 1; background: radial-gradient(circle at 68% 25%, rgba(247, 245, 239, 0.5), rgba(181, 31, 43, 0.38) 34%, rgba(39, 30, 31, 0.62) 63%, transparent 72%); box-shadow: inset -2rem -2.5rem 5rem rgba(0, 0, 0, 0.38), 0 2rem 7rem rgba(181, 31, 43, 0.12); }
+  .hero-shape--two { right: 19%; bottom: -48%; width: clamp(16rem, 32vw, 34rem); aspect-ratio: 1; background: radial-gradient(circle at 34% 22%, rgba(247, 245, 239, 0.46), rgba(228, 185, 31, 0.34) 34%, rgba(44, 39, 23, 0.64) 64%, transparent 72%); box-shadow: inset 2rem -2rem 6rem rgba(0, 0, 0, 0.4), 0 2rem 8rem rgba(228, 185, 31, 0.1); animation-delay: -3.5s; }
+  .hero-shape--three { right: 4%; bottom: 18%; width: clamp(5rem, 9vw, 9rem); aspect-ratio: 1; background: radial-gradient(circle at 35% 26%, rgba(247, 245, 239, 0.44), rgba(181, 31, 43, 0.5) 35%, rgba(52, 28, 22, 0.68) 68%); box-shadow: inset -1rem -1rem 2rem rgba(0, 0, 0, 0.38); animation-delay: -6s; }
 
-    .chip-site { left: 5%; }
-    .chip-crm { right: 5%; }
-    .chip-auto { bottom: 12%; left: 6%; }
-    .chip-data { right: 6%; bottom: 9%; }
-    .object-note { display: none; }
+  .hero-signal-line { position: absolute; right: 4%; bottom: 1.4rem; left: 4%; width: 92%; height: 72%; overflow: visible; }
+  .hero-signal-line path { fill: none; vector-effect: non-scaling-stroke; }
+  .hero-signal-base { stroke: rgba(247, 245, 239, 0.13); stroke-width: 1; }
+  .hero-signal-pulse { stroke: var(--brand-yellow-light); stroke-width: 2; stroke-linecap: round; stroke-dasharray: 0.07 0.93; animation: hero-signal-travel 7s linear infinite; }
 
-    .hero-brand {
-      align-items: flex-start;
-      flex-direction: column;
-    }
+  :global(.sequence-ready) .hero-thesis,
+  :global(.sequence-ready) .hero-signature {
+    opacity: 0;
+    clip-path: inset(0 0 100% 0);
+    transform: translateY(1.5rem);
+    transition: opacity 700ms ease, clip-path 1000ms var(--ease-out), transform 1000ms var(--ease-out);
+  }
 
-    .hero-brand p { text-align: left; }
+  :global(.sequence-ready) .hero-signature { transition-delay: 240ms; }
+  :global(.sequence-ready) .hero.is-sequence-visible .hero-thesis,
+  :global(.sequence-ready) .hero.is-sequence-visible .hero-signature { opacity: 1; clip-path: inset(0); transform: none; }
+  @keyframes hero-signal-travel { to { stroke-dashoffset: -1; } }
+  @keyframes hero-shape-float {
+    from { translate: -0.5rem 0.35rem; scale: 0.98; }
+    to { translate: 0.7rem -0.65rem; scale: 1.04; }
+  }
+
+  @media (max-width: 47.99rem) {
+    .hero { min-height: 43rem; }
+    .hero-meta { grid-template-columns: 1fr auto; }
+    .hero-meta span:nth-child(2) { justify-self: end; }
+    .hero-meta span:last-child { display: none; }
+    .hero-thesis { min-height: 43rem; align-content: start; padding-top: 5.75rem; padding-bottom: 9.5rem; }
+    .hero-thesis :global(.brand-mark) { margin-bottom: 1.75rem; }
+    h1 { font-size: clamp(2.4rem, 11.5vw, 3.9rem); }
+    .hero-lead { max-width: 24rem; }
+    .hero-actions { width: 100%; }
+    .hero-actions .button { flex: 1 1 10rem; }
+    .hero-signature { height: 8.5rem; }
+    .hero-shape--one { left: -18%; width: 16rem; }
+    .hero-shape--two { right: -25%; width: 18rem; }
+    .hero-signal-copy { right: 1rem; left: 1rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-shape,
+    .hero-signal-pulse { animation: none; }
   }
 </style>

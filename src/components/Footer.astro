@@ -5,13 +5,16 @@ import { siteConfig } from '../config/site';
 const year = new Date().getFullYear();
 ---
 
-<footer class="footer" data-sequence>
-  <div class="site-container footer-wordmark-stage" data-motion="scale-depth">
-    <span class="footer-wordmark" aria-hidden="true">TSBLV</span>
-    <span class="footer-wordmark-light" aria-hidden="true">TSBLV</span>
+<footer class="footer" data-footer-brand data-sequence>
+  <div class="footer-wordmark-stage" data-footer-light>
+    <div class="footer-wordmark-entry">
+      <span class="footer-wordmark" aria-hidden="true">TSBLV</span>
+      <span class="footer-wordmark-light" aria-hidden="true">TSBLV</span>
+    </div>
+    <span class="footer-origin" aria-hidden="true">ALANIA / WORLDWIDE</span>
   </div>
 
-  <div class="site-container content-grid footer-contact" data-motion="fade-blur">
+  <div class="site-container content-grid footer-contact">
     <div class="footer-brand">
       <BrandMark variant="full" size="medium" href="#top" ariaLabel="TSBLV — в начало страницы" />
     </div>
@@ -21,7 +24,7 @@ const year = new Date().getFullYear();
     </nav>
   </div>
 
-  <div class="site-container footer-bottom" data-motion="line-draw">
+  <div class="site-container footer-bottom">
     <span>© {year} TSBLV</span>
     <span>Без трекеров и лишних cookies</span>
   </div>
@@ -29,137 +32,174 @@ const year = new Date().getFullYear();
 
 <style>
   .footer {
-    z-index: 0;
+    position: relative;
+    z-index: 2;
     overflow: hidden;
-    padding: clamp(2rem, 4vw, 4rem) 0 1.5rem;
+    margin-top: -1px;
+    padding-bottom: 1.4rem;
     color: var(--white);
+    background: #111317;
+    isolation: isolate;
   }
 
   .footer::before {
     position: absolute;
-    z-index: -1;
-    inset: -10rem 0 0;
+    z-index: -2;
+    inset: 0;
     background:
-      conic-gradient(from 225deg at 76% 36%, transparent 0 28%, rgba(240, 201, 40, 0.07) 34%, rgba(255, 255, 255, 0.05) 39%, rgba(220, 52, 65, 0.06) 44%, transparent 52% 100%),
-      linear-gradient(to bottom, rgba(16, 18, 22, 0.94), var(--surface-deep));
+      radial-gradient(ellipse 34% 95% at 28% 5%, rgba(243, 240, 232, 0.13), transparent 66%),
+      radial-gradient(ellipse 34% 95% at 52% 8%, rgba(181, 31, 43, 0.25), transparent 66%),
+      radial-gradient(ellipse 38% 100% at 76% 8%, rgba(228, 185, 31, 0.23), transparent 68%);
     content: '';
     pointer-events: none;
   }
 
-  .footer-wordmark-stage {
-    position: relative;
-    height: clamp(7rem, 18vw, 16rem);
-    overflow: hidden;
-    border-bottom: 1px solid var(--line-on-dark);
+  .footer::after {
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 70% at 50% 0%, rgba(247, 245, 239, 0.035), transparent 72%);
+    content: '';
+    opacity: 0.72;
+    pointer-events: none;
   }
+
+  .footer-wordmark-stage {
+    --footer-light-x: 50%;
+    --footer-light-y: 50%;
+    --footer-shadow-x: 0px;
+    --footer-shadow-y: 3px;
+    --footer-grain-x: 0px;
+    --footer-grain-y: 0px;
+    position: relative;
+    height: clamp(10rem, 15vw, 14rem);
+    overflow: hidden;
+  }
+
+  .footer-wordmark-stage::before {
+    position: absolute;
+    z-index: 2;
+    top: -20%;
+    bottom: -20%;
+    left: 0;
+    width: 17%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.18), transparent);
+    content: '';
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(-170%) skewX(-12deg);
+  }
+
+  .footer-wordmark-stage::after {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle 18rem at var(--footer-light-x) var(--footer-light-y), rgba(255, 255, 255, 0.12), transparent 68%),
+      linear-gradient(90deg, rgba(243, 240, 232, 0.08), rgba(181, 31, 43, 0.07) 50%, rgba(228, 185, 31, 0.08));
+    content: '';
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 18% 72%, transparent);
+    mask-image: linear-gradient(to bottom, transparent, #000 18% 72%, transparent);
+    pointer-events: none;
+    transition: opacity 500ms var(--ease-out);
+  }
+
+  .footer-wordmark-entry { position: absolute; inset: 0; will-change: clip-path, transform; }
 
   .footer-wordmark,
   .footer-wordmark-light {
     position: absolute;
     top: 50%;
     left: 50%;
-    font-size: clamp(6rem, 18.5vw, 17rem);
-    font-weight: 780;
+    font-size: clamp(7.5rem, 19vw, 18rem);
+    font-weight: 790;
     line-height: 0.72;
-    letter-spacing: -0.065em;
-    transform: translate(-50%, -38%);
+    letter-spacing: -0.055em;
+    transform: translate(-50%, -42%);
     white-space: nowrap;
   }
 
   .footer-wordmark {
-    color: rgba(255, 255, 255, 0.045);
-    text-shadow:
-      0 -1px 0 rgba(255, 255, 255, 0.16),
-      0 1px 0 rgba(0, 0, 0, 0.65),
-      0 1.2rem 2.6rem rgba(0, 0, 0, 0.28);
+    background: linear-gradient(98deg, #f2efe7 0 34%, #b51f2b 46% 59%, #e4b91f 72% 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(var(--footer-shadow-x) var(--footer-shadow-y) 1.2rem rgba(0, 0, 0, 0.24));
   }
 
   .footer-wordmark-light {
-    background: linear-gradient(104deg, transparent 31%, rgba(255, 255, 255, 0.16) 44%, rgba(240, 201, 40, 0.08) 49%, transparent 61%);
-    background-position: 120% 0;
-    background-size: 230% 100%;
+    background: radial-gradient(circle 14rem at var(--footer-light-x) var(--footer-light-y), rgba(255, 255, 255, 0.2), transparent 66%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
   }
 
-  .footer.is-sequence-visible .footer-wordmark-light {
-    animation: footer-light 2.4s 500ms var(--ease-out) both;
+  .footer-origin {
+    position: absolute;
+    z-index: 3;
+    right: max(1rem, calc((100vw - 86rem) / 2));
+    bottom: 0.85rem;
+    color: rgba(247, 245, 239, 0.48);
+    font-size: 0.48rem;
+    letter-spacing: 0.15em;
   }
 
-  .footer-contact {
-    align-items: start;
-    padding-block: 2.2rem;
+  .sequence-ready .footer:not(.is-sequence-visible) .footer-wordmark-entry {
+    clip-path: inset(100% 0 0 0);
+    transform: translateY(2rem);
   }
 
-  .footer-brand {
-    grid-column: 1 / span 6;
+  .sequence-ready .footer .footer-wordmark-entry {
+    transition: clip-path 950ms var(--ease-out) 80ms, transform 950ms var(--ease-out) 80ms;
   }
+
+  .sequence-ready .footer:not(.is-sequence-visible) .footer-contact,
+  .sequence-ready .footer:not(.is-sequence-visible) .footer-bottom { opacity: 0; transform: translateY(1rem); }
+  .sequence-ready .footer .footer-contact { transition: opacity 700ms ease 360ms, transform 820ms var(--ease-out) 360ms; }
+  .sequence-ready .footer .footer-bottom { transition: opacity 650ms ease 480ms, transform 760ms var(--ease-out) 480ms; }
+  .footer.is-sequence-visible .footer-wordmark-stage::before { animation: footer-sweep 1200ms 240ms var(--ease-out) both; }
+
+  .footer-contact { align-items: start; padding-block: clamp(2rem, 3.5vw, 3rem); }
+  .footer-brand { grid-column: 1 / span 6; }
 
   .footer :global(.brand-mark) {
-    --brand-color: var(--white);
-    --brand-muted: rgba(243, 245, 247, 0.56);
-    --brand-line: rgba(243, 245, 247, 0.22);
-    --brand-accent: var(--flag-red);
+    --brand-color: #f3f0e8;
+    --brand-muted: rgba(247, 245, 239, 0.52);
+    --brand-line: rgba(247, 245, 239, 0.18);
+    --brand-accent: var(--red);
   }
 
-  .footer nav {
-    display: grid;
-    grid-column: 10 / -1;
-    justify-items: end;
-    gap: 0.75rem;
-  }
+  .footer nav { display: grid; grid-column: 9 / -1; justify-items: end; gap: 0.75rem; }
+  .footer nav a { position: relative; color: rgba(247, 245, 239, 0.62); font-size: 0.82rem; text-decoration: none; transition: color 280ms ease; }
+  .footer nav a::after { position: absolute; right: 0; bottom: -0.25rem; left: 0; height: 1px; background: linear-gradient(90deg, var(--red), var(--yellow)); content: ''; transform: scaleX(0); transform-origin: right; transition: transform 320ms var(--ease-out); }
+  .footer nav a:hover,
+  .footer nav a:focus-visible { color: var(--white); }
+  .footer nav a:hover::after,
+  .footer nav a:focus-visible::after { transform: scaleX(1); transform-origin: left; }
 
-  .footer nav a {
-    color: rgba(243, 245, 247, 0.74);
-    font-size: 0.82rem;
-    text-decoration: none;
-    transition: color 320ms var(--ease-out), transform 320ms var(--ease-out);
-  }
+  .footer-bottom { display: flex; justify-content: space-between; gap: 1rem; padding-top: 1.15rem; color: rgba(247, 245, 239, 0.42); font-size: 0.61rem; }
 
-  .footer nav a:hover {
-    color: var(--flag-yellow);
-    transform: translateX(-0.2rem);
-  }
-
-  .footer-bottom {
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
-    padding-top: 1.25rem;
-    border-top: 1px solid var(--line-on-dark);
-    color: rgba(243, 245, 247, 0.5);
-    font-size: 0.62rem;
-  }
-
-  @keyframes footer-light {
-    to { background-position: -25% 0; }
+  @keyframes footer-sweep {
+    0% { opacity: 0; transform: translateX(-170%) skewX(-12deg); }
+    18% { opacity: 0.72; }
+    82% { opacity: 0.35; }
+    100% { opacity: 0; transform: translateX(680%) skewX(-12deg); }
   }
 
   @media (max-width: 47.99rem) {
-    .footer-wordmark-stage {
-      width: 100%;
-      height: clamp(6rem, 28vw, 9rem);
-    }
-
+    .footer-wordmark-stage { height: clamp(7.5rem, 28vw, 9rem); }
     .footer-wordmark,
-    .footer-wordmark-light {
-      font-size: clamp(5.5rem, 28vw, 9rem);
-      letter-spacing: -0.055em;
-    }
-
+    .footer-wordmark-light { font-size: clamp(6.5rem, 29vw, 9rem); }
+    .footer-origin { display: none; }
     .footer-brand,
-    .footer nav {
-      grid-column: 1 / -1;
-    }
+    .footer nav { grid-column: 1 / -1; }
+    .footer nav { justify-items: start; margin-top: 1.5rem; }
+    .footer-bottom { flex-direction: column; }
+  }
 
-    .footer nav {
-      justify-items: start;
-      margin-top: 1.5rem;
-    }
-
-    .footer-bottom {
-      flex-direction: column;
-    }
+  @media (prefers-reduced-motion: reduce) {
+    .footer-wordmark-entry,
+    .footer-contact,
+    .footer-bottom { transition: none !important; }
+    .footer-wordmark-stage::before { display: none; }
   }
 </style>

@@ -2,24 +2,27 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Hero from '../components/Hero.astro';
-import Problems from '../components/Problems.astro';
+import About from '../components/About.astro';
 import SelectedWork from '../components/SelectedWork.astro';
 import Services from '../components/Services.astro';
 import Process from '../components/Process.astro';
-import About from '../components/About.astro';
+import FAQ from '../components/FAQ.astro';
 import Contact from '../components/Contact.astro';
 import Footer from '../components/Footer.astro';
+
+// Временно скрыто. Поменяйте на true, чтобы вернуть верхнюю панель.
+const showHeader = false;
 ---
 
 <BaseLayout>
-  <Header />
+  {showHeader && <Header />}
   <main id="main-content" tabindex="-1">
     <Hero />
-    <Problems />
+    <About />
     <SelectedWork />
     <Services />
     <Process />
-    <About />
+    <FAQ />
     <Contact />
   </main>
   <Footer />
