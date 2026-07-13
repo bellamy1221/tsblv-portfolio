@@ -1,21 +1,17 @@
 ---
 import '../styles/global.css';
-import '../styles/motion.css';
 import MotionProvider from '../components/MotionProvider.astro';
+import { siteConfig } from '../config/site';
 
 interface Props {
   title?: string;
   description?: string;
-  lang?: string;
-  ogImage?: string;
   noindex?: boolean;
 }
 
 const {
-  title = 'TSBLV — независимая digital-студия',
-  description = 'TSBLV создаёт цифровые продукты, бренды и сайты для амбициозных компаний.',
-  lang = 'ru',
-  ogImage,
+  title = siteConfig.title,
+  description = siteConfig.description,
   noindex = false,
 } = Astro.props;
 
@@ -23,29 +19,28 @@ const canonicalURL = Astro.site ? new URL(Astro.url.pathname, Astro.site) : unde
 ---
 
 <!doctype html>
-<html lang={lang}>
+<html lang="ru" data-theme="light">
   <head>
+    <script is:inline>
+      try {
+        const savedTheme = localStorage.getItem('tsblv-theme');
+        if (savedTheme === 'dark') document.documentElement.dataset.theme = 'dark';
+      } catch {}
+    </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
+    <meta name="theme-color" content="#f1efe8" data-theme-color />
     {noindex && <meta name="robots" content="noindex, nofollow" />}
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&family=Noto+Serif+Display:opsz,wght@6..72,400;6..72,500&display=swap"
-      rel="stylesheet"
-    />
-    <meta name="theme-color" content="#151616" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     {canonicalURL && <link rel="canonical" href={canonicalURL} />}
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="ru_RU" />
+    <meta property="og:site_name" content={siteConfig.name} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     {canonicalURL && <meta property="og:url" content={canonicalURL} />}
-    {ogImage && <meta property="og:image" content={ogImage} />}
-    <meta property="og:site_name" content="TSBLV" />
 
     <title>{title}</title>
   </head>

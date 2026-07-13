@@ -1,218 +1,71 @@
 ---
-import HeroVisual from './HeroVisual.astro';
+import BrandMark from './BrandMark.astro';
+import { siteConfig } from '../config/site';
 ---
 
-<section class="hero" id="hero" aria-labelledby="hero-title">
-  <div class="hero-container hero-inner">
-    <div class="hero-content">
-      <p class="eyebrow" data-hero-item="eyebrow">Независимая digital-студия</p>
-      <h1 id="hero-title">
-        <span class="hero-title-line" data-hero-line="1">
-          <span class="hero-title-line-inner">От ясных систем</span>
-        </span>
-        <span class="hero-title-line" data-hero-line="2">
-          <span class="hero-title-line-inner">до выразительных</span>
-        </span>
-        <span class="hero-title-line hero-title-line--desktop" data-hero-line="3">
-          <span class="hero-title-line-inner">цифровых миров</span>
-        </span>
-        <span class="hero-title-line hero-title-line--mobile" data-hero-line="3a">
-          <span class="hero-title-line-inner">цифровых</span>
-        </span>
-        <span class="hero-title-line hero-title-line--mobile" data-hero-line="4">
-          <span class="hero-title-line-inner">миров</span>
-        </span>
-      </h1>
-      <p class="lead" data-hero-item="lead">Я создаю сайты, сервисы и визуальные системы для современных брендов — от строгих минималистичных интерфейсов до масштабных имиджевых проектов.</p>
-      <div class="hero-actions" data-hero-item="actions">
-        <a class="button button-primary" href="#work" data-magnetic>Смотреть работы</a>
-        <a class="button button-secondary" href="#contact">Обсудить проект</a>
+<section class="hero" id="top" aria-labelledby="hero-title">
+  <div class="site-container hero-inner">
+    <div class="hero-copy" data-reveal>
+      <p class="kicker">Независимый digital-специалист</p>
+      <h1 id="hero-title">Создаю сайты и цифровые решения, которые помогают находить клиентов и экономить время.</h1>
+      <p class="hero-lead">Разрабатываю лендинги и сайты под ключ, настраиваю CRM, автоматизирую рутинные процессы и собираю понятную аналитику.</p>
+      <div class="hero-actions">
+        <a class="button button-primary" href="#work">Посмотреть работы</a>
+        <a class="button button-secondary" href={siteConfig.telegramUrl} target="_blank" rel="noreferrer">Написать в Telegram</a>
       </div>
-      <p class="hero-origin" data-hero-item="origin">
-        <span class="hero-origin-symbol" aria-hidden="true">Æ</span>
-        / Северная Осетия
-      </p>
+      <p class="service-line">Сайты <span>·</span> CRM <span>·</span> Автоматизация <span>·</span> Аналитика</p>
     </div>
 
-    <div class="visual-wrap hero-visual-wrap">
-      <HeroVisual />
+    <div class="wordmark-stage" aria-hidden="true" data-hero-mark>
+      <span class="stage-index">TS / 01</span>
+      <div class="letter-grid">
+        <span data-hero-letter>T</span><span data-hero-letter>S</span><span data-hero-letter>B</span><span data-hero-letter>L</span><span data-hero-letter>V</span>
+      </div>
+      <div class="stage-cursor"></div>
+      <div class="stage-meta"><span>Система</span><span>Порядок</span><span>Результат</span></div>
+    </div>
+
+    <div class="hero-brand" data-reveal>
+      <BrandMark variant="full" size="medium" href={null} />
+      <p><span>Работаю напрямую</span><span>и отвечаю за результат</span></p>
     </div>
   </div>
 </section>
 
 <style>
-  .hero {
-    position: relative;
-    overflow: clip;
-    min-height: min(820px, calc(100svh - var(--header-height)));
-    padding-block: clamp(2.5rem, 4vw, 4.5rem);
-  }
-
-  .hero-container {
-    width: min(100% - (var(--page-gutter) * 2), 90rem);
-    margin-inline: auto;
-  }
-
-  .hero-inner {
-    position: relative;
-    z-index: 1;
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    align-items: center;
-    gap: clamp(2rem, 4vw, 4.5rem);
-    min-height: inherit;
-  }
-
-  .hero-content {
-    min-width: 0;
-  }
-
-  .hero h1,
-  .hero-title-line,
-  .hero-title-line-inner {
-    overflow-wrap: normal;
-    word-break: normal;
-    hyphens: none;
-  }
-
-  .hero h1 {
-    width: min(100%, 39rem);
-    max-width: none;
-    margin-bottom: 0;
-    overflow: visible;
-    font-size: clamp(2.55rem, 11vw, 3.4rem);
-    font-weight: 400;
-    line-height: 0.98;
-    letter-spacing: -0.035em;
-  }
-
-  .hero-title-line {
-    display: block;
-    width: max-content;
-    max-width: 100%;
-    overflow: hidden;
-  }
-
-  .hero-title-line-inner {
-    display: block;
-    overflow-wrap: normal;
-    word-break: normal;
-    hyphens: none;
-  }
-
-  .hero-title-line--mobile {
-    display: none;
-  }
-
-  .eyebrow {
-    margin-bottom: 1.25rem;
-    font-size: 0.625rem;
-    letter-spacing: 0.17em;
-  }
-
-  .lead {
-    max-width: 33rem;
-    margin-top: 1.5rem;
-    margin-bottom: 1.5rem;
-    font-size: clamp(0.95rem, 0.3vw + 0.9rem, 1.075rem);
-    line-height: 1.55;
-  }
-
-  .hero-actions {
-    display: flex;
-    align-items: stretch;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  .hero-actions :global(.button) {
-    min-height: 2.5rem;
-    padding: 0.5rem 0.9rem;
-    font-size: 0.72rem;
-    font-weight: 600;
-    border-radius: 0.45rem;
-  }
-
-  .hero-origin {
-    display: flex;
-    align-items: baseline;
-    gap: 0.35rem;
-    margin-top: 1.4rem;
-    color: var(--color-text-subtle);
-    font-size: 0.6875rem;
-    line-height: 1.45;
-  }
-
-  .hero-origin-symbol {
-    color: var(--color-accent);
-    font-family: var(--font-display);
-    font-size: 0.875rem;
-    line-height: 1;
-  }
-
-  .visual-wrap {
-    position: relative;
-    width: 100%;
-    min-width: 0;
-  }
-
-  @media (min-width: 48rem) {
-    .hero-inner {
-      grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
-      gap: clamp(2rem, 3vw, 4rem);
-    }
-
-    .hero h1 {
-      font-size: clamp(3rem, 5.5vw, 4rem);
-    }
-
-    .hero-title-line-inner {
-      white-space: nowrap;
-    }
-
-    .hero-actions {
-      align-items: center;
-      flex-direction: row;
-      flex-wrap: wrap;
-    }
-  }
-
-  @media (min-width: 68.75rem) {
-    .hero-inner {
-      grid-template-columns: minmax(35rem, 0.95fr) minmax(34rem, 1.05fr);
-      gap: clamp(2rem, 3vw, 4rem);
-    }
-
-    .hero h1 {
-      font-size: clamp(3.6rem, 4.5vw, 4.75rem);
-    }
-  }
-
+  .hero { overflow: clip; padding: clamp(4rem, 8vw, 7.5rem) 0 clamp(5rem, 10vw, 9rem); }
+  .hero-inner { display: grid; gap: 3.5rem; }
+  .hero-copy { position: relative; z-index: 2; max-width: 59rem; }
+  h1 { max-width: 57rem; margin: 0; font-size: clamp(2.55rem, 7.4vw, 6.6rem); font-weight: 550; line-height: .97; letter-spacing: -.065em; text-wrap: balance; }
+  .kicker { margin: 0 0 1.25rem; color: var(--accent); font-size: .69rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+  .hero-lead { max-width: 42rem; margin: clamp(1.75rem, 3vw, 2.75rem) 0 0; color: var(--muted); font-size: clamp(1rem, 1.55vw, 1.28rem); line-height: 1.55; }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: .65rem; margin-top: 2rem; }
+  .service-line { display: flex; flex-wrap: wrap; gap: .45rem; margin: 2rem 0 0; color: var(--muted); font-size: .73rem; font-weight: 650; letter-spacing: .08em; text-transform: uppercase; }
+  .service-line span { color: var(--accent); }
+  .wordmark-stage { position: relative; min-height: clamp(12rem, 25vw, 22rem); overflow: hidden; border-block: 1px solid var(--line); }
+  .stage-index { position: absolute; top: 1rem; left: 0; color: var(--muted); font-size: .62rem; font-weight: 700; letter-spacing: .16em; }
+  .letter-grid { display: grid; height: 100%; min-height: inherit; grid-template-columns: repeat(5, 1fr); align-items: end; }
+  .letter-grid span { display: grid; height: 72%; place-items: end center; border-left: 1px solid var(--line); font-size: clamp(5rem, 17vw, 15rem); font-weight: 760; line-height: .68; letter-spacing: -.12em; will-change: auto; }
+  .wordmark-stage.is-interactive .letter-grid span { transition: transform .55s cubic-bezier(.22,1,.36,1); }
+  .wordmark-stage.is-interactive .letter-grid span.is-moving { transition-duration: 0s; will-change: transform; }
+  .letter-grid span:last-child { border-right: 1px solid var(--line); }
+  .stage-cursor { position: absolute; z-index: 2; top: 0; bottom: 0; left: 0; width: 2px; background: var(--accent); animation: cursor-scan 1.5s .35s cubic-bezier(.76,0,.24,1) both; }
+  .stage-meta { position: absolute; right: .75rem; bottom: .8rem; left: .75rem; display: flex; justify-content: space-between; color: var(--muted); font-size: .55rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; }
+  .hero-brand { display: flex; align-items: center; justify-content: space-between; gap: 2rem; }
+  .hero-brand p { margin: 0; color: var(--muted); font-size: .72rem; line-height: 1.55; text-align: right; }
+  .hero-brand p span { display: block; }
+  @keyframes cursor-scan { from { transform: translateX(0); } to { transform: translateX(calc(var(--container-width) - 2px)); } }
   @media (max-width: 47.99rem) {
-    .hero-title-line--desktop {
-      display: none;
-    }
-
-    .hero-title-line--mobile {
-      display: block;
-    }
-
-    .visual-wrap {
-      order: 5;
-    }
-
-    .hero-origin {
-      order: 4;
-    }
+    .hero { padding-top: 3rem; }
+    h1 { font-size: clamp(2.55rem, 12vw, 4.2rem); }
+    .hero-actions { display: grid; }
+    .wordmark-stage { margin-inline: calc(var(--gutter) * -1); }
+    .stage-index { left: var(--gutter); }
+    .letter-grid span { font-size: clamp(4.5rem, 26vw, 7rem); }
+    .stage-meta { right: var(--gutter); left: var(--gutter); }
+    .hero-brand { align-items: flex-start; flex-direction: column; }
+    .hero-brand p { text-align: left; }
+    @keyframes cursor-scan { from { transform: translateX(0); } to { transform: translateX(calc(100vw - 2px)); } }
   }
-
-  @media (max-width: 22.5rem) {
-    .hero-title-line {
-      width: 100%;
-    }
-
-    .hero-title-line-inner {
-      white-space: normal;
-    }
-  }
+  @media (prefers-reduced-motion: reduce) { .stage-cursor { right: 0; left: auto; animation: none; } }
 </style>

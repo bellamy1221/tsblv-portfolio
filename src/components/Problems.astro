@@ -1,0 +1,34 @@
+---
+import { problems } from '../data/home';
+---
+
+<section class="section problems" aria-labelledby="problems-title">
+  <div class="site-container problems-layout">
+    <div class="section-intro" data-reveal>
+      <p class="section-label">С чего начать</p>
+      <h2 id="problems-title">Когда я могу помочь</h2>
+      <p>Не обязательно приходить с готовым техническим заданием. Достаточно описать, что сейчас мешает работе.</p>
+    </div>
+    <ol class="problem-index">
+      {problems.map((problem) => (
+        <li data-reveal>
+          <span>{problem.id}</span>
+          <h3>{problem.title}</h3>
+          <i aria-hidden="true">↗</i>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  .problems-layout { display: grid; gap: 3rem; }
+  .section-intro p:last-child { max-width: 27rem; margin: 1.25rem 0 0; color: var(--muted); line-height: 1.6; }
+  .problem-index { margin: 0; padding: 0; border-top: 1px solid var(--line-strong); list-style: none; }
+  li { display: grid; grid-template-columns: 2.5rem 1fr auto; align-items: center; gap: 1rem; min-height: 5.25rem; border-bottom: 1px solid var(--line); }
+  li > span { color: var(--accent); font-size: .66rem; font-weight: 700; }
+  h3 { margin: 0; font-size: clamp(1.05rem, 2vw, 1.45rem); font-weight: 540; letter-spacing: -.025em; }
+  i { color: var(--muted); font-style: normal; transition: transform .2s ease, color .2s ease; }
+  li:hover i { color: var(--accent); transform: translate(3px, -3px); }
+  @media (min-width: 64rem) { .problems-layout { grid-template-columns: minmax(16rem, .65fr) minmax(0, 1.35fr); } .section-intro { position: sticky; top: 7rem; align-self: start; } }
+</style>
